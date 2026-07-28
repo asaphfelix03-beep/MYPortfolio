@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Retail - Top 10 Countries</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #814BE7;
+      --primary-light: #C17BFD;
+      --bg: #F7F7F7;
+      --card-bg: #FFFFFF;
+      --text: #1F1F24;
+      --text-muted: #6E7191;
+      --border: #E2E4ED;
+      --success: #34C563;
+      --danger: #E73B4F;
+      --radius: 12px;
+      --shadow: 0 0 0 1px var(--border), 0 2px 8px rgba(7,2,23,0.05);
+      --shadow-hover: 0 0 0 1px var(--border), 0 4px 16px rgba(7,2,23,0.10);
+      --font: 'Open Sans', system-ui, -apple-system, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not(.light) {
+        --bg: #1E2235;
+        --card-bg: #2D3148;
+        --text: #E2E4ED;
+        --text-muted: #A2A7BD;
+        --border: #484D66;
+        --shadow: 0 0 0 1px var(--border), 0 2px 8px rgba(7,2,23,0.15);
+        --shadow-hover: 0 0 0 1px var(--border), 0 4px 16px rgba(7,2,23,0.25);
+      }
+    }
+    :root.dark {
+      --bg: #1E2235;
+      --card-bg: #2D3148;
+      --text: #E2E4ED;
+      --text-muted: #A2A7BD;
+      --border: #484D66;
+      --shadow: 0 0 0 1px var(--border), 0 2px 8px rgba(7,2,23,0.15);
+      --shadow-hover: 0 0 0 1px var(--border), 0 4px 16px rgba(7,2,23,0.25);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60vh;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(91,108,249,0.06), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .dashboard { max-width: 1400px; margin: 0 auto; padding: 24px; position: relative; z-index: 1; }
+
+    /* --- Header --- */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .header .logo { height: 32px; width: auto; }
+    .title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* --- Grid --- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+    .col-2  { grid-column: span 2; }
+    .col-3  { grid-column: span 3; }
+    .col-4  { grid-column: span 4; }
+    .col-6  { grid-column: span 6; }
+    .col-8  { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+    /* Small screens: everything full-width */
+    @media (max-width: 767.98px) {
+      .col-2, .col-3, .col-4, .col-6, .col-8, .col-12 { grid-column: span 12; }
+      .grid { gap: 12px; }
+      .dashboard { padding: 16px; }
+      .kpi-value { font-size: 1.5rem; }
+      .title { font-size: 1.35rem; }
+      .chart-container { min-height: 260px; }
+    }
+
+    /* --- Card base --- */
+    .card,
+    .kpi-card,
+    .chart-card,
+    .text-card,
+    .table-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover,
+    .kpi-card:hover,
+    .chart-card:hover,
+    .text-card:hover,
+    .table-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-hover);
+    }
+    /* Gradient accent line */
+    .card::before,
+    .kpi-card::before,
+    .chart-card::before,
+    .text-card::before,
+    .table-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+      opacity: 0.6;
+    }
+
+    /* --- KPI card --- */
+    .kpi-card { padding: 24px; }
+    .kpi-label { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 6px; }
+    .kpi-value { font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .kpi-delta {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 8px;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .kpi-delta.positive { color: var(--success); background: rgba(52,197,99,0.1); }
+    .kpi-delta.negative { color: var(--danger); background: rgba(231,59,79,0.1); }
+
+    /* --- Chart card --- */
+    .card-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+    .chart-container { min-height: 300px; width: 100%; }
+
+    /* --- Text card --- */
+    .text-card p { font-size: 0.9rem; color: var(--text); margin-bottom: 8px; line-height: 1.6; }
+    .text-card p:last-child { margin-bottom: 0; }
+
+    /* --- Table card --- */
+    .table-card { overflow-x: auto; }
+    .table-card table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .table-card th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); font-weight: 600; color: var(--text); white-space: nowrap; }
+    .table-card td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+    .table-card tr:last-child td { border-bottom: none; }
+    .table-card tbody tr:nth-child(even) td { background: rgba(91,108,249,0.02); }
+    .table-card tbody tr:hover td { background: rgba(91,108,249,0.06); }
+
+    /* --- Theme toggle --- */
+    .theme-toggle {
+      position: absolute;
+      top: 24px;
+      right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--primary-light); }
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon { display: none; }
+    .theme-toggle .icon-sun { display: inline; }
+    :root.dark .theme-toggle .icon-sun { display: none; }
+    :root.dark .theme-toggle .icon-moon { display: inline; }
+    @media (prefers-color-scheme: dark) {
+      :root:not(.light) .theme-toggle .icon-sun { display: none; }
+      :root:not(.light) .theme-toggle .icon-moon { display: inline; }
+    }
+
+    /* --- Footer --- */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .footer .logo-sm { height: 18px; width: auto; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <header class="header">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <span class="icon-sun">&#9788;</span>
+        <span class="icon-moon">&#9790;</span>
+      </button>
+      <img class="logo" src="https://www.energent.ai/images/logos/svg/energent-logo.svg" alt="Energent logo">
+      <div>
+        <h1 class="title">Top 10 des pays générateurs de chiffre d'affaires</h1>
+        <p class="subtitle">Analyse du chiffre d'affaires par pays à partir du fichier top_10_countries.csv</p>
+      </div>
+    </header>
+    <div class="grid">
+      <div class="col-3">
+        <div class="kpi-card">
+          <div class="kpi-label">CA cumulé</div>
+          <div class="kpi-value">$ 875,173</div>
+          <div class="kpi-delta positive">10 pays analysés</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Pays leader</div>
+          <div class="kpi-value" style="font-size: 1.55rem;">United Kingdom</div>
+          <div class="kpi-delta positive">1er du classement</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Part du leader</div>
+          <div class="kpi-value">85.6%</div>
+          <div class="kpi-delta negative">Concentration élevée</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Reste du Top 10</div>
+          <div class="kpi-value">$ 126,171</div>
+          <div class="kpi-delta positive">Hors Royaume-Uni</div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="chart-card">
+          <div class="card-title">Chiffre d'affaires par pays</div>
+          <div class="chart-container" id="chart-1"></div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="text-card">
+          <div class="card-title">Points clés</div>
+          <p><strong>Concentration du revenu :</strong> le Royaume-Uni représente 85,6 % du chiffre d'affaires cumulé observé dans ce Top 10.</p>
+          <p><strong>Écart de niveau :</strong> les Pays-Bas, deuxième marché, restent sous le seuil de $ 30,000, très loin derrière le leader.</p>
+          <p><strong>Queue de classement :</strong> les quatre derniers pays génèrent chacun moins de $ 6,000, ce qui traduit une distribution très asymétrique.</p>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="table-card">
+          <div class="card-title">Classement détaillé</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Pays</th>
+                <th style="text-align: right;">Revenue</th>
+                <th style="text-align: right;">Part</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>United Kingdom</td><td style="text-align: right;">$ 749,001.70</td><td style="text-align: right;">85.6%</td></tr>
+              <tr><td>2</td><td>Netherlands</td><td style="text-align: right;">$ 27,435.83</td><td style="text-align: right;">3.1%</td></tr>
+              <tr><td>3</td><td>EIRE</td><td style="text-align: right;">$ 23,759.11</td><td style="text-align: right;">2.7%</td></tr>
+              <tr><td>4</td><td>France</td><td style="text-align: right;">$ 23,168.92</td><td style="text-align: right;">2.6%</td></tr>
+              <tr><td>5</td><td>Germany</td><td style="text-align: right;">$ 21,653.30</td><td style="text-align: right;">2.5%</td></tr>
+              <tr><td>6</td><td>Australia</td><td style="text-align: right;">$ 12,421.03</td><td style="text-align: right;">1.4%</td></tr>
+              <tr><td>7</td><td>Spain</td><td style="text-align: right;">$ 5,575.40</td><td style="text-align: right;">0.6%</td></tr>
+              <tr><td>8</td><td>Switzerland</td><td style="text-align: right;">$ 5,375.69</td><td style="text-align: right;">0.6%</td></tr>
+              <tr><td>9</td><td>Belgium</td><td style="text-align: right;">$ 3,582.51</td><td style="text-align: right;">0.4%</td></tr>
+              <tr><td>10</td><td>Portugal</td><td style="text-align: right;">$ 3,199.31</td><td style="text-align: right;">0.4%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <!-- The energent.ai logo + link are the platform attribution; do NOT add additional phrases
+           like "Generated by energent.ai", "Built with energent.ai styling", or similar.
+           Add report-specific content here only (data source, methodology, generation date), or
+           leave the footer with just the logo + link below. -->
+      <img class="logo-sm" src="https://www.energent.ai/images/logos/svg/energent-logo.svg" alt="Energent logo">
+      <a href="https://www.energent.ai" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Powered by energent.ai</a>
+    </footer>
+  </div>
+  <script>
+    // Theme toggle
+    function getEffectiveDark() {
+      const root = document.documentElement;
+      if (root.classList.contains('dark')) return true;
+      if (root.classList.contains('light')) return false;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function toggleTheme() {
+      const root = document.documentElement;
+      const currentlyDark = getEffectiveDark();
+      root.classList.remove('dark', 'light');
+      root.classList.add(currentlyDark ? 'light' : 'dark');
+      rebuildCharts();
+    }
+
+    const COLORS = ['#814BE7','#6851FF','#E73B4F','#D4A740','#3FA881'];
+    const chartRegistry = [];
+
+    function getDefaultLayout() {
+      const dark = getEffectiveDark();
+      return {
+        font: { family: 'Open Sans, system-ui, sans-serif', color: dark ? '#E2E4ED' : '#1F1F24' },
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
+        autosize: true,
+        margin: { l: 50, r: 30, t: 50, b: 50 },
+        xaxis: { gridcolor: dark ? '#5A5F78' : '#E2E4ED', automargin: true },
+        yaxis: { gridcolor: dark ? '#5A5F78' : '#E2E4ED', automargin: true },
+        colorway: COLORS,
+        legend: { font: { family: 'Open Sans, system-ui, sans-serif', size: 12 } },
+        hoverlabel: {
+          font: { family: 'Open Sans, system-ui, sans-serif', size: 13 },
+          bgcolor: dark ? '#3D4260' : '#FFFFFF',
+          bordercolor: dark ? '#5A5F78' : '#E2E4ED',
+          namelength: -1,
+        },
+      };
+    }
+
+    const NESTED_LAYOUT_KEYS = ['xaxis','yaxis','yaxis2','margin','legend','font','hoverlabel'];
+    function mergeLayouts(base, overrides) {
+      const merged = { ...base, ...overrides };
+      for (const key of NESTED_LAYOUT_KEYS) {
+        if (base[key] && overrides[key] && typeof base[key] === 'object' && typeof overrides[key] === 'object') {
+          merged[key] = { ...base[key], ...overrides[key] };
+        }
+      }
+      return merged;
+    }
+
+    function createChart(id, traces, layoutOverrides = {}) {
+      const CLIP_TYPES = ['scatter','scattergl','bar','waterfall','funnel','histogram','box','violin'];
+      const processed = traces.map(t =>
+        t.text && t.textposition && t.cliponaxis === undefined
+        && CLIP_TYPES.includes(t.type || 'scatter')
+          ? { ...t, cliponaxis: false }
+          : t
+      );
+      chartRegistry.push({ id, traces: processed, layoutOverrides });
+      Plotly.newPlot(id, processed,
+        mergeLayouts(getDefaultLayout(), layoutOverrides),
+        { responsive: true, displayModeBar: false }
+      );
+    }
+
+    function rebuildCharts() {
+      chartRegistry.forEach(({ id, traces, layoutOverrides }) => {
+        Plotly.react(id, traces,
+          mergeLayouts(getDefaultLayout(), layoutOverrides),
+          { responsive: true, displayModeBar: false }
+        );
+      });
+    }
+
+    const countryData = [
+      { country: 'United Kingdom', revenue: 749001.701, share: 85.6 },
+      { country: 'Netherlands', revenue: 27435.83, share: 3.1 },
+      { country: 'EIRE', revenue: 23759.11, share: 2.7 },
+      { country: 'France', revenue: 23168.92, share: 2.6 },
+      { country: 'Germany', revenue: 21653.3, share: 2.5 },
+      { country: 'Australia', revenue: 12421.03, share: 1.4 },
+      { country: 'Spain', revenue: 5575.4, share: 0.6 },
+      { country: 'Switzerland', revenue: 5375.69, share: 0.6 },
+      { country: 'Belgium', revenue: 3582.51, share: 0.4 },
+      { country: 'Portugal', revenue: 3199.31, share: 0.4 }
+    ];
+
+    const formatMoney0 = value => `$ ${Math.round(value).toLocaleString('en-US')}`;
+    const countries = countryData.map(d => d.country);
+    const revenues = countryData.map(d => d.revenue);
+    const shares = countryData.map(d => d.share);
+    const barColors = ['#814BE7','#9860EF','#A86DF4','#B679F8','#C286FB','#CFA1FD','#D9B8FF','#E1C9FF','#E8D9FF','#F0EBFF'];
+
+    createChart('chart-1', [
+      {
+        type: 'bar',
+        x: countries,
+        y: revenues,
+        text: revenues.map(formatMoney0),
+        textposition: 'outside',
+        textfont: { family: 'Open Sans, system-ui, sans-serif', size: 11 },
+        customdata: shares,
+        hovertemplate: "<b>%{x}</b><br>Chiffre d'affaires: $ %{y:,.2f}<br>Part du total: %{customdata:.1f}%<extra></extra>",
+        marker: {
+          color: barColors,
+          line: { color: '#C17BFD', width: 1 }
+        }
+      }
+    ], {
+      title: {
+        text: "Top 10 des pays générateurs de chiffre d'affaires",
+        x: 0.01,
+        xanchor: 'left',
+        font: { family: 'Open Sans, system-ui, sans-serif', size: 16 }
+      },
+      margin: { l: 80, r: 40, t: 95, b: 120 },
+      bargap: 0.22,
+      showlegend: false,
+      xaxis: {
+        title: 'Pays',
+        tickangle: -35
+      },
+      yaxis: {
+        title: "Chiffre d'affaires ($)",
+        tickprefix: '$ ',
+        tickformat: ',.0f',
+        rangemode: 'tozero'
+      }
+    });
+  </script>
+</body>
+</html>

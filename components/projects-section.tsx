@@ -41,6 +41,7 @@ const projects = [
     technologies: ["Python", "Pandas", "Matplotlib"],
     year: "2019",
     image: "/images/diagram-2019.png",
+    link: "/Online_Retail_Top10_Countries.html",
     icon: BookOpen,
     color: "accent",
     type: "Analyse de données",
