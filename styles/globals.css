@@ -119,7 +119,64 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* Improved base typography and layout */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    line-height: 1.6;
+    -webkit-font-feature-settings: "kern" 1;
+  }
+
+  /* Container utility for consistent max width */
+  .container-max {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Card style used across the site for a modern look */
+  .card {
+    @apply rounded-2xl p-6 bg-card bg-opacity-40 border border-border/30;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Project card specifics */
+  .project-card {
+    @apply flex flex-col gap-4;
+  }
+
+  .project-img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* Responsive adjustments */
+  @media (min-width: 1024px) {
+    .project-card {
+      @apply flex-row items-start;
+    }
+    .project-card .project-meta {
+      @apply w-1/3 pr-6;
+    }
+    .project-card .project-body {
+      @apply w-2/3;
+    }
+  }
+
+  /* Tighter headings */
+  h1, h2, h3, h4, h5 {
+    letter-spacing: -0.02em;
   }
 }

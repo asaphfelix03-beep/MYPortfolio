@@ -86,7 +86,7 @@ export default function ProjectsSection() {
                 className="group relative"
               >
                 <div
-                  className={`glass rounded-2xl p-8 border transition-all duration-300 h-full ${
+                  className={`card project-card transition-all duration-300 h-full ${
                     hoveredProject === project.id
                       ? project.color === "primary"
                         ? "border-primary/50 shadow-lg shadow-primary/10"
@@ -94,112 +94,86 @@ export default function ProjectsSection() {
                       : "border-primary/20"
                   }`}
                 >
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex items-center gap-4">
+                  <div className="project-meta">
+                    <div className="flex items-start gap-4 mb-4">
                       <div
-                        className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all ${
+                        className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all shrink-0 ${
                           project.color === "primary"
                             ? "bg-primary/20 group-hover:bg-primary/30"
                             : "bg-accent/20 group-hover:bg-accent/30"
                         }`}
                       >
                         <project.icon
-                          className={
-                            project.color === "primary"
-                              ? "text-primary"
-                              : "text-accent"
-                          }
+                          className={project.color === "primary" ? "text-primary" : "text-accent"}
                           size={28}
                         />
                       </div>
                       <div>
-                        <span
-                          className={`text-xs font-mono ${
-                            project.color === "primary"
-                              ? "text-primary"
-                              : "text-accent"
-                          }`}
-                        >
+                        <span className={`text-xs font-mono ${project.color === "primary" ? "text-primary" : "text-accent"}`}>
                           {project.year}
                         </span>
-                        <h3 className="text-xl font-bold text-foreground">
+                        <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1">
                           {project.title}
                         </h3>
+                        <p className="text-sm text-muted-foreground mt-2 hidden lg:block">{project.type}</p>
                       </div>
                     </div>
-                    <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-secondary text-muted-foreground">
-                      <Smartphone size={12} />
-                      {project.type}
-                    </span>
-                  </div>
-
-                  {/* Content */}
-                  <p
-                    className={`font-medium mb-3 ${
-                      project.color === "primary" ? "text-primary" : "text-accent"
-                    }`}
-                  >
-                    {project.subtitle}
-                  </p>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 text-pretty">
-                    {project.description}
-                  </p>
-
-                  {project.image ? (
-                    <div className="mb-6">
-                      <img src={project.image} alt={`${project.title} diagramme`} className="w-full rounded-lg object-cover" />
+                    <div className="mb-4">
+                      <p className={`font-medium mb-1 ${project.color === "primary" ? "text-primary" : "text-accent"}`}>
+                        {project.subtitle}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {project.technologies.map((tech) => (
+                          <span
+                            key={tech}
+                            className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                              project.color === "primary"
+                                ? "bg-primary/10 text-primary border-primary/20"
+                                : "bg-accent/10 text-accent border-accent/20"
+                            }`}
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  ) : null}
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className={`px-3 py-1 rounded-full text-xs font-medium border ${
-                          project.color === "primary"
-                            ? "bg-primary/10 text-primary border-primary/20"
-                            : "bg-accent/10 text-accent border-accent/20"
-                        }`}
-                      >
-                        {tech}
-                      </span>
-                    ))}
                   </div>
 
-                  {/* Action */}
-                  <div className="flex gap-3">
-                    {project.link ? (
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1">
-                        <Button
-                          variant="ghost"
-                          className={`w-full justify-center gap-2 ${
-                            project.color === "primary"
-                              ? "hover:bg-primary/10 text-primary"
-                              : "hover:bg-accent/10 text-accent"
-                          }`}
-                        >
-                          <span>Voir le projet</span>
-                          <ExternalLink size={16} />
-                        </Button>
-                      </a>
+                  <div className="project-body">
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 text-pretty">
+                      {project.description}
+                    </p>
+
+                    {project.image ? (
+                      <div className="mb-4">
+                        <img src={project.image} alt={`${project.title} diagramme`} className="project-img" />
+                      </div>
                     ) : null}
 
-                    {project.download ? (
-                      <a href={project.download} download className="flex-1">
-                        <Button
-                          variant="outline"
-                          className={`w-full justify-center gap-2 ${
-                            project.color === "primary"
-                              ? "text-primary border-primary/20 hover:bg-primary/5"
-                              : "text-accent border-accent/20 hover:bg-accent/5"
-                          }`}
-                        >
-                          <span>Télécharger l'APK</span>
-                        </Button>
-                      </a>
-                    ) : null}
+                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                      {project.link ? (
+                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
+                          <Button
+                            variant="ghost"
+                            className={`w-full justify-center gap-2 ${project.color === "primary" ? "hover:bg-primary/10 text-primary" : "hover:bg-accent/10 text-accent"}`}
+                          >
+                            <span>Voir le projet</span>
+                            <ExternalLink size={16} />
+                          </Button>
+                        </a>
+                      ) : null}
+
+                      {project.download ? (
+                        <a href={project.download} download className="w-full sm:w-1/2">
+                          <Button
+                            variant="outline"
+                            className={`w-full justify-center gap-2 ${project.color === "primary" ? "text-primary border-primary/20 hover:bg-primary/5" : "text-accent border-accent/20 hover:bg-accent/5"}`}
+                          >
+                            <span>Télécharger</span>
+                          </Button>
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
 

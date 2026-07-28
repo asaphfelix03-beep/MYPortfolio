@@ -78,9 +78,12 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 leading-tight"
           >
-            <span className="text-foreground">Ojewumi Asaph Felix</span>
+            <span className="text-foreground">Ojewumi Asaph</span>{' '}
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
+              Felix
+            </span>
           </motion.h1>
 
           {/* Title */}
@@ -88,14 +91,14 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-2 text-xl sm:text-2xl md:text-3xl text-muted-foreground mb-6 font-light"
+            className="flex flex-wrap items-center justify-center gap-3 text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 font-medium"
           >
             <span>Étudiant en</span>
-            <span className="px-3 py-1 rounded-lg bg-primary/20 text-primary font-medium border border-primary/30">
+            <span className="px-3 py-1 rounded-md bg-primary/10 text-primary font-semibold border border-primary/20">
               Cybersécurité
             </span>
             <span>&</span>
-            <span className="px-3 py-1 rounded-lg bg-accent/20 text-accent font-medium border border-accent/30">
+            <span className="px-3 py-1 rounded-md bg-accent/10 text-accent font-semibold border border-accent/20">
               Intelligence Artificielle
             </span>
           </motion.div>
@@ -105,10 +108,10 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed text-pretty"
+            className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed"
           >
-            Je conçois des expériences numériques sécurisées et performantes,
-            en alliant cybersécurité, intelligence artificielle et développement web.
+            Je conçois des expériences numériques sécurisées et performantes, en
+            alliant cybersécurité, intelligence artificielle et développement web.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -116,7 +119,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-12"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 w-full"
           >
             <Button
               onClick={scrollToAbout}
