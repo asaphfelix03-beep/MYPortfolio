@@ -1,0 +1,222 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { ExternalLink, Smartphone, Leaf, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const projects = [
+  {
+    id: 1,
+    title: "EcoCollect",
+    subtitle: "Application de collecte et recyclage des déchets",
+    description:
+      "Application mobile citoyenne permettant de signaler des dépôts sauvages de déchets, de localiser les points de collecte et de recyclage, et de sensibiliser à l'éco-responsabilité.",
+    technologies: ["Flutter", "Django", "PostgreSQL", "Google Maps API"],
+    year: "2025-2026",
+    icon: Leaf,
+    color: "accent",
+    type: "Mobile App",
+  },
+  {
+    id: 2,
+    title: "N'ti",
+    subtitle: "Application d'apprentissage du Baoulé",
+    description:
+      "Application mobile dédiée à l'apprentissage de la langue Baoulé, proposant des leçons, du vocabulaire, des audios de prononciation, des quiz et un dictionnaire hors ligne Baoulé–Français permettant d'apprendre la langue Baoulé plus efficacement.",
+    technologies: ["Flutter", "Firebase", "Audio Processing"],
+    year: "2025",
+    icon: BookOpen,
+    color: "primary",
+    type: "Mobile App",
+    download: "/files/nti-app-release.apk",
+  },
+  {
+    id: 3,
+    title: "PROJET D'ANALYSE DE DONNÉES – VENTES PHARMACEUTIQUES",
+    subtitle: "Analyse exploratoire des ventes pharmaceutiques (2014–2019)",
+    description:
+      "J'ai effectué une analyse exploratoire des données sur six années (2014–2019) à partir de fichiers CSV. Nettoyage et agrégation des données (groupements, filtres temporels, gestion des valeurs manquantes). Création de visualisations pour mettre en évidence les tendances : médicaments les plus vendus, moyennes quotidiennes et saisonnalité de la catégorie R03, qui affiche une augmentation de XX % pendant l'hiver.",
+    technologies: ["Python", "Pandas", "Matplotlib"],
+    year: "2019",
+    image: "/images/diagram-2019.png",
+    icon: BookOpen,
+    color: "accent",
+    type: "Analyse de données",
+  },
+
+];
+
+export default function ProjectsSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+
+  return (
+    <section id="projects" className="relative py-32 px-6">
+      <div ref={ref} className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="text-center mb-16">
+            <span className="text-primary font-mono text-sm tracking-wider">
+              &lt;PROJETS /&gt;
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 text-foreground">
+              Mes Réalisations
+            </h2>
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-pretty">
+              Des projets concrets qui démontrent ma capacité à résoudre des
+              problèmes réels avec des solutions technologiques innovantes.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.2, duration: 0.5 }}
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+                className="group relative"
+              >
+                <div
+                  className={`glass rounded-2xl p-8 border transition-all duration-300 h-full ${
+                    hoveredProject === project.id
+                      ? project.color === "primary"
+                        ? "border-primary/50 shadow-lg shadow-primary/10"
+                        : "border-accent/50 shadow-lg shadow-accent/10"
+                      : "border-primary/20"
+                  }`}
+                >
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all ${
+                          project.color === "primary"
+                            ? "bg-primary/20 group-hover:bg-primary/30"
+                            : "bg-accent/20 group-hover:bg-accent/30"
+                        }`}
+                      >
+                        <project.icon
+                          className={
+                            project.color === "primary"
+                              ? "text-primary"
+                              : "text-accent"
+                          }
+                          size={28}
+                        />
+                      </div>
+                      <div>
+                        <span
+                          className={`text-xs font-mono ${
+                            project.color === "primary"
+                              ? "text-primary"
+                              : "text-accent"
+                          }`}
+                        >
+                          {project.year}
+                        </span>
+                        <h3 className="text-xl font-bold text-foreground">
+                          {project.title}
+                        </h3>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-secondary text-muted-foreground">
+                      <Smartphone size={12} />
+                      {project.type}
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <p
+                    className={`font-medium mb-3 ${
+                      project.color === "primary" ? "text-primary" : "text-accent"
+                    }`}
+                  >
+                    {project.subtitle}
+                  </p>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 text-pretty">
+                    {project.description}
+                  </p>
+
+                  {project.image ? (
+                    <div className="mb-6">
+                      <img src={project.image} alt={`${project.title} diagramme`} className="w-full rounded-lg object-cover" />
+                    </div>
+                  ) : null}
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                          project.color === "primary"
+                            ? "bg-primary/10 text-primary border-primary/20"
+                            : "bg-accent/10 text-accent border-accent/20"
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Action */}
+                  <div className="flex gap-3">
+                    {project.link ? (
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1">
+                        <Button
+                          variant="ghost"
+                          className={`w-full justify-center gap-2 ${
+                            project.color === "primary"
+                              ? "hover:bg-primary/10 text-primary"
+                              : "hover:bg-accent/10 text-accent"
+                          }`}
+                        >
+                          <span>Voir le projet</span>
+                          <ExternalLink size={16} />
+                        </Button>
+                      </a>
+                    ) : null}
+
+                    {project.download ? (
+                      <a href={project.download} download className="flex-1">
+                        <Button
+                          variant="outline"
+                          className={`w-full justify-center gap-2 ${
+                            project.color === "primary"
+                              ? "text-primary border-primary/20 hover:bg-primary/5"
+                              : "text-accent border-accent/20 hover:bg-accent/5"
+                          }`}
+                        >
+                          <span>Télécharger l'APK</span>
+                        </Button>
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+
+                {/* Decorative gradient */}
+                <div
+                  className={`absolute inset-0 -z-10 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity ${
+                    project.color === "primary"
+                      ? "bg-primary/20"
+                      : "bg-accent/20"
+                  }`}
+                />
+              </motion.div>
+            ))}
+          </div>
+
+        </motion.div>
+      </div>
+    </section>
+  );
+}
