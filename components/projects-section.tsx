@@ -12,12 +12,13 @@ const projects = [
     title: "EcoCollect",
     subtitle: "Application de collecte et recyclage des déchets",
     description:
-      "Application mobile citoyenne permettant de signaler des dépôts sauvages de déchets, de localiser les points de collecte et de recyclage, et de sensibiliser à l'éco-responsabilité.",
+      "Projet en cours de développement : application mobile citoyenne permettant de signaler des dépôts sauvages de déchets, de localiser les points de collecte et de recyclage, et de sensibiliser à l'éco-responsabilité.",
     technologies: ["Flutter", "Django", "PostgreSQL", "Google Maps API"],
     year: "2025-2026",
     icon: Leaf,
     color: "accent",
     type: "Mobile App",
+    status: "En cours",
   },
   {
     id: 2,
@@ -53,12 +54,13 @@ const projects = [
     title: "Matronassist-ci",
     subtitle: "Plateforme de suivi de grossesse pour sages-femmes",
     description:
-      "Création d'une plateforme de suivi de grossesse qui automatise le travail administratif des sages-femmes et améliore le suivi des patientes grâce à des alertes intelligentes et un partage facilité des données médicales.",
+      "Projet en cours de développement : plateforme de suivi de grossesse qui automatise le travail administratif des sages-femmes et améliore le suivi des patientes grâce à des alertes intelligentes et un partage facilité des données médicales.",
     technologies: ["React", "Node.js", "Express", "MongoDB", "Docker"],
     year: "2024",
     icon: BookOpen,
     color: "primary",
     type: "Plateforme web",
+    status: "En cours",
   },
 
 ];
@@ -123,10 +125,17 @@ export default function ProjectsSection() {
                           size={28}
                         />
                       </div>
-                      <div>
-                        <span className={`text-xs font-mono ${project.color === "primary" ? "text-primary" : "text-accent"}`}>
-                          {project.year}
-                        </span>
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className={`text-xs font-mono ${project.color === "primary" ? "text-primary" : "text-accent"}`}>
+                            {project.year}
+                          </span>
+                          {project.status ? (
+                            <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${project.color === "primary" ? "bg-primary/10 text-primary border border-primary/20" : "bg-accent/10 text-accent border border-accent/20"}`}>
+                              {project.status}
+                            </span>
+                          ) : null}
+                        </div>
                         <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1">
                           {project.title}
                         </h3>
