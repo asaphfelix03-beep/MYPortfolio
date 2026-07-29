@@ -142,7 +142,7 @@ export default function HeroSection() {
               className="px-8 py-4 rounded-full text-muted-foreground hover:text-primary transition-all"
               asChild
             >
-              <a href="/cv-asaph-01.pdf" download="CV-Asaph-Felix.pdf">
+              <a href="/CV%20OJEWUMI%20ASAPH%20_FELIX%201.pdf" download="CV OJEWUMI ASAPH FELIX.pdf">
                 <Download size={20} className="mr-2" />
                 Télécharger le CV
               </a>
