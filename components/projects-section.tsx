@@ -127,9 +127,6 @@ export default function ProjectsSection() {
                       </div>
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className={`text-xs font-mono ${project.color === "primary" ? "text-primary" : "text-accent"}`}>
-                            {project.year}
-                          </span>
                           {project.status ? (
                             <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${project.color === "primary" ? "bg-primary/10 text-primary border border-primary/20" : "bg-accent/10 text-accent border border-accent/20"}`}>
                               {project.status}
