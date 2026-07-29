@@ -48,6 +48,18 @@ const projects = [
     color: "accent",
     type: "Analyse de données",
   },
+  {
+    id: 4,
+    title: "Matronassist-ci",
+    subtitle: "Plateforme de suivi de grossesse pour sages-femmes",
+    description:
+      "Création d'une plateforme de suivi de grossesse qui automatise le travail administratif des sages-femmes et améliore le suivi des patientes grâce à des alertes intelligentes et un partage facilité des données médicales.",
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Docker"],
+    year: "2024",
+    icon: BookOpen,
+    color: "primary",
+    type: "Plateforme web",
+  },
 
 ];
 
