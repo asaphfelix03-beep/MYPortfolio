@@ -48,6 +48,8 @@ const projects = [
     icon: BookOpen,
     color: "accent",
     type: "Analyse de données",
+    download: "/Online_Retail_Analysis_Notebook.md",
+    linkLabel: "Voir la visualisation",
   },
   {
     id: 4,
