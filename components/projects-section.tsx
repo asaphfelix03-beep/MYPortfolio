@@ -42,6 +42,8 @@ const projects = [
     year: "2019",
     image: "/images/diagram-2019.png",
     link: "/Online_Retail_Top10_Countries.html",
+    linkLabel: "Voir la visualisation",
+    visualization: "/Online_Retail_Top10_Countries.html",
     icon: BookOpen,
     color: "accent",
     type: "Analyse de données",
@@ -145,24 +147,48 @@ export default function ProjectsSection() {
                       {project.description}
                     </p>
 
-                    {project.image ? (
-                      <div className="mb-4">
-                        <img src={project.image} alt={`${project.title} diagramme`} className="project-img" />
-                      </div>
+                    {project.visualization ? (
+                     <div className="mb-4 rounded-xl border border-border/70 bg-background/70 p-2 shadow-inner">
+                       <div className="mb-2 flex items-center justify-between gap-2">
+                         <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                           Aperçu interactif
+                         </p>
+                         {project.link ? (
+                           <a
+                             href={project.link}
+                             target="_blank"
+                             rel="noopener noreferrer"
+                             className={`text-xs font-medium underline-offset-4 hover:underline ${project.color === "primary" ? "text-primary" : "text-accent"}`}
+                           >
+                             Plein écran
+                           </a>
+                         ) : null}
+                       </div>
+                       <iframe
+                         src={project.visualization}
+                         title={`${project.title} visualisation`}
+                         loading="lazy"
+                         className="project-visualization"
+                       />
+                     </div>
+                    ) : project.image ? (
+                     <div className="mb-4">
+                       <img src={project.image} alt={`${project.title} diagramme`} className="project-img" />
+                     </div>
                     ) : null}
 
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                      {project.link ? (
-                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
-                          <Button
-                            variant="ghost"
-                            className={`w-full justify-center gap-2 ${project.color === "primary" ? "hover:bg-primary/10 text-primary" : "hover:bg-accent/10 text-accent"}`}
-                          >
-                            <span>Voir le projet</span>
-                            <ExternalLink size={16} />
-                          </Button>
-                        </a>
-                      ) : null}
+                     {project.link ? (
+                       <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
+                         <Button
+                           variant="ghost"
+                           className={`w-full justify-center gap-2 ${project.color === "primary" ? "hover:bg-primary/10 text-primary" : "hover:bg-accent/10 text-accent"}`}
+                         >
+                           <span>{project.linkLabel ?? "Voir le projet"}</span>
+                           <ExternalLink size={16} />
+                         </Button>
+                       </a>
+                     ) : null}
 
                       {project.download ? (
                         <a href={project.download} download className="w-full sm:w-1/2">

@@ -161,7 +161,21 @@
     object-fit: cover;
     border: 1px solid rgba(255,255,255,0.04);
   }
-
+ 
+  .project-visualization {
+    width: 100%;
+    min-height: 420px;
+    border: 0;
+    border-radius: 0.75rem;
+    background: #fff;
+  }
+ 
+  @media (max-width: 768px) {
+    .project-visualization {
+      min-height: 340px;
+    }
+  }
+ 
   /* Responsive adjustments */
   @media (min-width: 1024px) {
     .project-card {
