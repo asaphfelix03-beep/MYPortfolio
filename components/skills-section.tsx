@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Brain, Database, Code2, Network, LineChart } from "lucide-react";
+import { Shield, Database, Code2, Network, LineChart } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { brandIcons } from "@/lib/brand-icons";
@@ -14,16 +14,16 @@ const pillars = [
     footer: "Défense & analyse",
   },
   {
-    icon: Brain,
-    title: "L'IA au service du concret",
-    body: "Modèles supervisés et non supervisés, évaluation rigoureuse et interprétation des résultats. Une IA utile, mesurable et compréhensible.",
-    footer: "Machine Learning",
-  },
-  {
     icon: LineChart,
     title: "La donnée qui décide",
-    body: "Nettoyage, agrégation et visualisation de jeux de données réels pour transformer des fichiers bruts en décisions claires.",
-    footer: "Data & analyse",
+    body: "Nettoyage, agrégation et exploration de jeux de données réels. Je transforme des fichiers bruts en tendances lisibles et en visualisations qui éclairent une décision.",
+    footer: "Analyse de données",
+  },
+  {
+    icon: Code2,
+    title: "Des applications qui tiennent",
+    body: "Applications web et mobiles construites de bout en bout, du modèle de données à l'interface, avec le souci du détail et de la fiabilité.",
+    footer: "Web & mobile",
   },
 ];
 
@@ -53,7 +53,7 @@ export default function SkillsSection() {
           <Reveal delay={0.12} className="lg:col-span-4 min-w-0">
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
               Une sélection de technologies pratiquées en cours, en projet et en
-              autoformation, du modèle de machine learning au durcissement réseau.
+              autoformation, de l&apos;analyse de données au durcissement réseau.
             </p>
           </Reveal>
         </div>

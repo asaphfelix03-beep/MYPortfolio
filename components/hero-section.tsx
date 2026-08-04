@@ -155,9 +155,9 @@ export default function HeroSection() {
               className="absolute -bottom-4 -left-2 sm:-left-5 rounded-md bg-foreground text-background px-4 py-3 shadow-lg"
             >
               <p className="text-[9.5px] font-semibold uppercase tracking-[0.16em] opacity-70">
-                Intelligence Artificielle
+                Données
               </p>
-              <p className="display text-xl leading-none mt-1">Data & Machine Learning</p>
+              <p className="display text-xl leading-none mt-1">Analyse & visualisation</p>
             </motion.div>
           </div>
         </motion.div>
