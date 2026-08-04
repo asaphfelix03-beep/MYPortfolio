@@ -4,13 +4,7 @@ import { motion } from "framer-motion";
 import { Shield, Brain, Database, Code2, Network, LineChart } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
-
-const technologies = [
-  "PYTHON", "PANDAS", "NUMPY", "SCIKIT-LEARN", "TENSORFLOW", "PYTORCH",
-  "MATPLOTLIB", "SQL", "POSTGRESQL", "MONGODB", "JAVASCRIPT", "TYPESCRIPT",
-  "REACT", "NODE.JS", "EXPRESS", "FLUTTER", "DART", "DJANGO", "DOCKER",
-  "GIT", "LINUX", "WIRESHARK", "SIEM", "OWASP", "HADOOP", "SPARK", "KAFKA",
-];
+import { brandIcons } from "@/lib/brand-icons";
 
 const pillars = [
   {
@@ -65,17 +59,34 @@ export default function SkillsSection() {
         </div>
 
         {/* Infinite technology marquee */}
-        <div className="mt-12 sm:mt-16 border-y border-border py-5 marquee-mask overflow-hidden">
+        <div className="mt-12 sm:mt-16 border-y border-border py-7 marquee-mask overflow-hidden">
           <div
-            className={`flex w-max gap-8 sm:gap-12 ${reduce ? "flex-wrap" : "animate-marquee"}`}
+            className={
+              reduce
+                ? "flex flex-wrap justify-center gap-x-9 gap-y-6"
+                : // .animate-marquee pauses on hover (see globals.css), which
+                  // makes the per-logo colour reveal reachable.
+                  "flex w-max animate-marquee gap-10 sm:gap-14"
+            }
           >
-            {/* duplicated once so the -50% translation loops seamlessly */}
-            {[...technologies, ...technologies].map((tech, i) => (
+            {/* Duplicated once so the -50% translation loops seamlessly.
+                The copy is aria-hidden so screen readers hear each tech once. */}
+            {(reduce ? brandIcons : [...brandIcons, ...brandIcons]).map((icon, i) => (
               <span
-                key={`${tech}-${i}`}
-                className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground whitespace-nowrap"
+                key={`${icon.title}-${i}`}
+                title={icon.title}
+                aria-hidden={i >= brandIcons.length ? true : undefined}
+                className="group/logo shrink-0 grid place-items-center"
               >
-                {tech}
+                <svg
+                  role="img"
+                  viewBox="0 0 24 24"
+                  aria-label={i < brandIcons.length ? icon.title : undefined}
+                  className="h-7 w-7 sm:h-8 sm:w-8 fill-[var(--brand)] opacity-70 saturate-[0.85] transition duration-300 group-hover/logo:opacity-100 group-hover/logo:saturate-100 group-hover/logo:scale-110"
+                  style={{ "--brand": `#${icon.hex}` } as React.CSSProperties}
+                >
+                  <path d={icon.path} />
+                </svg>
               </span>
             ))}
           </div>

@@ -162,6 +162,13 @@
   animation: marquee-x 42s linear infinite;
 }
 
+/* Declared here rather than as a Tailwind `hover:` utility: this rule sits
+   outside @layer, so the shorthand above would otherwise win the cascade and
+   keep resetting animation-play-state to running. */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 .marquee-mask {
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
