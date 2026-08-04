@@ -1,201 +1,167 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail, Download, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { ArrowRight, Download } from "lucide-react";
 import Image from "next/image";
+import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+
+const stats = [
+  { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
+  { label: "Certifications", value: "06", note: "Cisco · IBM" },
+  { label: "Projets menés", value: "04", note: "web · mobile · data" },
+];
 
 export default function HeroSection() {
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.9]);
-  const y = useTransform(scrollY, [0, 300], [0, 100]);
+  const reduce = useSafeReducedMotion();
 
-  const scrollToAbout = () => {
-    document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const rise = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
+        };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+      className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-40 pb-16 sm:pb-20 px-5 sm:px-8"
     >
-      {/* Cyber grid background */}
-      <div className="absolute inset-0 cyber-grid opacity-12" />
-      
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute inset-0 grid-paper [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
 
-      <motion.div 
-        style={{ opacity, scale, y }}
-        className="max-w-5xl mx-auto text-center z-10"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          {/* Profile image */}
+      <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+        {/* Left: copy */}
+        <div className="lg:col-span-7 min-w-0">
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-            className="relative w-32 h-32 mx-auto mb-8"
+            {...rise(0)}
+            className="inline-flex items-center gap-2.5 rounded-md border border-border bg-card px-3 py-1.5"
           >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent opacity-60 blur-sm" />
-            <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-primary/50 p-1">
-              <Image
-                src="/images/asaph-photo.png"
-                alt="Ojewumi Asaph Felix"
-                width={128}
-                height={128}
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -bottom-1 -right-1 w-8 h-8 bg-accent rounded-full flex items-center justify-center border-2 border-background"
-            >
-              <Sparkles size={14} className="text-background" />
-            </motion.div>
-          </motion.div>
-
-          {/* Status badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-background/80 border border-primary/20 text-sm font-medium text-muted-foreground"
-          >
-            Étudiant en cybersécurité et intelligence artificielle
-          </motion.div>
-
-          {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 leading-tight"
-          >
-            <span className="text-foreground">Ojewumi Asaph</span>{' '}
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-              Felix
+            <span className="relative flex h-1.5 w-1.5">
+              {!reduce && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
+              )}
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
             </span>
+            <span className="eyebrow text-foreground">
+              Disponible · Stage & Alternance
+            </span>
+          </motion.div>
+
+          <motion.h1
+            {...rise(0.08)}
+            className="mt-6 text-[clamp(2.4rem,6.2vw,4.5rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-balance"
+          >
+            Je sécurise et{" "}
+            <span className="display italic font-normal">valorise</span> la donnée
+            qui fait avancer{" "}
+            <span className="display italic font-normal">vos projets</span>.
           </motion.h1>
 
-          {/* Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-3 text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 font-medium"
-          >
-            <span>Étudiant en</span>
-            <span className="px-3 py-1 rounded-md bg-primary/10 text-primary font-semibold border border-primary/20">
-              Cybersécurité
-            </span>
-            <span>&</span>
-            <span className="px-3 py-1 rounded-md bg-accent/10 text-accent font-semibold border border-accent/20">
-              Intelligence Artificielle
-            </span>
-          </motion.div>
-
-          {/* Description */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed"
+            {...rise(0.16)}
+            className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground text-pretty"
           >
-            Je conçois des expériences numériques sécurisées et performantes, en
-            alliant cybersécurité, intelligence artificielle et développement web.
+            Étudiant en Cybersécurité et Intelligence Artificielle à l&apos;ESATIC.
+            Je conçois des applications web et mobiles fiables, j&apos;analyse des
+            jeux de données et j&apos;applique les bonnes pratiques de sécurité à
+            chaque étape.
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 w-full"
-          >
-            <Button
-              onClick={scrollToAbout}
-              size="lg"
-              className="px-8 py-4 rounded-full border border-primary/30 bg-background/90 text-primary-foreground hover:bg-background hover:border-primary transition-all"
+          <motion.div {...rise(0.24)} className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
             >
-              Découvrir mon profil
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="px-8 py-4 rounded-full border border-primary/30 text-foreground hover:bg-primary/10 hover:border-primary transition-all"
-              asChild
+              Travaillons ensemble
+              <ArrowRight
+                size={15}
+                className="transition-transform group-hover:translate-x-0.5"
+              />
+            </a>
+            <a
+              href="#projects"
+              className="inline-flex items-center px-6 py-3.5 rounded-md border border-foreground/25 text-[11px] font-semibold uppercase tracking-[0.14em] hover:bg-secondary transition-colors"
             >
-              <a href="#contact">Me contacter</a>
-            </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              className="px-8 py-4 rounded-full text-muted-foreground hover:text-primary transition-all"
-              asChild
+              Voir mes réalisations
+            </a>
+            <a
+              href="/cv"
+              download="CV OJEWUMI ASAPH FELIX.pdf"
+              className="inline-flex items-center gap-2 px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors"
             >
-              <a href="/cv" download="CV OJEWUMI ASAPH FELIX.pdf">
-                <Download size={20} className="mr-2" />
-                Télécharger le CV
-              </a>
-            </Button>
+              <Download size={15} />
+              CV
+            </a>
           </motion.div>
 
-          {/* Social links */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="flex items-center justify-center gap-4"
+          {/* Stats */}
+          <motion.dl
+            {...rise(0.32)}
+            className="mt-12 grid grid-cols-3 gap-5 sm:gap-8 max-w-lg"
           >
-            {[
-              { icon: Mail, href: "mailto:asaphfelix02@gmail.com", label: "Email" },
-              { icon: Github, href: "https://github.com", label: "GitHub" },
-              { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-            ].map((social, index) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                target={social.href.startsWith("mailto") ? undefined : "_blank"}
-                rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                whileHover={{ scale: 1.15, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-4 rounded-xl glass border border-primary/30 text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all"
-                aria-label={social.label}
-              >
-                <social.icon size={22} />
-              </motion.a>
+            {stats.map((s) => (
+              <div key={s.label}>
+                <dt className="eyebrow text-[9.5px] sm:text-[10px] leading-snug">
+                  {s.label}
+                </dt>
+                <dd className="mt-1.5 display text-3xl sm:text-4xl">
+                  {s.value}
+                  <span className="ml-1.5 font-sans text-[11px] not-italic text-muted-foreground align-middle">
+                    {s.note}
+                  </span>
+                </dd>
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </motion.dl>
+        </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.button
-          onClick={scrollToAbout}
-          animate={{ y: [0, 12, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
-          aria-label="Scroll down"
+        {/* Right: framed portrait with floating labels */}
+        <motion.div
+          initial={reduce ? undefined : { opacity: 0, scale: 0.96 }}
+          animate={reduce ? undefined : { opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:col-span-5 min-w-0"
         >
-          <span className="text-xs uppercase tracking-widest opacity-60 group-hover:opacity-100">Défiler</span>
-          <ArrowDown size={24} />
-        </motion.button>
-      </motion.div>
+          <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+            <div className="rounded-xl border border-border bg-card p-2.5 shadow-[0_18px_50px_-20px_rgba(28,25,23,0.28)]">
+              {/* Source photo is ~square, so a square frame shows it uncropped. */}
+              <div className="relative aspect-square overflow-hidden rounded-lg bg-secondary">
+                <Image
+                  src="/images/asaph-photo.png"
+                  alt="Ojewumi Asaph Felix"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 384px, 420px"
+                  className="object-cover object-center"
+                />
+              </div>
+            </div>
+
+            {/* floating chips */}
+            <motion.div
+              initial={reduce ? undefined : { opacity: 0, y: 10 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="absolute -top-3 -right-2 sm:-right-4 rounded-md border border-border bg-card px-3 py-2 shadow-sm"
+            >
+              <span className="eyebrow text-foreground">Cybersécurité</span>
+            </motion.div>
+
+            <motion.div
+              initial={reduce ? undefined : { opacity: 0, y: 10 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0 }}
+              transition={{ delay: 0.72, duration: 0.5 }}
+              className="absolute -bottom-4 -left-2 sm:-left-5 rounded-md bg-foreground text-background px-4 py-3 shadow-lg"
+            >
+              <p className="text-[9.5px] font-semibold uppercase tracking-[0.16em] opacity-70">
+                Intelligence Artificielle
+              </p>
+              <p className="display text-xl leading-none mt-1">Data & Machine Learning</p>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

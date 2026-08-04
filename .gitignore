@@ -19,4 +19,7 @@ node_modules
 .DS_Store
 .vercel
 
+# Build artifacts
+tsconfig.tsbuildinfo
+
 .vercel

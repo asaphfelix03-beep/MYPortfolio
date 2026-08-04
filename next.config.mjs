@@ -75,6 +75,39 @@ const nextConfig = {
         source: '/(.*)',
         headers: securityHeaders,
       },
+      {
+        // This static Plotly export is embedded in an <iframe> on the
+        // projects section (same-origin) and pulls its chart script/fonts
+        // from a CDN. The blanket policy above blocks both the self-embed
+        // and those specific external resources, so this route gets a
+        // scoped-down allowlist instead of a global relaxation.
+        source: '/Online_Retail_Top10_Countries.html',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "base-uri 'self'",
+              "object-src 'none'",
+              "frame-ancestors 'self'",
+              "form-action 'self'",
+              "img-src 'self' data: blob: https://www.energent.ai",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.plot.ly",
+              "connect-src 'self'",
+              "worker-src 'self' blob:",
+              "manifest-src 'self'",
+              "media-src 'self'",
+              "upgrade-insecure-requests",
+            ].join('; '),
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+        ],
+      },
     ]
   },
 }

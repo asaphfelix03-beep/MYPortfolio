@@ -1,271 +1,295 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { GraduationCap, MapPin, Calendar, Award, Star, Code2, Target } from "lucide-react";
+import {
+  GraduationCap,
+  MapPin,
+  Award,
+  FileText,
+  ExternalLink,
+  Download,
+  BadgeCheck,
+} from "lucide-react";
 import Image from "next/image";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+
+type Certification = {
+  title: string;
+  issuer: string;
+  date: string | null;
+  file: string | null;
+  /** Issuer-hosted verification page, when the credential offers one. */
+  verify?: string;
+};
+
+const certifications: Certification[] = [
+  {
+    title: "Databases and SQL for Data Science with Python",
+    issuer: "IBM · Coursera",
+    date: "Août 2026",
+    file: "/certificates/databases-sql-data-science-python.pdf",
+    verify: "https://coursera.org/verify/UVGR2UKXALOP",
+  },
+  {
+    title: "Data Analytics Essentials",
+    issuer: "Cisco Networking Academy",
+    date: "Juillet 2026",
+    file: "/certificates/data-analytics-essentials.pdf",
+  },
+  {
+    title: "Introduction à la science des données",
+    issuer: "Cisco Networking Academy",
+    date: "Juillet 2026",
+    file: "/certificates/introduction-data-science.pdf",
+  },
+  {
+    title: "Introduction à l'IA moderne",
+    issuer: "Cisco Networking Academy",
+    date: "Juillet 2026",
+    file: "/certificates/introduction-modern-ai.pdf",
+  },
+  {
+    title: "Data Science Essentials with Python",
+    issuer: "Cisco Networking Academy",
+    date: "Juillet 2026",
+    file: "/certificates/data-science-essentials-python.pdf",
+  },
+  {
+    title: "Cybersecurity Defense Analyst Pathway Exam",
+    issuer: "Cisco Networking Academy",
+    date: "Juillet 2026",
+    file: "/certificates/cybersecurity-defense-analyst.pdf",
+  },
+];
+
+const education = [
+  {
+    period: "2026 — 2027",
+    title: "Licence 3 · Cybersécurité et Intelligence Artificielle",
+    school: "École Supérieure Africaine des TICs (ESATIC)",
+    current: true,
+  },
+  {
+    period: "2024 — 2026",
+    title: "Licence 2 · Cybersécurité et Intelligence Artificielle",
+    school: "École Supérieure Africaine des TICs (ESATIC)",
+  },
+  {
+    period: "Juin 2024",
+    title: "Baccalauréat série D",
+    school: "Lycée Moderne de Treichville",
+  },
+];
 
 export default function AboutSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="about" className="relative py-32 px-6 overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px]" />
-      
-      <div ref={ref} className="max-w-6xl mx-auto relative">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Header */}
-          <div className="text-center mb-16">
-            <motion.span 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              className="inline-block text-primary font-mono text-sm tracking-wider px-4 py-2 rounded-full glass border border-primary/30"
-            >
-              &lt;À PROPOS /&gt;
-            </motion.span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mt-6 text-foreground">
-              Qui suis-je{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">?</span>
+    <section id="about" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8">
+      <div className="max-w-7xl mx-auto">
+        <Reveal>
+          <p className="eyebrow">Présentation & parcours</p>
+        </Reveal>
+
+        {/* Lead statement */}
+        <div className="mt-5 grid lg:grid-cols-12 gap-8 lg:gap-12">
+          <Reveal delay={0.06} className="lg:col-span-7 min-w-0">
+            <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">
+              Étudiant aujourd&apos;hui, ingénieur de{" "}
+              <span className="italic">confiance</span> demain.
             </h2>
-          </div>
+          </Reveal>
+          <Reveal delay={0.12} className="lg:col-span-5 min-w-0">
+            <p className="text-sm sm:text-base leading-relaxed text-muted-foreground text-pretty">
+              Je m&apos;appelle Ojewumi Asaph Felix. Je me forme à l&apos;ESATIC,
+              à Abidjan, sur deux disciplines qui se répondent : protéger les
+              systèmes et faire parler les données. Rigoureux et curieux,
+              j&apos;apprends autant par les projets que par la certification.
+            </p>
+          </Reveal>
+        </div>
 
-          <div className="grid lg:grid-cols-5 gap-8 items-start">
-            {/* Profile Card - Left */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="lg:col-span-2"
-            >
-              <div className="glass rounded-3xl p-8 border border-primary/20 relative overflow-hidden group">
-                {/* Decorative gradient */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-colors" />
-                
-                {/* Profile image */}
-                <div className="relative mb-6">
-                  <div className="w-full aspect-square max-w-[200px] mx-auto relative">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-accent opacity-50 blur-lg" />
-                    <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-primary/30">
-                      <Image
-                        src="/images/asaph-photo.png"
-                        alt="Ojewumi Asaph Felix"
-                        width={200}
-                        height={200}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Name and title */}
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">
-                    Ojewumi Asaph Felix
-                  </h3>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30">
-                    <Code2 size={16} className="text-primary" />
-                    <span className="text-sm font-medium text-foreground">
-                      Étudiant en Cybersécurité & IA
-                    </span>
-                  </div>
-                </div>
-
-                {/* Location */}
-                <div className="flex items-center justify-center gap-2 text-muted-foreground mb-6">
-                  <MapPin size={16} className="text-primary" />
-                  <span>Treichville, Abidjan, Côte d&apos;Ivoire</span>
-                </div>
-
-                {/* Traits */}
-                <div className="flex flex-wrap justify-center gap-2">
-                  {["Rigoureux", "Créatif", "Curieux", "Team Player"].map((trait, i) => (
-                    <motion.span
-                      key={trait}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 0.5 + i * 0.1 }}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-secondary/50 text-foreground border border-border/50 hover:border-primary/50 transition-colors"
-                    >
-                      {trait}
-                    </motion.span>
-                  ))}
-                </div>
+        <div className="mt-12 sm:mt-16 grid lg:grid-cols-12 gap-6">
+          {/* Identity card */}
+          <Reveal delay={0.06} className="lg:col-span-4 min-w-0">
+            <div className="card-paper overflow-hidden h-full">
+              <div className="relative aspect-square bg-secondary">
+                <Image
+                  src="/images/asaph-photo.png"
+                  alt="Ojewumi Asaph Felix"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 380px"
+                  className="object-cover object-center"
+                />
               </div>
-
-              {/* Languages Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 gap-4 mt-6"
-              >
-                <div className="glass rounded-xl p-5 border border-primary/20 text-center group hover:border-primary/50 transition-colors">
-                  <div className="text-3xl font-bold text-primary mb-1">FR</div>
-                  <div className="flex items-center justify-center gap-1 mb-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} size={12} className="fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-xs text-muted-foreground">Courant</p>
-                </div>
-                <div className="glass rounded-xl p-5 border border-accent/20 text-center group hover:border-accent/50 transition-colors">
-                  <div className="text-3xl font-bold text-accent mb-1">EN</div>
-                  <div className="flex items-center justify-center gap-1 mb-1">
-                    {[1, 2, 3, 4].map((star) => (
-                      <Star key={star} size={12} className="fill-accent text-accent" />
-                    ))}
-                    <Star size={12} className="text-accent/30" />
-                  </div>
-                  <p className="text-xs text-muted-foreground">Technique</p>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Column - Bio + Education + Achievements */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="lg:col-span-3 space-y-6"
-            >
-              {/* Bio Card */}
-              <div className="glass rounded-2xl p-8 border border-primary/20">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <Target className="text-primary" size={20} />
-                  </div>
-                  <h4 className="text-lg font-semibold text-foreground">Ma Mission</h4>
-                </div>
-                <p className="text-muted-foreground leading-relaxed text-lg text-pretty">
-                  Étudiant passionné en <span className="text-primary font-medium">Cybersécurité</span> et{" "}
-                  <span className="text-accent font-medium">Intelligence Artificielle</span>, je souhaite mettre ma polyvalence technique au service de
-                  projets innovants. Compétent en développement web, sécurité informatique et bases de données.
+              <div className="p-6">
+                <h3 className="display text-2xl">Ojewumi Asaph Felix</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Cybersécurité & Intelligence Artificielle
                 </p>
-              </div>
+                <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+                  <MapPin size={14} className="text-accent shrink-0" />
+                  Treichville, Abidjan · Côte d&apos;Ivoire
+                </p>
 
-              {/* Education */}
-              <div className="glass rounded-2xl p-8 border border-primary/20">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <GraduationCap className="text-primary" size={20} />
-                  </div>
-                  <h4 className="text-lg font-semibold text-foreground">Formation</h4>
-                </div>
-                <div className="space-y-6">
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.4 }}
-                    className="relative pl-6 border-l-2 border-primary/50"
-                  >
-                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary border-4 border-background" />
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                      <Calendar size={14} />
-                      <span>2026 - 2027</span>
-                    </div>
-                    <h5 className="text-lg font-semibold text-foreground">
-                      Licence 3 en Cybersécurité et Intelligence Artificielle
-                    </h5>
-                    <p className="text-muted-foreground">
-                      École Supérieure Africaine des TICs (ESATIC)
-                    </p>
-                  </motion.div>
-
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.5 }}
-                    className="relative pl-6 border-l-2 border-primary/50"
-                  >
-                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary border-4 border-background" />
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                      <Calendar size={14} />
-                      <span>2024 - Aujourd&apos;hui</span>
-                    </div>
-                    <h5 className="text-lg font-semibold text-foreground">
-                      Licence 2 en Cybersécurité et IA
-                    </h5>
-                    <p className="text-muted-foreground">
-                      École Supérieure Africaine des TICs (ESATIC)
-                    </p>
-                  </motion.div>
-
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.6 }}
-                    className="relative pl-6 border-l-2 border-accent/50"
-                  >
-                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-accent border-4 border-background" />
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                      <Calendar size={14} />
-                      <span>Juin 2024</span>
-                    </div>
-                    <h5 className="text-lg font-semibold text-foreground">Baccalauréat série D</h5>
-                    <p className="text-muted-foreground">
-                      Lycée Moderne de Treichville
-                    </p>
-                  </motion.div>
-                </div>
-              </div>
-
-              {/* Achievements */}
-              <div className="glass rounded-2xl p-8 border border-accent/20">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
-                    <Award className="text-accent" size={20} />
-                  </div>
-                  <h4 className="text-lg font-semibold text-foreground">Distinctions</h4>
-                </div>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {[
-                    { title: "Hackathons Tech", desc: "Participation active", icon: "💻" },
-                    { title: "Ecowas Hackathon", desc: "Compétition régionale", icon: "🏆" },
-                  ].map((achievement, index) => (
-                    <motion.div
-                      key={achievement.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ delay: 0.7 + index * 0.1 }}
-                      className="flex items-start gap-3 p-4 rounded-xl bg-secondary/30 border border-border/50 hover:border-accent/50 transition-colors"
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {["Rigoureux", "Curieux", "Créatif", "Team player"].map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-md border border-border bg-secondary/60 px-2.5 py-1 text-[11px] font-medium"
                     >
-                      <span className="text-2xl">{achievement.icon}</span>
-                      <div>
-                        <h5 className="font-medium text-foreground">{achievement.title}</h5>
-                        <p className="text-sm text-muted-foreground">{achievement.desc}</p>
-                      </div>
-                    </motion.div>
+                      {t}
+                    </span>
                   ))}
                 </div>
-              </div>
 
-              {/* Certifications */}
-              <div className="glass rounded-2xl p-8 border border-primary/20 mt-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <Award className="text-primary" size={20} />
+                <div className="mt-5 pt-5 border-t border-border grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="eyebrow text-[10px]">Français</p>
+                    <p className="display text-xl mt-0.5">Courant</p>
                   </div>
-                  <h4 className="text-lg font-semibold text-foreground">Certifications</h4>
+                  <div>
+                    <p className="eyebrow text-[10px]">Anglais</p>
+                    <p className="display text-xl mt-0.5">Technique</p>
+                  </div>
                 </div>
-                <ul className="list-disc list-inside text-muted-foreground space-y-2 text-sm">
-                  <li>Data Analytics Essentials (Cisco Networking Academy)</li>
-                  <li>Introduction à la science des données (Cisco Networking Academy)</li>
-                  <li>Introduction à l’IA moderne (Cisco Networking Academy)</li>
-                  <li>Data Science &amp; Analytics with Python (Cisco Networking Academy)</li>
-                  <li>Cybersecurity Defense Analyst Pathway Exam (Cisco Networking Academy)</li>
-                </ul>
               </div>
-            </motion.div>
+            </div>
+          </Reveal>
+
+          {/* Education + certifications */}
+          <div className="lg:col-span-8 min-w-0 space-y-6">
+            <Reveal delay={0.12}>
+              <div className="card-paper p-6 sm:p-8">
+                <div className="flex items-center gap-2.5">
+                  <GraduationCap size={17} className="text-accent" />
+                  <p className="eyebrow text-foreground">Formation</p>
+                </div>
+
+                <ol className="mt-6 space-y-6">
+                  {education.map((e) => (
+                    <li
+                      key={e.title}
+                      className="relative pl-6 border-l border-border"
+                    >
+                      <span
+                        className={`absolute -left-[4.5px] top-1.5 h-2 w-2 rounded-full ${
+                          e.current ? "bg-accent" : "bg-border"
+                        }`}
+                      />
+                      <p className="eyebrow text-[10px]">{e.period}</p>
+                      <h4 className="mt-1.5 text-[15px] sm:text-base font-bold tracking-tight text-balance">
+                        {e.title}
+                      </h4>
+                      <p className="mt-0.5 text-sm text-muted-foreground">
+                        {e.school}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </Reveal>
+
+            {/* Certifications */}
+            <Reveal delay={0.18}>
+              <div className="card-paper p-6 sm:p-8">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2.5">
+                    <Award size={17} className="text-accent" />
+                    <p className="eyebrow text-foreground">Certifications</p>
+                  </div>
+                  <span className="display text-2xl leading-none">
+                    {certifications.length}
+                  </span>
+                </div>
+
+                <RevealGroup className="mt-5 divide-y divide-border" stagger={0.05}>
+                  {certifications.map((cert) => (
+                    <RevealItem key={cert.title}>
+                      <div className="group/cert flex items-center justify-between gap-3 py-3.5 first:pt-0 last:pb-0 -mx-2 px-2 rounded-md hover:bg-secondary/60 transition-colors">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <FileText
+                            size={15}
+                            className="text-muted-foreground shrink-0 transition-colors group-hover/cert:text-accent"
+                          />
+                          <div className="min-w-0">
+                            {/* Two lines on phones so long course names stay readable. */}
+                            <p className="text-[13px] sm:text-sm font-semibold tracking-tight line-clamp-2 sm:truncate">
+                              {cert.title}
+                            </p>
+                            <p className="text-[11px] text-muted-foreground truncate">
+                              {cert.issuer}
+                              {cert.date ? ` · ${cert.date}` : ""}
+                            </p>
+                          </div>
+                        </div>
+
+                        {cert.file ? (
+                          <div className="flex items-center gap-0.5 shrink-0">
+                            {cert.verify ? (
+                              <a
+                                href={cert.verify}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-1.5 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                                aria-label={`Vérifier l'authenticité du certificat : ${cert.title}`}
+                                title="Vérifier l'authenticité"
+                              >
+                                <BadgeCheck size={15} />
+                              </a>
+                            ) : null}
+                            <a
+                              href={cert.file}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                              aria-label={`Voir le certificat : ${cert.title}`}
+                              title="Voir le certificat"
+                            >
+                              <ExternalLink size={15} />
+                            </a>
+                            <a
+                              href={cert.file}
+                              download
+                              className="p-1.5 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                              aria-label={`Télécharger le certificat : ${cert.title}`}
+                              title="Télécharger"
+                            >
+                              <Download size={15} />
+                            </a>
+                          </div>
+                        ) : (
+                          <span className="eyebrow text-[9px] shrink-0">
+                            En cours
+                          </span>
+                        )}
+                      </div>
+                    </RevealItem>
+                  ))}
+                </RevealGroup>
+              </div>
+            </Reveal>
+
+            {/* Distinctions */}
+            <Reveal delay={0.24}>
+              <div className="grid sm:grid-cols-2 gap-6">
+                {[
+                  { title: "Hackathons Tech", desc: "Participation active" },
+                  { title: "Ecowas Hackathon", desc: "Compétition régionale" },
+                ].map((d) => (
+                  <motion.div
+                    key={d.title}
+                    whileHover={{ y: -3 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                    className="card-paper p-6"
+                  >
+                    <p className="eyebrow text-[10px]">Distinction</p>
+                    <h4 className="display text-xl mt-2">{d.title}</h4>
+                    <p className="mt-1 text-sm text-muted-foreground">{d.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </Reveal>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
