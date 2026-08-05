@@ -17,10 +17,42 @@ const instrument = Instrument_Serif({
   display: 'swap',
 })
 
+const siteUrl = 'https://portfolio-ojewumi.tech'
+const title = 'Asaph Felix | Cybersécurité & Intelligence Artificielle'
+const description =
+  'Portfolio de Ojewumi Asaph Felix - Étudiant en Cybersécurité et Intelligence Artificielle à Abidjan. Projets en analyse de données, sécurité des réseaux et développement web et mobile.'
+
 export const metadata: Metadata = {
-  title: 'Asaph Felix | Cybersécurité & Intelligence Artificielle',
-  description:
-    'Portfolio de Ojewumi Asaph Felix - Étudiant en Cybersécurité et Intelligence Artificielle à Abidjan. Projets en data science, sécurité des réseaux et développement web.',
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'profile',
+    locale: 'fr_FR',
+    url: siteUrl,
+    siteName: 'Asaph Felix',
+    title,
+    description,
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Ojewumi Asaph Felix — Cybersécurité, données et développement',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: [
       {

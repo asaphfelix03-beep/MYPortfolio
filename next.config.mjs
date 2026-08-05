@@ -41,7 +41,7 @@ const securityHeaders = [
   },
   {
     key: 'Access-Control-Allow-Origin',
-    value: 'https://monportfolio-asaph.vercel.app',
+    value: 'https://portfolio-ojewumi.tech',
   },
   {
     key: 'Cross-Origin-Opener-Policy',
