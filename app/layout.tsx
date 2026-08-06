@@ -53,23 +53,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+  // Icons are picked up from app/icon.svg and app/apple-icon.png. Next
+  // fingerprints those URLs, which is what finally evicts the v0 favicon
+  // browsers had cached under the bare /icon.svg path.
 }
 
 export default function RootLayout({
