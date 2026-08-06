@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { LogoMark } from "@/components/ui/logo-mark";
 
 const navItems = [
   { name: "Bio", href: "#about" },
@@ -58,8 +59,8 @@ export default function Navigation() {
             onClick={() => handleNavClick("#home")}
             className="flex items-center gap-2.5 shrink-0 group"
           >
-            <span className="w-8 h-8 rounded-md bg-foreground text-background grid place-items-center font-bold text-sm">
-              A
+            <span className="w-8 h-8 rounded-md bg-foreground grid place-items-center transition-transform duration-300 group-hover:-translate-y-0.5">
+              <LogoMark className="w-5 h-5 text-background" accent="#2E9E6B" />
             </span>
             <span className="font-bold tracking-tight text-[15px] hidden sm:block">
               Asaph Felix
