@@ -46,7 +46,7 @@ const projects: Project[] = [
       "Application mobile dédiée à l'apprentissage de la langue Baoulé : leçons, vocabulaire, audios de prononciation, quiz et dictionnaire Baoulé–Français consultable sans connexion.",
     technologies: ["Flutter", "Firebase", "Audio Processing"],
     type: "Application mobile",
-    year: "2025",
+    year: "2026",
     download: "/files/nti-app-release.apk",
   },
   {
@@ -70,7 +70,7 @@ const projects: Project[] = [
       "Plateforme de suivi de grossesse qui automatise le travail administratif des sages-femmes et améliore le suivi des patientes grâce à des alertes intelligentes et un partage facilité des données médicales.",
     technologies: ["React", "Node.js", "Express", "MongoDB", "Docker"],
     type: "Plateforme web",
-    year: "2024",
+    year: "2026",
     status: "En cours",
   },
 ];

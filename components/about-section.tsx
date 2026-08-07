@@ -7,7 +7,6 @@ import {
   Award,
   FileText,
   ExternalLink,
-  Download,
   BadgeCheck,
 } from "lucide-react";
 import Image from "next/image";
@@ -245,15 +244,6 @@ export default function AboutSection() {
                               title="Voir le certificat"
                             >
                               <ExternalLink size={15} />
-                            </a>
-                            <a
-                              href={cert.file}
-                              download
-                              className="p-1.5 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                              aria-label={`Télécharger le certificat : ${cert.title}`}
-                              title="Télécharger"
-                            >
-                              <Download size={15} />
                             </a>
                           </div>
                         ) : (
