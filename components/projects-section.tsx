@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRight, Download, Github } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 
@@ -19,12 +19,28 @@ type Project = {
   linkLabel?: string;
   visualization?: string;
   download?: string;
+  repo?: string;
 };
 
 const projects: Project[] = [
   {
-    id: 3,
+    id: 5,
     index: "01",
+    title: "Électrification de la Côte d'Ivoire",
+    tagline: "Ce que disent réellement dix-neuf lignes de données publiques",
+    description:
+      "Analyse de 63 ans d'abonnements à l'électricité (1960–2023) à partir des données ouvertes du Ministère des Mines, du Pétrole et de l'Énergie. Trois régimes de croissance distincts sont identifiés, la contribution du programme PEPT est isolée, et l'accès universel est projeté selon le rythme d'abonnement tenu. La chaîne complète est versionnée : contrôle qualité de la source, base SQLite sous contraintes, cinq requêtes analytiques commentées et 29 tests qui verrouillent chaque chiffre publié.",
+    technologies: ["Python", "Pandas", "SQL · SQLite", "Matplotlib", "Jupyter"],
+    type: "Analyse de données",
+    year: "2026",
+    link: "https://asaphfelix03-beep.github.io/electrification-ci/dashboard/",
+    linkLabel: "Ouvrir le tableau de bord",
+    visualization: "https://asaphfelix03-beep.github.io/electrification-ci/dashboard/",
+    repo: "https://github.com/asaphfelix03-beep/electrification-ci",
+  },
+  {
+    id: 3,
+    index: "02",
     title: "Analyse des ventes pharmaceutiques",
     tagline: "Six années de données transformées en tendances lisibles",
     description:
@@ -39,7 +55,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    index: "02",
+    index: "03",
     title: "N'ti",
     tagline: "Apprendre le Baoulé, hors ligne et en autonomie",
     description:
@@ -51,7 +67,7 @@ const projects: Project[] = [
   },
   {
     id: 1,
-    index: "03",
+    index: "04",
     title: "EcoCollect",
     tagline: "Signaler, localiser et réduire les dépôts sauvages",
     description:
@@ -63,7 +79,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    index: "04",
+    index: "05",
     title: "Matronassist-ci",
     tagline: "Alléger l'administratif des sages-femmes",
     description:
@@ -182,7 +198,7 @@ export default function ProjectsSection() {
                       </div>
                     ) : null}
 
-                    {(p.link || p.download) && (
+                    {(p.link || p.download || p.repo) && (
                       <div className="mt-5 flex flex-wrap gap-2.5">
                         {p.link ? (
                           <a
@@ -196,6 +212,17 @@ export default function ProjectsSection() {
                               size={14}
                               className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
+                          </a>
+                        ) : null}
+                        {p.repo ? (
+                          <a
+                            href={p.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] hover:bg-secondary transition-colors"
+                          >
+                            <Github size={14} />
+                            Code source
                           </a>
                         ) : null}
                         {p.download ? (

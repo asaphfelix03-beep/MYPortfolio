@@ -7,6 +7,9 @@ const securityHeaders = [
       "base-uri 'self'",
       "object-src 'none'",
       "frame-ancestors 'none'",
+      // The electrification project embeds its live dashboard, published on
+      // GitHub Pages. Without this, default-src 'self' blocks that iframe.
+      "frame-src 'self' https://asaphfelix03-beep.github.io",
       "form-action 'self'",
       "img-src 'self' data: blob:",
       "font-src 'self' data:",
