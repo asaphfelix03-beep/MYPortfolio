@@ -23,6 +23,13 @@ type Certification = {
 
 const certifications: Certification[] = [
   {
+    title: "Data Analysis with SQL, Excel & Power BI",
+    issuer: "Microsoft · Coursera · Spécialisation",
+    date: "Août 2026",
+    file: "/certificates/microsoft-data-analysis-sql-excel-powerbi.pdf",
+    verify: "https://coursera.org/verify/specialization/UPNCJ04RATC5",
+  },
+  {
     title: "Databases and SQL for Data Science with Python",
     issuer: "IBM · Coursera",
     date: "Août 2026",

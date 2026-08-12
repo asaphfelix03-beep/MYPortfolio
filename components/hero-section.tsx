@@ -7,7 +7,7 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 
 const stats = [
   { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
-  { label: "Certifications", value: "06", note: "Cisco · IBM" },
+  { label: "Certifications", value: "07", note: "Cisco · IBM · Microsoft" },
   { label: "Projets menés", value: "05", note: "web · mobile · data" },
 ];
 
