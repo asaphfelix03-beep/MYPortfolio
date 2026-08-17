@@ -37,6 +37,12 @@ const certifications: Certification[] = [
     verify: "https://coursera.org/verify/UVGR2UKXALOP",
   },
   {
+    title: "Notions de base sur les réseaux",
+    issuer: "Cisco Networking Academy",
+    date: "Août 2026",
+    file: "/certificates/networking-basics.pdf",
+  },
+  {
     title: "Data Analytics Essentials",
     issuer: "Cisco Networking Academy",
     date: "Juillet 2026",
