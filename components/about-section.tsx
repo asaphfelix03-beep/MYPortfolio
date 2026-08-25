@@ -23,6 +23,12 @@ type Certification = {
 
 const certifications: Certification[] = [
   {
+    title: "Associate Data Analyst",
+    issuer: "DataCamp · Certification",
+    date: "Août 2026",
+    file: "/certificates/datacamp-associate-data-analyst.pdf",
+  },
+  {
     title: "Data Analysis with SQL, Excel & Power BI",
     issuer: "Microsoft · Coursera · Spécialisation",
     date: "Août 2026",

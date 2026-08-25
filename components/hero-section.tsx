@@ -7,7 +7,7 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 
 const stats = [
   { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
-  { label: "Certifications", value: "08", note: "Cisco · IBM · Microsoft" },
+  { label: "Certifications", value: "09", note: "4 organismes" },
   { label: "Projets menés", value: "05", note: "web · mobile · data" },
 ];
 
@@ -101,13 +101,15 @@ export default function HeroSection() {
             className="mt-12 grid grid-cols-3 gap-5 sm:gap-8 max-w-lg"
           >
             {stats.map((s) => (
-              <div key={s.label}>
+              // min-w-0 lets a long note wrap inside its own column instead of
+              // widening the cell and spilling over the neighbouring stat.
+              <div key={s.label} className="min-w-0">
                 <dt className="eyebrow text-[9.5px] sm:text-[10px] leading-snug">
                   {s.label}
                 </dt>
                 <dd className="mt-1.5 display text-3xl sm:text-4xl">
                   {s.value}
-                  <span className="ml-1.5 font-sans text-[11px] not-italic text-muted-foreground align-middle">
+                  <span className="ml-1.5 font-sans text-[11px] not-italic text-muted-foreground align-middle break-words">
                     {s.note}
                   </span>
                 </dd>
