@@ -127,10 +127,11 @@ export default function HeroSection() {
         >
           <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
             <div className="rounded-xl border border-border bg-card p-2.5 shadow-[0_18px_50px_-20px_rgba(28,25,23,0.28)]">
-              {/* Source photo is ~square, so a square frame shows it uncropped. */}
+              {/* Source is 900x816, so a square frame trims a little off each
+                  side; the subject is centred, so object-center is enough. */}
               <div className="relative aspect-square overflow-hidden rounded-lg bg-secondary">
                 <Image
-                  src="/images/asaph-photo.png"
+                  src="/images/asaph-photo.jpg"
                   alt="Ojewumi Asaph Felix"
                   fill
                   priority

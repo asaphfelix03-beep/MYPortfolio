@@ -131,7 +131,7 @@ export default function AboutSection() {
             <div className="card-paper overflow-hidden h-full">
               <div className="relative aspect-square bg-secondary">
                 <Image
-                  src="/images/asaph-photo.png"
+                  src="/images/asaph-photo.jpg"
                   alt="Ojewumi Asaph Felix"
                   fill
                   sizes="(max-width: 1024px) 100vw, 380px"
