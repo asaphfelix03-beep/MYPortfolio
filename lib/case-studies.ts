@@ -164,9 +164,11 @@ const uemoa: CaseStudy = {
       content: { kind: "charts" },
     },
   ],
-  // Le classeur lui-meme n'est pas publie : ce lien mene au code qui le rend,
-  // extraction comprise (scripts/extract-uemoa.py).
-  repo: "https://github.com/asaphfelix03-beep/MYPortfolio",
+  // Le depot de l'analyse : donnees sources en CSV, calculs, controles
+  // qualite et script d'extraction. Le classeur .xlsx n'y est pas publie.
+  repo: "https://github.com/asaphfelix03-beep/analyse-data-BCEAO",
+  link: "https://github.com/asaphfelix03-beep/analyse-data-BCEAO#readme",
+  linkLabel: "Lire l'analyse complete",
 };
 
 export const caseStudies: CaseStudy[] = [uemoa];

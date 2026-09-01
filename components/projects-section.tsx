@@ -69,6 +69,7 @@ const projects: Project[] = [
     type: "Analyse de données",
     year: "2026",
     caseStudy: "monnaie-electronique-uemoa",
+    repo: "https://github.com/asaphfelix03-beep/analyse-data-BCEAO",
     preview: "uemoa-kpis",
     featured: true,
   },
