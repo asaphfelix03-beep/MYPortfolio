@@ -30,7 +30,9 @@ const contactInfo = [
 const socials = [
   {
     icon: Github,
-    href: "https://github.com/asaphfelix03-beep/portfolio-asaph",
+    // Meme depot que dans le footer : MYPortfolio porte le code de ce site,
+    // portfolio-asaph est une ancienne copie figee depuis juillet 2026.
+    href: "https://github.com/asaphfelix03-beep/MYPortfolio",
     label: "GitHub",
   },
   {
