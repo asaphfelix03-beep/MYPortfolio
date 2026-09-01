@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowUpRight, Download, Github } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Download, Github, Table2 } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { dashboard } from "@/lib/uemoa-dashboard";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 
 type Project = {
@@ -22,8 +25,12 @@ type Project = {
   visualization?: string;
   /** Static screenshot used when there is nothing to embed. */
   image?: string;
+  /** Live preview panel built from the project's own data. */
+  preview?: "uemoa-kpis";
   download?: string;
   repo?: string;
+  /** Slug of an internal long-form page at /projets/<slug>. */
+  caseStudy?: string;
   /** Gets the large alternating treatment instead of the compact grid. */
   featured?: boolean;
 };
@@ -46,8 +53,28 @@ const projects: Project[] = [
     featured: true,
   },
   {
-    id: 3,
+    id: 6,
     index: "02",
+    title: "Monnaie électronique dans l'UEMOA",
+    tagline: "Les comptes se multiplient deux fois plus vite qu'ils ne servent",
+    description:
+      "Analyse sous Excel des comptes de monnaie électronique de l'UEMOA entre 2020 et 2024, à partir des séries de la BCEAO. Les comptes ouverts progressent de 27,46 % par an contre 15,76 % pour les comptes actifs : le taux d'activité de la zone tombe de 45,43 % à 30,90 %. Le classeur se consulte feuille par feuille, contrôles qualité compris.",
+    technologies: [
+      "Excel",
+      "Power Query",
+      "Tableau croisé dynamique",
+      "INDEX / MATCH",
+      "Statistiques descriptives",
+    ],
+    type: "Analyse de données",
+    year: "2026",
+    caseStudy: "monnaie-electronique-uemoa",
+    preview: "uemoa-kpis",
+    featured: true,
+  },
+  {
+    id: 3,
+    index: "03",
     title: "CVFacile",
     tagline: "Un CV professionnel en quelques minutes, sans créer de compte",
     description:
@@ -62,7 +89,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    index: "03",
+    index: "04",
     title: "N'ti",
     tagline: "Apprendre le Baoulé, hors ligne et en autonomie",
     description:
@@ -74,7 +101,7 @@ const projects: Project[] = [
   },
   {
     id: 1,
-    index: "04",
+    index: "05",
     title: "EcoCollect",
     tagline: "Signaler, localiser et réduire les dépôts sauvages",
     description:
@@ -86,7 +113,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    index: "05",
+    index: "06",
     title: "Matronassist-ci",
     tagline: "Alléger l'administratif des sages-femmes",
     description:
@@ -125,9 +152,18 @@ function TechList({ items }: { items: string[] }) {
 }
 
 function ProjectActions({ p }: { p: Project }) {
-  if (!p.link && !p.download && !p.repo) return null;
+  if (!p.link && !p.download && !p.repo && !p.caseStudy) return null;
   return (
     <div className="flex flex-wrap gap-2.5">
+      {p.caseStudy ? (
+        <Link
+          href={`/projets/${p.caseStudy}`}
+          className="group/cta inline-flex items-center gap-1.5 rounded-md bg-foreground text-background px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] hover:opacity-90 transition-opacity"
+        >
+          <Table2 size={14} />
+          Voir l&apos;étude de cas
+        </Link>
+      ) : null}
       {p.link ? (
         <a
           href={p.link}
@@ -164,6 +200,96 @@ function ProjectActions({ p }: { p: Project }) {
         </a>
       ) : null}
     </div>
+  );
+}
+
+/**
+ * Preview panel for the UEMOA study: the four headline figures of its own
+ * dashboard, read from the workbook rather than restated here, so the card can
+ * never drift from the analysis it links to.
+ */
+function UemoaKpiPreview() {
+  return (
+    <div className="flex h-full flex-col justify-center gap-4 p-6 sm:p-8">
+      <p className="eyebrow text-[9.5px]">Extrait du tableau de bord</p>
+      <div className="grid grid-cols-2 gap-3">
+        {dashboard.kpis.slice(0, 4).map((k) => (
+          <div
+            key={k.label}
+            className="rounded-lg border border-border bg-card p-4"
+          >
+            <p className="text-[9.5px] font-semibold uppercase tracking-[0.12em] text-muted-foreground text-balance">
+              {k.label}
+            </p>
+            <p className="display mt-1.5 text-2xl tabular-nums">{k.value}</p>
+            <p className="mt-1 text-[10.5px] leading-snug text-muted-foreground">
+              {k.note}
+            </p>
+          </div>
+        ))}
+      </div>
+      <p className="text-[11px] text-muted-foreground">
+        Les six feuilles du classeur sont consultables sur la page du projet.
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Screenshot panel of a featured card. The whole panel is the link — to the
+ * case study when there is one, to the live site otherwise. If the screenshot
+ * has not been added yet it degrades to a named placeholder rather than a
+ * broken image, so a project can be wired up before its assets exist.
+ */
+function FeaturedPreview({ p }: { p: Project }) {
+  const [failed, setFailed] = useState(false);
+
+  const preview = p.preview === "uemoa-kpis" ? (
+    <UemoaKpiPreview />
+  ) : failed ? (
+    <div className="flex h-full min-h-[220px] flex-col items-center justify-center gap-1.5 bg-secondary/40 px-6 text-center">
+      <p className="display text-xl text-muted-foreground">{p.title}</p>
+      <p className="text-[11px] text-muted-foreground/80">
+        Aperçu à venir — déposer{" "}
+        <code className="rounded bg-background/70 px-1.5 py-0.5">
+          {p.image}
+        </code>
+      </p>
+    </div>
+  ) : (
+    <Image
+      src={p.image!}
+      alt={`Aperçu du projet ${p.title}`}
+      width={2160}
+      height={1350}
+      sizes="(max-width: 1024px) 100vw, 58vw"
+      onError={() => setFailed(true)}
+      className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+    />
+  );
+
+  if (p.caseStudy) {
+    return (
+      <Link
+        href={`/projets/${p.caseStudy}`}
+        className="block h-full overflow-hidden"
+        aria-label={`Ouvrir l'étude de cas ${p.title}`}
+      >
+        {preview}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={p.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block h-full overflow-hidden"
+      aria-label={`Ouvrir ${p.title} dans un nouvel onglet`}
+    >
+      {preview}
+    </a>
   );
 }
 
@@ -229,23 +355,8 @@ function FeaturedProject({ p, flip }: { p: Project; flip: boolean }) {
                 className="project-visualization flex-1"
               />
             </div>
-          ) : p.image ? (
-            <a
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block h-full overflow-hidden"
-              aria-label={`Ouvrir ${p.title} dans un nouvel onglet`}
-            >
-              <Image
-                src={p.image}
-                alt={`Aperçu du site ${p.title}`}
-                width={2160}
-                height={1350}
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              />
-            </a>
+          ) : p.image || p.preview ? (
+            <FeaturedPreview p={p} />
           ) : null}
         </div>
       </div>
@@ -279,7 +390,7 @@ function CompactProject({ p }: { p: Project }) {
 
       <div className="mt-5 flex-1" />
       <TechList items={p.technologies} />
-      {p.link || p.download || p.repo ? (
+      {p.link || p.download || p.repo || p.caseStudy ? (
         <div className="mt-5">
           <ProjectActions p={p} />
         </div>

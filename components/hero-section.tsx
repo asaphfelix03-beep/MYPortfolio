@@ -8,7 +8,7 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 const stats = [
   { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
   { label: "Certifications", value: "09", note: "4 organismes" },
-  { label: "Projets menés", value: "05", note: "web · mobile · data" },
+  { label: "Projets menés", value: "06", note: "web · mobile · data" },
 ];
 
 export default function HeroSection() {
