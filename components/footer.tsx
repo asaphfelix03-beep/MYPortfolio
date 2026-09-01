@@ -12,7 +12,9 @@ const links = [
 const socials = [
   {
     icon: Github,
-    href: "https://github.com/asaphfelix03-beep/portfolio-asaph",
+    // Le depot qui porte reellement ce site. asaphfelix03-beep/portfolio-asaph
+    // est une ancienne copie, figee depuis juillet 2026.
+    href: "https://github.com/asaphfelix03-beep/MYPortfolio",
     label: "GitHub",
   },
   {
