@@ -29,7 +29,9 @@ export function SpotlightCard({
   const rx = useSpring(useMotionValue(0), { stiffness: 260, damping: 22 });
   const ry = useSpring(useMotionValue(0), { stiffness: 260, damping: 22 });
 
-  const spotlight = useMotionTemplate`radial-gradient(340px circle at ${px}% ${py}%, oklch(0.7 0.11 220 / 0.14), transparent 70%)`;
+  // Teinte de l'accent du site (emeraude), pas un bleu generique : la lumiere
+  // doit appartenir a la marque.
+  const spotlight = useMotionTemplate`radial-gradient(340px circle at ${px}% ${py}%, oklch(0.72 0.12 163 / 0.16), transparent 70%)`;
 
   const handleMove = (e: PointerEvent<HTMLDivElement>) => {
     if (reduce || e.pointerType === "touch") return;
@@ -71,7 +73,11 @@ export function SpotlightCard({
           className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
       )}
-      <div className="relative">{children}</div>
+      {/* Les enfants sont rendus sans conteneur intermediaire : un wrapper ici
+          couperait les chaines de mise en page qui traversent la carte —
+          le h-full des cartes projets et le flex-col des cartes d'expertise.
+          L'ordre du DOM suffit a les peindre au-dessus de la lumiere. */}
+      {children}
     </motion.div>
   );
 }
