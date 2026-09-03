@@ -12,6 +12,8 @@ import {
   Copy,
   ExternalLink,
 } from "lucide-react";
+import { Magnetic } from "@/components/ui/magnetic";
+import { WordRevealRich } from "@/components/ui/text-reveal";
 import { Reveal } from "@/components/ui/reveal";
 
 const EMAIL = "asaphfelix02@gmail.com";
@@ -91,8 +93,14 @@ export default function ContactSection() {
           <div className="lg:col-span-5 min-w-0">
             <Reveal delay={0.06}>
               <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">
-                Bâtissons quelque chose d&apos;
-                <span className="italic">utile</span>.
+                <WordRevealRich
+                  italicClassName="italic"
+                  parts={[
+                    { text: "Bâtissons quelque chose d'" },
+                    { text: "utile", italic: true },
+                    { text: "." },
+                  ]}
+                />
               </h2>
             </Reveal>
 
@@ -218,16 +226,18 @@ export default function ContactSection() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="group mt-6 inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-foreground text-background px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
-              >
-                Envoyer le message
-                <ArrowRight
-                  size={15}
-                  className="transition-transform group-hover:translate-x-0.5"
-                />
-              </button>
+              <Magnetic className="mt-6 w-full sm:w-auto">
+                <button
+                  type="submit"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-foreground text-background px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
+                >
+                  Envoyer le message
+                  <ArrowRight
+                    size={15}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </button>
+              </Magnetic>
 
               {/* Shown after submit: mailto only works when a mail client is
                   installed, so always offer a route that works in-browser. */}

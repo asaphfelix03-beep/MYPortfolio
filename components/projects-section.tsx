@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Download, Github, Table2 } from "lucide-react";
+import { Unveil } from "@/components/ui/unveil";
+import { WordRevealRich } from "@/components/ui/text-reveal";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { dashboard } from "@/lib/uemoa-dashboard";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
@@ -258,15 +261,17 @@ function FeaturedPreview({ p }: { p: Project }) {
       </p>
     </div>
   ) : (
-    <Image
-      src={p.image!}
-      alt={`Aperçu du projet ${p.title}`}
-      width={2160}
-      height={1350}
-      sizes="(max-width: 1024px) 100vw, 58vw"
-      onError={() => setFailed(true)}
-      className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-    />
+    <Unveil className="h-full">
+      <Image
+        src={p.image!}
+        alt={`Aperçu du projet ${p.title}`}
+        width={2160}
+        height={1350}
+        sizes="(max-width: 1024px) 100vw, 58vw"
+        onError={() => setFailed(true)}
+        className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+      />
+    </Unveil>
   );
 
   if (p.caseStudy) {
@@ -416,8 +421,14 @@ export default function ProjectsSection() {
         <div className="mt-5 grid lg:grid-cols-12 gap-6 lg:gap-10 items-end">
           <Reveal delay={0.06} className="lg:col-span-7 min-w-0">
             <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">
-              Des projets qui répondent à des besoins{" "}
-              <span className="italic">réels</span>.
+              <WordRevealRich
+                italicClassName="italic"
+                parts={[
+                  { text: "Des projets qui répondent à des besoins " },
+                  { text: "réels", italic: true },
+                  { text: "." },
+                ]}
+              />
             </h2>
           </Reveal>
           <Reveal delay={0.12} className="lg:col-span-5 min-w-0">
@@ -450,13 +461,9 @@ export default function ProjectsSection() {
         >
           {compact.map((p) => (
             <RevealItem key={p.id} className="min-w-0">
-              <motion.div
-                whileHover={reduce ? undefined : { y: -3 }}
-                transition={{ type: "spring", stiffness: 300, damping: 26 }}
-                className="h-full"
-              >
+              <SpotlightCard className="h-full">
                 <CompactProject p={p} />
-              </motion.div>
+              </SpotlightCard>
             </RevealItem>
           ))}
         </RevealGroup>

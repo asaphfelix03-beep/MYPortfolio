@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Magnetic } from "@/components/ui/magnetic";
 import { LogoMark } from "@/components/ui/logo-mark";
 
 const navItems = [
@@ -95,16 +96,18 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-2">
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick("#contact");
-              }}
-              className="hidden sm:inline-flex items-center px-4 lg:px-5 py-2.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.12em] hover:opacity-90 transition-opacity whitespace-nowrap"
-            >
-              Me contacter
-            </a>
+            <Magnetic strength={0.3} className="hidden sm:inline-block">
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick("#contact");
+                }}
+                className="inline-flex items-center px-4 lg:px-5 py-2.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.12em] hover:opacity-90 transition-opacity whitespace-nowrap"
+              >
+                Me contacter
+              </a>
+            </Magnetic>
 
             <button
               onClick={() => setIsOpen((v) => !v)}

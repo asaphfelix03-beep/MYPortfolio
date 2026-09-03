@@ -10,6 +10,10 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import Image from "next/image";
+import { CountUp } from "@/components/ui/count-up";
+import { Unveil } from "@/components/ui/unveil";
+import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+import { WordRevealRich } from "@/components/ui/text-reveal";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 
 type Certification = {
@@ -100,6 +104,8 @@ const education = [
 ];
 
 export default function AboutSection() {
+  const reduce = useSafeReducedMotion();
+
   return (
     <section id="about" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8">
       <div className="max-w-7xl mx-auto">
@@ -111,8 +117,14 @@ export default function AboutSection() {
         <div className="mt-5 grid lg:grid-cols-12 gap-8 lg:gap-12">
           <Reveal delay={0.06} className="lg:col-span-7 min-w-0">
             <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">
-              Étudiant aujourd&apos;hui, ingénieur de{" "}
-              <span className="italic">confiance</span> demain.
+              <WordRevealRich
+                italicClassName="italic"
+                parts={[
+                  { text: "Étudiant aujourd'hui, ingénieur de " },
+                  { text: "confiance", italic: true },
+                  { text: " demain." },
+                ]}
+              />
             </h2>
           </Reveal>
           <Reveal delay={0.12} className="lg:col-span-5 min-w-0">
@@ -129,7 +141,7 @@ export default function AboutSection() {
           {/* Identity card */}
           <Reveal delay={0.06} className="lg:col-span-4 min-w-0">
             <div className="card-paper overflow-hidden h-full">
-              <div className="relative aspect-square bg-secondary">
+              <Unveil className="relative aspect-square bg-secondary">
                 <Image
                   src="/images/asaph-photo.jpg"
                   alt="Ojewumi Asaph Felix"
@@ -137,7 +149,7 @@ export default function AboutSection() {
                   sizes="(max-width: 1024px) 100vw, 380px"
                   className="object-cover object-center"
                 />
-              </div>
+              </Unveil>
               <div className="p-6">
                 <h3 className="display text-2xl">Ojewumi Asaph Felix</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -182,16 +194,34 @@ export default function AboutSection() {
                   <p className="eyebrow text-foreground">Formation</p>
                 </div>
 
-                <ol className="mt-6 space-y-6">
-                  {education.map((e) => (
-                    <li
-                      key={e.title}
-                      className="relative pl-6 border-l border-border"
-                    >
-                      <span
-                        className={`absolute -left-[4.5px] top-1.5 h-2 w-2 rounded-full ${
+                {/* Le trait se tracait par segments : chaque entree portait son
+                    propre border-l, coupe par l'espacement de la liste. Il est
+                    desormais continu, tire de haut en bas a l'entree, et les
+                    points eclosent dessus l'un apres l'autre. */}
+                <ol className="relative mt-6 space-y-6">
+                  <motion.span
+                    aria-hidden
+                    className="absolute left-0 top-1.5 bottom-1.5 w-px origin-top bg-border"
+                    initial={reduce ? undefined : { scaleY: 0 }}
+                    whileInView={reduce ? undefined : { scaleY: 1 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  {education.map((e, i) => (
+                    <li key={e.title} className="relative pl-6">
+                      <motion.span
+                        className={`absolute left-0 top-1.5 h-2 w-2 -translate-x-[3.5px] rounded-full ${
                           e.current ? "bg-accent" : "bg-border"
                         }`}
+                        initial={reduce ? undefined : { scale: 0 }}
+                        whileInView={reduce ? undefined : { scale: 1 }}
+                        viewport={{ once: true, margin: "-60px" }}
+                        transition={{
+                          delay: 0.35 + i * 0.13,
+                          type: "spring",
+                          stiffness: 420,
+                          damping: 20,
+                        }}
                       />
                       <p className="eyebrow text-[10px]">{e.period}</p>
                       <h4 className="mt-1.5 text-[15px] sm:text-base font-bold tracking-tight text-balance">
@@ -215,7 +245,7 @@ export default function AboutSection() {
                     <p className="eyebrow text-foreground">Certifications</p>
                   </div>
                   <span className="display text-2xl leading-none">
-                    {certifications.length}
+                    <CountUp value={certifications.length} />
                   </span>
                 </div>
 

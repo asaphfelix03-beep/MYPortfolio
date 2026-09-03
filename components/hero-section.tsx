@@ -1,18 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 import Image from "next/image";
+import { Unveil } from "@/components/ui/unveil";
+import { WordRevealRich } from "@/components/ui/text-reveal";
+import { CountUp } from "@/components/ui/count-up";
+import { Magnetic } from "@/components/ui/magnetic";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 
 const stats = [
   { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
-  { label: "Certifications", value: "09", note: "4 organismes" },
-  { label: "Projets menés", value: "06", note: "web · mobile · data" },
+  // count anime le chiffre de 0 a sa valeur ; le zero de tete reste en prefixe
+  // pour que "09" ne devienne pas "9" pendant le comptage.
+  { label: "Certifications", value: "09", count: 9, note: "4 organismes" },
+  { label: "Projets menés", value: "06", count: 6, note: "web · mobile · data" },
 ];
 
 export default function HeroSection() {
   const reduce = useSafeReducedMotion();
+
+  // Parallaxe : en descendant, le portrait derive vers le haut un peu plus vite
+  // que le texte. L'ecart entre les deux vitesses est ce qui donne la
+  // profondeur ; au-dela d'une centaine de pixels l'effet devient un decrochage.
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, -90]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -24]);
 
   const rise = (delay: number) =>
     reduce
@@ -25,6 +43,7 @@ export default function HeroSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-40 pb-16 sm:pb-20 px-5 sm:px-8"
     >
@@ -32,7 +51,10 @@ export default function HeroSection() {
 
       <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         {/* Left: copy */}
-        <div className="lg:col-span-7 min-w-0">
+        <motion.div
+          style={reduce ? undefined : { y: copyY }}
+          className="lg:col-span-7 min-w-0"
+        >
           <motion.div
             {...rise(0)}
             className="inline-flex items-center gap-2.5 rounded-md border border-border bg-card px-3 py-1.5"
@@ -48,15 +70,21 @@ export default function HeroSection() {
             </span>
           </motion.div>
 
-          <motion.h1
-            {...rise(0.08)}
-            className="mt-6 text-[clamp(2.4rem,6.2vw,4.5rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-balance"
-          >
-            Je sécurise et{" "}
-            <span className="display italic font-normal">valorise</span> la donnée
-            qui fait avancer{" "}
-            <span className="display italic font-normal">vos projets</span>.
-          </motion.h1>
+          {/* The headline reveals word by word rather than as one block: it is
+              the first thing read, and the stagger is what gives the page its
+              opening beat. */}
+          <h1 className="mt-6 text-[clamp(2.4rem,6.2vw,4.5rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-balance">
+            <WordRevealRich
+              delay={0.08}
+              parts={[
+                { text: "Je sécurise et " },
+                { text: "valorise", italic: true },
+                { text: " la donnée qui fait avancer " },
+                { text: "vos projets", italic: true },
+                { text: "." },
+              ]}
+            />
+          </h1>
 
           <motion.p
             {...rise(0.16)}
@@ -69,16 +97,18 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div {...rise(0.24)} className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
-            >
-              Travaillons ensemble
-              <ArrowRight
-                size={15}
-                className="transition-transform group-hover:translate-x-0.5"
-              />
-            </a>
+            <Magnetic>
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
+              >
+                Travaillons ensemble
+                <ArrowRight
+                  size={15}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </a>
+            </Magnetic>
             <a
               href="#projects"
               className="inline-flex items-center px-6 py-3.5 rounded-md border border-foreground/25 text-[11px] font-semibold uppercase tracking-[0.14em] hover:bg-secondary transition-colors"
@@ -108,7 +138,11 @@ export default function HeroSection() {
                   {s.label}
                 </dt>
                 <dd className="mt-1.5 display text-3xl sm:text-4xl">
-                  {s.value}
+                  {s.count ? (
+                    <CountUp value={s.count} prefix="0" className="tabular-nums" />
+                  ) : (
+                    s.value
+                  )}
                   <span className="ml-1.5 font-sans text-[11px] not-italic text-muted-foreground align-middle break-words">
                     {s.note}
                   </span>
@@ -116,20 +150,24 @@ export default function HeroSection() {
               </div>
             ))}
           </motion.dl>
-        </div>
+        </motion.div>
 
         {/* Right: framed portrait with floating labels */}
         <motion.div
           initial={reduce ? undefined : { opacity: 0, scale: 0.96 }}
           animate={reduce ? undefined : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          style={reduce ? undefined : { y: portraitY }}
           className="lg:col-span-5 min-w-0"
         >
           <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
             <div className="rounded-xl border border-border bg-card p-2.5 shadow-[0_18px_50px_-20px_rgba(28,25,23,0.28)]">
               {/* Source is 900x816, so a square frame trims a little off each
                   side; the subject is centred, so object-center is enough. */}
-              <div className="relative aspect-square overflow-hidden rounded-lg bg-secondary">
+              <Unveil
+                delay={0.35}
+                className="relative aspect-square overflow-hidden rounded-lg bg-secondary"
+              >
                 <Image
                   src="/images/asaph-photo.jpg"
                   alt="Ojewumi Asaph Felix"
@@ -138,7 +176,7 @@ export default function HeroSection() {
                   sizes="(max-width: 1024px) 384px, 420px"
                   className="object-cover object-center"
                 />
-              </div>
+              </Unveil>
             </div>
 
             {/* floating chips */}

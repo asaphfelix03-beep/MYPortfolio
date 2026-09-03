@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Shield, Database, Code2, Network, LineChart } from "lucide-react";
+import { WordRevealRich } from "@/components/ui/text-reveal";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { brandIcons } from "@/lib/brand-icons";
@@ -46,8 +48,14 @@ export default function SkillsSection() {
         <div className="mt-5 grid lg:grid-cols-12 gap-6 lg:gap-10 items-end">
           <Reveal delay={0.06} className="lg:col-span-8 min-w-0">
             <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">
-              Une expertise à la croisée de la sécurité, de la donnée et du{" "}
-              <span className="italic">code</span>.
+              <WordRevealRich
+                italicClassName="italic"
+                parts={[
+                  { text: "Une expertise à la croisée de la sécurité, de la donnée et du " },
+                  { text: "code", italic: true },
+                  { text: "." },
+                ]}
+              />
             </h2>
           </Reveal>
           <Reveal delay={0.12} className="lg:col-span-4 min-w-0">
@@ -99,11 +107,7 @@ export default function SkillsSection() {
         >
           {pillars.map((p) => (
             <RevealItem key={p.title} className="h-full">
-              <motion.article
-                whileHover={reduce ? undefined : { y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                className="card-paper h-full p-6 sm:p-7 flex flex-col"
-              >
+              <SpotlightCard className="card-paper h-full p-6 sm:p-7 flex flex-col">
                 <p.icon size={20} className="text-accent" />
                 <h3 className="mt-5 text-base font-bold tracking-tight">{p.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground text-pretty flex-1">
@@ -112,7 +116,7 @@ export default function SkillsSection() {
                 <p className="display italic text-lg mt-5 text-foreground/70">
                   {p.footer}
                 </p>
-              </motion.article>
+              </SpotlightCard>
             </RevealItem>
           ))}
         </RevealGroup>
