@@ -168,7 +168,7 @@ const uemoa: CaseStudy = {
   // qualite et script d'extraction. Le classeur .xlsx n'y est pas publie.
   repo: "https://github.com/asaphfelix03-beep/analyse-data-BCEAO",
   link: "https://github.com/asaphfelix03-beep/analyse-data-BCEAO#readme",
-  linkLabel: "Lire l'analyse complete",
+  linkLabel: "Lire l'analyse complète",
 };
 
 export const caseStudies: CaseStudy[] = [uemoa];
