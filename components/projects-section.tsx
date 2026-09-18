@@ -104,20 +104,8 @@ const projects: Project[] = [
     download: "/files/nti-app-release.apk",
   },
   {
-    id: 1,
-    index: "05",
-    title: "EcoCollect",
-    tagline: "Signaler, localiser et réduire les dépôts sauvages",
-    description:
-      "Application mobile citoyenne permettant de signaler des dépôts sauvages de déchets, de localiser les points de collecte et de recyclage, et de sensibiliser à l'éco-responsabilité.",
-    technologies: ["Flutter", "Django", "PostgreSQL", "Google Maps API"],
-    type: "Application mobile",
-    year: "2025 — 2026",
-    status: "En cours",
-  },
-  {
     id: 4,
-    index: "06",
+    index: "05",
     title: "Matronassist-ci",
     tagline: "Alléger l'administratif des sages-femmes",
     description:
@@ -131,6 +119,12 @@ const projects: Project[] = [
 
 const featured = projects.filter((p) => p.featured);
 const compact = projects.filter((p) => !p.featured);
+
+// The compact grid takes as many columns as it has cards, up to three: two
+// cards in a three-column grid leave an empty slot that reads as a missing
+// project rather than as a layout.
+const compactColumns =
+  compact.length >= 3 ? "md:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-2";
 
 function StatusBadge({ children }: { children: string }) {
   return (
@@ -456,7 +450,7 @@ export default function ProjectsSection() {
 
         {/* Supporting work */}
         <RevealGroup
-          className="mt-6 sm:mt-8 grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3"
+          className={`mt-6 sm:mt-8 grid gap-5 sm:gap-6 ${compactColumns}`}
           stagger={0.08}
         >
           {compact.map((p) => (

@@ -15,7 +15,7 @@ const stats = [
   // count anime le chiffre de 0 a sa valeur ; le zero de tete reste en prefixe
   // pour que "09" ne devienne pas "9" pendant le comptage.
   { label: "Certifications", value: "09", count: 9, note: "4 organismes" },
-  { label: "Projets menés", value: "06", count: 6, note: "web · mobile · data" },
+  { label: "Projets menés", value: "05", count: 5, note: "web · mobile · data" },
 ];
 
 export default function HeroSection() {
