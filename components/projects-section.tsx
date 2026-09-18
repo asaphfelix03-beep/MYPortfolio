@@ -342,7 +342,7 @@ function FeaturedProject({ p, flip }: { p: Project; flip: boolean }) {
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[11px] font-medium text-accent underline-offset-4 hover:underline"
+                    className="-my-2 inline-block py-2 text-[11px] font-medium text-accent underline-offset-4 hover:underline"
                   >
                     Plein écran
                   </a>

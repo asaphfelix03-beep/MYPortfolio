@@ -51,7 +51,7 @@ export default async function CaseStudyPage({
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8">
           <Link
             href="/#projects"
-            className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="group -my-2.5 inline-flex items-center gap-2 py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft
               size={16}
@@ -61,7 +61,7 @@ export default async function CaseStudyPage({
           </Link>
           <Link
             href="/#contact"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="-my-2.5 inline-block py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             Me contacter
           </Link>
@@ -269,7 +269,7 @@ export default async function CaseStudyPage({
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4">
           <Link
             href="/#projects"
-            className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="group -my-2.5 inline-flex items-center gap-2 py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft
               size={16}

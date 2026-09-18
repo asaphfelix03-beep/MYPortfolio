@@ -97,10 +97,10 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div {...rise(0.24)} className="mt-8 flex flex-wrap gap-3">
-            <Magnetic>
+            <Magnetic className="w-full sm:w-auto">
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
+                className="group inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
               >
                 Travaillons ensemble
                 <ArrowRight
@@ -111,14 +111,14 @@ export default function HeroSection() {
             </Magnetic>
             <a
               href="#projects"
-              className="inline-flex items-center px-6 py-3.5 rounded-md border border-foreground/25 text-[11px] font-semibold uppercase tracking-[0.14em] hover:bg-secondary transition-colors"
+              className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-3.5 rounded-md border border-foreground/25 text-[11px] font-semibold uppercase tracking-[0.14em] hover:bg-secondary transition-colors"
             >
               Voir mes réalisations
             </a>
             <a
               href="/cv"
               download="CV OJEWUMI ASAPH FELIX.pdf"
-              className="inline-flex items-center gap-2 px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors"
             >
               <Download size={15} />
               CV
@@ -134,7 +134,7 @@ export default function HeroSection() {
               // min-w-0 lets a long note wrap inside its own column instead of
               // widening the cell and spilling over the neighbouring stat.
               <div key={s.label} className="min-w-0">
-                <dt className="eyebrow text-[9.5px] sm:text-[10px] leading-snug">
+                <dt className="eyebrow min-h-[2.75em] text-[9.5px] leading-snug sm:min-h-0 sm:text-[10px]">
                   {s.label}
                 </dt>
                 <dd className="mt-1.5 display text-3xl sm:text-4xl">
@@ -143,7 +143,7 @@ export default function HeroSection() {
                   ) : (
                     s.value
                   )}
-                  <span className="ml-1.5 font-sans text-[11px] not-italic text-muted-foreground align-middle break-words">
+                  <span className="mt-1 block font-sans text-[11px] leading-snug not-italic text-muted-foreground break-words sm:mt-0 sm:ml-1.5 sm:inline sm:align-middle">
                     {s.note}
                   </span>
                 </dd>
