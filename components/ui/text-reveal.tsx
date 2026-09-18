@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+import { IN_VIEW_MARGIN } from "@/lib/motion";
 
 /** One run of a heading, optionally set in the italic display face. */
 export type RevealPart = { text: string; italic?: boolean };
@@ -93,7 +94,7 @@ export function WordRevealRich({
       variants={container}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: IN_VIEW_MARGIN }}
     >
       {tokens.map((t, i) => (
         <span key={`${t.word}-${i}`}>
@@ -156,7 +157,7 @@ export function WordReveal({
       variants={container}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: IN_VIEW_MARGIN }}
     >
       {words.map((w, i) => (
         <span

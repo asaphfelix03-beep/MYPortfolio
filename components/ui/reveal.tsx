@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+import { IN_VIEW_MARGIN } from "@/lib/motion";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 
@@ -39,7 +40,7 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, x, y, filter: blur ? "blur(6px)" : "none" }}
       whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
-      viewport={{ once, margin: "-80px" }}
+      viewport={{ once, margin: IN_VIEW_MARGIN }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
@@ -75,7 +76,7 @@ export function RevealGroup({
       variants={variants}
       initial="hidden"
       whileInView="show"
-      viewport={{ once, margin: "-80px" }}
+      viewport={{ once, margin: IN_VIEW_MARGIN }}
     >
       {children}
     </motion.div>

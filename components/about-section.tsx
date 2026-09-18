@@ -15,6 +15,7 @@ import { Unveil } from "@/components/ui/unveil";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { WordRevealRich } from "@/components/ui/text-reveal";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { IN_VIEW_MARGIN } from "@/lib/motion";
 
 type Certification = {
   title: string;
@@ -204,7 +205,7 @@ export default function AboutSection() {
                     className="absolute left-0 top-1.5 bottom-1.5 w-px origin-top bg-border"
                     initial={reduce ? undefined : { scaleY: 0 }}
                     whileInView={reduce ? undefined : { scaleY: 1 }}
-                    viewport={{ once: true, margin: "-60px" }}
+                    viewport={{ once: true, margin: IN_VIEW_MARGIN }}
                     transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                   />
                   {education.map((e, i) => (
@@ -215,7 +216,7 @@ export default function AboutSection() {
                         }`}
                         initial={reduce ? undefined : { scale: 0 }}
                         whileInView={reduce ? undefined : { scale: 1 }}
-                        viewport={{ once: true, margin: "-60px" }}
+                        viewport={{ once: true, margin: IN_VIEW_MARGIN }}
                         transition={{
                           delay: 0.35 + i * 0.13,
                           type: "spring",
@@ -271,13 +272,16 @@ export default function AboutSection() {
                         </div>
 
                         {cert.file ? (
-                          <div className="flex items-center gap-0.5 shrink-0">
+                          <div className="flex items-center gap-1 shrink-0">
+                            {/* Deux icones cote a cote : a 27 px separees de 2 px,
+                                un doigt touchait l'une en visant l'autre. La zone
+                                de toucher passe a 36 px, l'icone garde sa taille. */}
                             {cert.verify ? (
                               <a
                                 href={cert.verify}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-1.5 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                                className="grid h-9 w-9 place-items-center rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
                                 aria-label={`Vérifier l'authenticité du certificat : ${cert.title}`}
                                 title="Vérifier l'authenticité"
                               >
@@ -288,7 +292,7 @@ export default function AboutSection() {
                               href={cert.file}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1.5 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                              className="grid h-9 w-9 place-items-center rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
                               aria-label={`Voir le certificat : ${cert.title}`}
                               title="Voir le certificat"
                             >

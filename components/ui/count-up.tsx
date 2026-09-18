@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+import { IN_VIEW_MARGIN } from "@/lib/motion";
 
 /**
  * Counts from 0 to `value` the first time it scrolls into view.
@@ -22,7 +23,7 @@ export function CountUp({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: IN_VIEW_MARGIN });
   const reduce = useSafeReducedMotion();
   const [display, setDisplay] = useState(reduce ? value : 0);
 
