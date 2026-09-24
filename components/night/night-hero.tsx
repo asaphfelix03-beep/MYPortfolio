@@ -67,6 +67,8 @@ export default function NightHero() {
               {...rise(0.08)}
               className="woven-title block text-[clamp(3.2rem,12vw,9rem)] text-foreground"
             >
+              Ojewumi
+              <br />
               Asaph
               <br />
               Felix
