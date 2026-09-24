@@ -102,8 +102,10 @@ export default function ContactSection() {
 
             <Reveal delay={0.12}>
               <p className="mt-5 text-sm sm:text-base leading-relaxed text-muted-foreground text-pretty">
-                Une opportunité de stage, une alternance ou simplement une
-                question sur mon parcours ? Écrivez-moi, je réponds rapidement.
+                Je recherche un stage de trois mois à partir de fin février
+                2027, en analyse de données ou en cybersécurité. Une
+                opportunité, ou simplement une question sur mon parcours ?
+                Écrivez-moi, je réponds rapidement.
               </p>
             </Reveal>
 
