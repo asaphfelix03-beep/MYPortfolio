@@ -40,8 +40,33 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: 5,
+    id: 7,
     index: "01",
+    title: "SynthID-Graph",
+    tagline: "Seul, un fraudeur rusé est invisible. Son réseau, lui, le trahit.",
+    description:
+      "Détection d'anneaux d'identités synthétiques avant le « bust-out », ce moment où le fraudeur vide d'un coup tous ses plafonds de crédit. Un simulateur multi-agents produit trois banques, 20 684 identités et 110 anneaux sur 36 mois, projetés dans un graphe Neo4j de 198 000 nœuds. Les règles classiques repèrent 15 % des anneaux les plus rusés ; avec les caractéristiques de graphe, un ensemble LightGBM + GraphSAGE et une coopération inter-bancaire chiffrée, on atteint 90 %, avec 212 jours d'anticipation médiane et sans qu'aucune donnée personnelle ne quitte sa banque. Données 100 % simulées.",
+    technologies: [
+      "Python",
+      "Neo4j · GDS",
+      "PyTorch Geometric",
+      "LightGBM",
+      "OPRF · Paillier",
+      "Docker",
+    ],
+    type: "Sécurité & données",
+    year: "2026",
+    // La video de quatre minutes part du contexte et va jusqu'aux resultats :
+    // c'est ce qu'un recruteur regarde avant de lire du code. Lien verifie.
+    link: "https://github.com/asaphfelix03-beep/synthid-graph/blob/main/docs/media/synthid-graph-video-720p-voix.mp4",
+    linkLabel: "Voir la vidéo · 4 min",
+    repo: "https://github.com/asaphfelix03-beep/synthid-graph",
+    image: "/images/synthid-graph-anneau.png",
+    featured: true,
+  },
+  {
+    id: 5,
+    index: "02",
     title: "Électrification de la Côte d'Ivoire",
     tagline: "Ce que disent réellement dix-neuf lignes de données publiques",
     description:
@@ -57,7 +82,7 @@ const projects: Project[] = [
   },
   {
     id: 6,
-    index: "02",
+    index: "03",
     title: "Monnaie électronique dans l'UEMOA",
     tagline: "Les comptes se multiplient deux fois plus vite qu'ils ne servent",
     description:
@@ -78,7 +103,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    index: "03",
+    index: "04",
     title: "CVFacile",
     tagline: "Un CV professionnel en quelques minutes, sans créer de compte",
     description:
@@ -93,7 +118,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    index: "04",
+    index: "05",
     title: "N'ti",
     tagline: "Apprendre le Baoulé, hors ligne et en autonomie",
     description:
@@ -105,7 +130,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    index: "05",
+    index: "06",
     title: "Matronassist-ci",
     tagline: "Alléger l'administratif des sages-femmes",
     description:

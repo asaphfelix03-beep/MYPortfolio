@@ -12,7 +12,7 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 const figures = [
   { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
   { label: "Certifications", value: "09", count: 9, note: "4 organismes" },
-  { label: "Projets menés", value: "05", count: 5, note: "Web · Mobile · Données" },
+  { label: "Projets menés", value: "06", count: 6, note: "Sécurité · Données · Web" },
 ];
 
 /**
