@@ -265,7 +265,7 @@ function FeaturedPreview({ p }: { p: Project }) {
 /** Large alternating card: copy on one side, live preview or screenshot on the other. */
 function FeaturedProject({ p, flip }: { p: Project; flip: boolean }) {
   return (
-    <article className="group overflow-hidden rounded-2xl border border-border bg-card">
+    <article className="group overflow-hidden border-t border-border">
       <div className="grid lg:grid-cols-12">
         <div
           className={`min-w-0 flex flex-col justify-center gap-5 p-6 sm:p-8 lg:p-10 lg:col-span-5 ${
@@ -277,13 +277,14 @@ function FeaturedProject({ p, flip }: { p: Project; flip: boolean }) {
               <span className="display text-2xl leading-none text-muted-foreground/50">
                 {p.index}
               </span>
-              <span className="eyebrow text-[10px]">{p.type}</span>
               {p.status ? <StatusBadge>{p.status}</StatusBadge> : null}
             </div>
             <h3 className="display text-2xl sm:text-3xl lg:text-[2.1rem] leading-tight mt-3 text-balance">
               {p.title}
             </h3>
-            <p className="mt-1.5 text-sm text-muted-foreground">{p.year}</p>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              {p.year} · {p.type}
+            </p>
           </div>
 
           <p className="display italic text-lg text-foreground/85 text-balance">
@@ -336,7 +337,7 @@ function FeaturedProject({ p, flip }: { p: Project; flip: boolean }) {
 /** Compact card for the supporting projects, sized to sit three across. */
 function CompactProject({ p }: { p: Project }) {
   return (
-    <article className="flex h-full min-w-0 flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-foreground/25">
+    <article className="flex h-full min-w-0 flex-col border-t border-border pt-6 pr-6 transition-colors hover:border-accent/50">
       <div className="flex items-center justify-between gap-2">
         <span className="display text-2xl leading-none text-muted-foreground/50">
           {p.index}
@@ -344,11 +345,12 @@ function CompactProject({ p }: { p: Project }) {
         {p.status ? <StatusBadge>{p.status}</StatusBadge> : null}
       </div>
 
-      <p className="eyebrow text-[10px] mt-5">{p.type}</p>
-      <h3 className="display text-xl sm:text-[1.4rem] leading-tight mt-1.5 text-balance">
+      <h3 className="display text-xl sm:text-[1.4rem] leading-tight mt-5 text-balance">
         {p.title}
       </h3>
-      <p className="mt-1 text-xs text-muted-foreground">{p.year}</p>
+      <p className="mt-1 text-xs text-muted-foreground">
+        {p.year} · {p.type}
+      </p>
 
       <p className="display italic text-[0.95rem] text-foreground/80 mt-4 text-balance">
         {p.tagline}

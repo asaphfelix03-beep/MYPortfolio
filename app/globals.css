@@ -123,9 +123,17 @@
    editorial du monde clair. */
 .world-night h2.display {
   text-transform: uppercase;
-  letter-spacing: 0.055em;
+  letter-spacing: 0.045em;
   font-weight: 300;
   line-height: 1.02;
+  font-size: clamp(1.6rem, 3.6vw, 2.7rem);
+}
+
+/* L'emphase d'un mot par l'italique appartenait au monde clair. Portee en
+   capitales espacees elle ne lit plus comme une emphase mais comme un
+   doublon penche : le device saute, le titre se porte tout seul. */
+.world-night h2.display .italic {
+  font-style: normal;
 }
 
 /* Une seule couleur saturee sur la page. Les marques technologiques

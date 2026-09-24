@@ -149,7 +149,7 @@ export default function NightHero() {
         {...rise(0.42)}
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-border px-5 py-7 sm:px-8 md:pl-20 lg:flex-row lg:items-end lg:justify-between lg:gap-10"
       >
-        <p className="inline-flex shrink-0 items-center gap-2.5 self-start border border-border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground lg:mb-1">
+        <p className="inline-flex shrink-0 items-center gap-2.5 self-start text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground lg:mb-2">
           <span className="relative flex h-1.5 w-1.5">
             {!reduce && (
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />

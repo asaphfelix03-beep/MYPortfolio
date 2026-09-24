@@ -124,7 +124,7 @@ export default function SkillsSection() {
         >
           {domains.map((d) => (
             <RevealItem key={d.label}>
-              <div className="flex items-start gap-3.5 rounded-xl border border-border bg-secondary/40 p-5">
+              <div className="flex h-full items-start gap-3.5 border-t border-border pt-5 pr-5">
                 <d.icon size={18} className="text-foreground mt-0.5 shrink-0" />
                 <div className="min-w-0">
                   <h3 className="text-sm font-bold tracking-tight">{d.label}</h3>
