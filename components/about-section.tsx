@@ -158,7 +158,7 @@ export default function AboutSection() {
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-1.5">
-                  {["Rigoureux", "Curieux", "Créatif", "Team player"].map((t) => (
+                  {["Rigoureux", "Curieux", "Créatif", "Esprit d'équipe"].map((t) => (
                     <span
                       key={t}
                       className="rounded-md border border-border bg-secondary/60 px-2.5 py-1 text-[11px] font-medium"
@@ -312,7 +312,7 @@ export default function AboutSection() {
               <div className="grid sm:grid-cols-2 gap-6">
                 {[
                   { title: "Hackathons Tech", desc: "Participation active" },
-                  { title: "Ecowas Hackathon", desc: "Compétition régionale" },
+                  { title: "ECOWAS Hackathon", desc: "Compétition régionale" },
                 ].map((d) => (
                   <motion.div
                     key={d.title}
@@ -320,7 +320,7 @@ export default function AboutSection() {
                     transition={{ type: "spring", stiffness: 300, damping: 24 }}
                     className="card-paper p-6"
                   >
-                    <p className="eyebrow text-[10px]">Distinction</p>
+                    <p className="eyebrow text-[10px]">Participation</p>
                     <h4 className="display text-xl mt-2">{d.title}</h4>
                     <p className="mt-1 text-sm text-muted-foreground">{d.desc}</p>
                   </motion.div>

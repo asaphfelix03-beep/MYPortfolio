@@ -12,7 +12,7 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 const figures = [
   { label: "Cybersécurité & IA", value: "L3", note: "ESATIC" },
   { label: "Certifications", value: "09", count: 9, note: "4 organismes" },
-  { label: "Projets menés", value: "05", count: 5, note: "web · mobile · data" },
+  { label: "Projets menés", value: "05", count: 5, note: "Web · Mobile · Données" },
 ];
 
 /**
@@ -65,7 +65,7 @@ export default function NightHero() {
           <h1>
             <motion.span
               {...rise(0.08)}
-              className="woven-title block text-[clamp(3.2rem,12vw,9rem)] text-foreground"
+              className="woven-title block text-[clamp(2.6rem,8.5vw,6rem)] text-foreground"
             >
               Ojewumi
               <br />

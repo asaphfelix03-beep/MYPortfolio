@@ -7,7 +7,7 @@ import { Magnetic } from "@/components/ui/magnetic";
 import { LogoMark } from "@/components/ui/logo-mark";
 
 const navItems = [
-  { name: "Bio", href: "#about" },
+  { name: "Profil", href: "#about" },
   { name: "Expertise", href: "#skills" },
   { name: "Réalisations", href: "#projects" },
   { name: "Contact", href: "#contact" },

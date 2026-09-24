@@ -81,7 +81,16 @@ export default function GaugeRow() {
                 />
               </div>
 
-              <span className="mt-2 h-20 text-[9px] uppercase leading-none tracking-[0.18em] text-muted-foreground [writing-mode:vertical-rl]">
+              {/* Le pays sujet se repere aussi sans la couleur : sa luminance
+                  est proche de celle des barres de contexte, donc l'identite
+                  ne peut pas reposer sur la seule teinte. */}
+              <span
+                className={`mt-2 h-20 text-[9px] uppercase leading-none tracking-[0.18em] [writing-mode:vertical-rl] ${
+                  isSubject
+                    ? "font-semibold text-foreground"
+                    : "text-muted-foreground"
+                }`}
+              >
                 {c.pays}
               </span>
             </li>
