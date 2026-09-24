@@ -308,6 +308,7 @@
 
   .world-night .project-visualization {
     background: oklch(0.22 0.045 255);
+    border-radius: 0;
   }
 
   .project-img {
@@ -383,6 +384,32 @@
 
 ::selection {
   background: oklch(0.596 0.145 163 / 0.22);
+}
+
+.world-night ::selection {
+  background: oklch(0.72 0.17 45 / 0.28);
+  color: oklch(0.96 0.005 250);
+}
+
+/* La barre de defilement de la page appartient a la racine, pas au
+   conteneur de la nuit : une regle posee sur .world-night ne l'atteint
+   jamais. :has remonte a la racine sans forcer une classe sur <body>, donc
+   la route claire garde la sienne. */
+html:has(.world-night) {
+  scrollbar-color: oklch(0.33 0.055 255) oklch(0.17 0.03 258);
+}
+
+html:has(.world-night) ::-webkit-scrollbar-track {
+  background: oklch(0.17 0.03 258);
+}
+
+html:has(.world-night) ::-webkit-scrollbar-thumb {
+  background: oklch(0.33 0.055 255);
+  border-radius: 0;
+}
+
+html:has(.world-night) ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.72 0.17 45);
 }
 
 @media (prefers-reduced-motion: reduce) {
