@@ -56,10 +56,9 @@ const projects: Project[] = [
     ],
     type: "Sécurité & données",
     year: "2026",
-    // La video de quatre minutes part du contexte et va jusqu'aux resultats :
-    // c'est ce qu'un recruteur regarde avant de lire du code. Lien verifie.
-    link: "https://github.com/asaphfelix03-beep/synthid-graph/blob/main/docs/media/synthid-graph-video-720p-voix.mp4",
-    linkLabel: "Voir la vidéo · 4 min",
+    // Pas de lien vers la video : GitHub n'ouvre pas de lecteur pour un mp4
+    // de 10 Mo sur une page de fichier, il propose de le telecharger, et sur
+    // un telephone en connexion limitee c'est 10 Mo pour rien.
     repo: "https://github.com/asaphfelix03-beep/synthid-graph",
     image: "/images/synthid-graph-anneau.png",
     featured: true,
