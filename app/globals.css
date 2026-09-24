@@ -64,21 +64,21 @@
  * anomalous value in the data.
  * ------------------------------------------------------------------ */
 .world-night {
-  --background: oklch(0.14 0.028 258);
+  --background: oklch(0.17 0.03 258);
   --foreground: oklch(0.96 0.005 250);
-  --card: oklch(0.2 0.04 255);
+  --card: oklch(0.22 0.045 255);
   --card-foreground: oklch(0.96 0.005 250);
-  --popover: oklch(0.2 0.04 255);
+  --popover: oklch(0.22 0.045 255);
   --popover-foreground: oklch(0.96 0.005 250);
   --primary: oklch(0.96 0.005 250);
   --primary-foreground: oklch(0.16 0.03 258);
-  --secondary: oklch(0.24 0.045 255);
+  --secondary: oklch(0.26 0.05 255);
   --secondary-foreground: oklch(0.96 0.005 250);
-  --muted: oklch(0.24 0.045 255);
+  --muted: oklch(0.26 0.05 255);
   --muted-foreground: oklch(0.7 0.035 250);
   --accent: oklch(0.72 0.17 45);
   --accent-foreground: oklch(0.16 0.03 258);
-  --border: oklch(0.31 0.05 255);
+  --border: oklch(0.33 0.055 255);
   --input: oklch(0.31 0.05 255);
   --ring: oklch(0.72 0.17 45);
 
@@ -104,15 +104,15 @@
 /* Inside the night, a section that used to invert is already night: hold the
    same values so a band does not jump a shade darker than its neighbour. */
 .world-night .section-dark {
-  --background: oklch(0.14 0.028 258);
+  --background: oklch(0.17 0.03 258);
   --foreground: oklch(0.96 0.005 250);
-  --card: oklch(0.2 0.04 255);
+  --card: oklch(0.22 0.045 255);
   --card-foreground: oklch(0.96 0.005 250);
-  --secondary: oklch(0.24 0.045 255);
+  --secondary: oklch(0.26 0.05 255);
   --secondary-foreground: oklch(0.96 0.005 250);
-  --muted: oklch(0.24 0.045 255);
+  --muted: oklch(0.26 0.05 255);
   --muted-foreground: oklch(0.7 0.035 250);
-  --border: oklch(0.31 0.05 255);
+  --border: oklch(0.33 0.055 255);
   --input: oklch(0.31 0.05 255);
   --primary: oklch(0.96 0.005 250);
   --primary-foreground: oklch(0.16 0.03 258);
@@ -258,7 +258,7 @@
   }
 
   .world-night .project-visualization {
-    background: oklch(0.2 0.04 255);
+    background: oklch(0.22 0.045 255);
   }
 
   .project-img {
