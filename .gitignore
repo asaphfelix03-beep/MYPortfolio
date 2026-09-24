@@ -23,3 +23,8 @@ node_modules
 tsconfig.tsbuildinfo
 
 .vercel
+
+# Captures de revue Impeccable : artefacts de build, pas des sources.
+.impeccable/review/
+.impeccable/build/
+.impeccable/mocks/

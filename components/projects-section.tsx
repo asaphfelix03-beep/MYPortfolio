@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Download, Github, Table2 } from "lucide-react";
+import GaugeRow from "@/components/night/gauge-row";
 import { Unveil } from "@/components/ui/unveil";
 import { WordRevealRich } from "@/components/ui/text-reveal";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { dashboard } from "@/lib/uemoa-dashboard";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 
 type Project = {
@@ -201,37 +201,6 @@ function ProjectActions({ p }: { p: Project }) {
   );
 }
 
-/**
- * Preview panel for the UEMOA study: the four headline figures of its own
- * dashboard, read from the workbook rather than restated here, so the card can
- * never drift from the analysis it links to.
- */
-function UemoaKpiPreview() {
-  return (
-    <div className="flex h-full flex-col justify-center gap-4 p-6 sm:p-8">
-      <p className="eyebrow text-[9.5px]">Extrait du tableau de bord</p>
-      <div className="grid grid-cols-2 gap-3">
-        {dashboard.kpis.slice(0, 4).map((k) => (
-          <div
-            key={k.label}
-            className="rounded-lg border border-border bg-card p-4"
-          >
-            <p className="text-[9.5px] font-semibold uppercase tracking-[0.12em] text-muted-foreground text-balance">
-              {k.label}
-            </p>
-            <p className="display mt-1.5 text-2xl tabular-nums">{k.value}</p>
-            <p className="mt-1 text-[10.5px] leading-snug text-muted-foreground">
-              {k.note}
-            </p>
-          </div>
-        ))}
-      </div>
-      <p className="text-[11px] text-muted-foreground">
-        Les six feuilles du classeur sont consultables sur la page du projet.
-      </p>
-    </div>
-  );
-}
 
 /**
  * Screenshot panel of a featured card. The whole panel is the link — to the
@@ -243,7 +212,7 @@ function FeaturedPreview({ p }: { p: Project }) {
   const [failed, setFailed] = useState(false);
 
   const preview = p.preview === "uemoa-kpis" ? (
-    <UemoaKpiPreview />
+    <GaugeRow />
   ) : failed ? (
     <div className="flex h-full min-h-[220px] flex-col items-center justify-center gap-1.5 bg-secondary/40 px-6 text-center">
       <p className="display text-xl text-muted-foreground">{p.title}</p>
@@ -255,7 +224,7 @@ function FeaturedPreview({ p }: { p: Project }) {
       </p>
     </div>
   ) : (
-    <Unveil className="h-full">
+    <Unveil className="night-plate h-full">
       <Image
         src={p.image!}
         alt={`Aperçu du projet ${p.title}`}

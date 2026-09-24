@@ -1,11 +1,20 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Plus_Jakarta_Sans, Instrument_Serif } from 'next/font/google'
+import { Plus_Jakarta_Sans, Instrument_Serif, Jost } from 'next/font/google'
 import './globals.css'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
+  display: 'swap',
+})
+
+// The woven night's single voice: a geometric sans with real character in
+// the caps, self-hosted by next/font so the strict CSP needs no new host.
+const jost = Jost({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-geo',
   display: 'swap',
 })
 
@@ -64,7 +73,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className={`${jakarta.variable} ${instrument.variable}`}>
+    <html
+      lang="fr"
+      className={`${jakarta.variable} ${instrument.variable} ${jost.variable}`}
+    >
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

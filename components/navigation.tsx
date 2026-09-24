@@ -61,7 +61,7 @@ export default function Navigation() {
             className="flex items-center gap-2.5 shrink-0 group"
           >
             <span className="w-8 h-8 rounded-md bg-foreground grid place-items-center transition-transform duration-300 group-hover:-translate-y-0.5">
-              <LogoMark className="w-5 h-5 text-background" accent="#2E9E6B" />
+              <LogoMark className="w-5 h-5 text-background" accent="var(--accent)" />
             </span>
             <span className="font-bold tracking-tight text-[15px] hidden sm:block">
               Asaph Felix
@@ -103,7 +103,7 @@ export default function Navigation() {
                   e.preventDefault();
                   handleNavClick("#contact");
                 }}
-                className="inline-flex items-center px-4 lg:px-5 py-2.5 rounded-md bg-foreground text-background text-[11px] font-semibold uppercase tracking-[0.12em] hover:opacity-90 transition-opacity whitespace-nowrap"
+                className="inline-flex items-center px-4 lg:px-5 py-2.5 bg-accent text-accent-foreground text-[11px] font-semibold uppercase tracking-[0.18em] hover:opacity-90 transition-opacity whitespace-nowrap"
               >
                 Me contacter
               </a>

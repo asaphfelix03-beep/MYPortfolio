@@ -51,6 +51,88 @@
   color: var(--foreground);
 }
 
+/* ------------------------------------------------------------------ *
+ * The woven night — the home page's world.
+ *
+ * Scoped to a wrapper rather than :root so the case study page keeps the
+ * editorial light world until it is brought across too. Every section
+ * inside already paints from semantic tokens, so redefining them here is
+ * what turns the whole page to night.
+ *
+ * One weft colour and nothing else is coloured: amber-coral, the colour of
+ * lamplight, carried by the accent token. Red stays reserved for the single
+ * anomalous value in the data.
+ * ------------------------------------------------------------------ */
+.world-night {
+  --background: oklch(0.14 0.028 258);
+  --foreground: oklch(0.96 0.005 250);
+  --card: oklch(0.2 0.04 255);
+  --card-foreground: oklch(0.96 0.005 250);
+  --popover: oklch(0.2 0.04 255);
+  --popover-foreground: oklch(0.96 0.005 250);
+  --primary: oklch(0.96 0.005 250);
+  --primary-foreground: oklch(0.16 0.03 258);
+  --secondary: oklch(0.24 0.045 255);
+  --secondary-foreground: oklch(0.96 0.005 250);
+  --muted: oklch(0.24 0.045 255);
+  --muted-foreground: oklch(0.7 0.035 250);
+  --accent: oklch(0.72 0.17 45);
+  --accent-foreground: oklch(0.16 0.03 258);
+  --border: oklch(0.31 0.05 255);
+  --input: oklch(0.31 0.05 255);
+  --ring: oklch(0.72 0.17 45);
+
+  /* A cloth's geometry is orthogonal: the night squares off every corner the
+     light world rounded, so the page reads as woven rather than as the old
+     site repainted. rounded-full survives for genuine pills. */
+  --radius: 0rem;
+
+  /* The cloth itself: warp and weft hairlines, and the points of light the
+     weave holds. The pitch is the one rhythm every register repeats. */
+  --weave-pitch: 22px;
+  --weave-line: oklch(0.96 0.005 250 / 0.045);
+  --weave-dot: oklch(0.96 0.005 250 / 0.16);
+
+  background-color: var(--background);
+  color: var(--foreground);
+  /* One voice: the geometric face carries running text too, not only
+     the display. Two families would make the night a repaint of the
+     light world rather than its own world. */
+  font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Inside the night, a section that used to invert is already night: hold the
+   same values so a band does not jump a shade darker than its neighbour. */
+.world-night .section-dark {
+  --background: oklch(0.14 0.028 258);
+  --foreground: oklch(0.96 0.005 250);
+  --card: oklch(0.2 0.04 255);
+  --card-foreground: oklch(0.96 0.005 250);
+  --secondary: oklch(0.24 0.045 255);
+  --secondary-foreground: oklch(0.96 0.005 250);
+  --muted: oklch(0.24 0.045 255);
+  --muted-foreground: oklch(0.7 0.035 250);
+  --border: oklch(0.31 0.05 255);
+  --input: oklch(0.31 0.05 255);
+  --primary: oklch(0.96 0.005 250);
+  --primary-foreground: oklch(0.16 0.03 258);
+  background-color: transparent;
+}
+
+/* One geometric voice for everything. The editorial serif belongs to the
+   light world; in the night the display face is the same sans, set in
+   tracked caps, so display and body are one family. */
+.world-night .display {
+  font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+
+.world-night .eyebrow {
+  font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+}
+
 @theme inline {
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-serif), ui-serif, Georgia, serif;
@@ -127,6 +209,56 @@
       linear-gradient(to right, oklch(0.21 0.008 45 / 0.045) 1px, transparent 1px),
       linear-gradient(to bottom, oklch(0.21 0.008 45 / 0.045) 1px, transparent 1px);
     background-size: 56px 56px;
+  }
+
+  /* The cloth. Warp and weft hairlines with a point of light at every
+     crossing — one primitive that draws the hero field, the register
+     grounds and the data marks alike, so the page has a single texture
+     rather than a set of decorations. */
+  .weave-field {
+    background-image:
+      radial-gradient(circle at 50% 50%, var(--weave-dot) 1px, transparent 1.7px),
+      linear-gradient(to right, var(--weave-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--weave-line) 1px, transparent 1px);
+    background-size: var(--weave-pitch) var(--weave-pitch);
+    background-position: center center;
+  }
+
+  /* Tracked uppercase display, the night's headline voice. */
+  .woven-title {
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    line-height: 0.92;
+  }
+
+  /* A plate on the night ground. Photographs and embedded dashboards come
+     in on white; left alone they punch a lit hole through the cloth. The
+     plate cools them toward the ground's own indigo and drops their
+     brightness, so they read as printed on the cloth rather than pasted
+     over it. */
+  .world-night .night-plate {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .world-night .night-plate :is(img, iframe) {
+    filter: brightness(0.82) contrast(1.04) saturate(0.85);
+  }
+
+  .world-night .night-plate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: oklch(0.34 0.07 258);
+    mix-blend-mode: color;
+    opacity: 0.55;
+  }
+
+  .world-night .project-visualization {
+    background: oklch(0.2 0.04 255);
   }
 
   .project-img {
