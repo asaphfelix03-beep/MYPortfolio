@@ -156,7 +156,7 @@ function ProjectActions({ p }: { p: Project }) {
       {p.caseStudy ? (
         <Link
           href={`/projets/${p.caseStudy}`}
-          className="group/cta inline-flex items-center gap-1.5 rounded-md bg-foreground text-background px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] hover:opacity-90 transition-opacity"
+          className="group/cta inline-flex items-center gap-1.5 rounded-md bg-accent text-accent-foreground px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] hover:opacity-90 transition-opacity"
         >
           <Table2 size={14} />
           Voir l&apos;étude de cas
@@ -167,7 +167,7 @@ function ProjectActions({ p }: { p: Project }) {
           href={p.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="group/cta inline-flex items-center gap-1.5 rounded-md bg-foreground text-background px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] hover:opacity-90 transition-opacity"
+          className="group/cta inline-flex items-center gap-1.5 rounded-md bg-accent text-accent-foreground px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] hover:opacity-90 transition-opacity"
         >
           {p.linkLabel ?? "Voir le projet"}
           <ArrowUpRight
@@ -377,10 +377,6 @@ export default function ProjectsSection() {
       className="section-dark relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8"
     >
       <div className="max-w-7xl mx-auto">
-        <Reveal>
-          <p className="eyebrow">Projets sélectionnés &amp; résultats</p>
-        </Reveal>
-
         <div className="mt-5 grid lg:grid-cols-12 gap-6 lg:gap-10 items-end">
           <Reveal delay={0.06} className="lg:col-span-7 min-w-0">
             <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">

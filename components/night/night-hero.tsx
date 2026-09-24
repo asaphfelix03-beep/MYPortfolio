@@ -62,20 +62,7 @@ export default function NightHero() {
           style={reduce ? undefined : { y: copyY }}
           className="min-w-0 lg:col-span-7"
         >
-          <motion.p
-            {...rise(0)}
-            className="inline-flex items-center gap-2.5 border border-border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground"
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              {!reduce && (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
-              )}
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-            </span>
-            Disponible · Stage &amp; Alternance
-          </motion.p>
-
-          <h1 className="mt-7">
+          <h1>
             <motion.span
               {...rise(0.08)}
               className="woven-title block text-[clamp(3.2rem,12vw,9rem)] text-foreground"
@@ -156,10 +143,23 @@ export default function NightHero() {
       </div>
 
       {/* The bottom hairline carries the figures, set as registration marks. */}
-      <motion.dl
+      {/* The bottom hairline carries the availability chip and the figures,
+          set as registration marks along the edge of the cloth. */}
+      <motion.div
         {...rise(0.42)}
-        className="relative mx-auto grid w-full max-w-7xl grid-cols-3 gap-5 border-t border-border px-5 py-7 sm:gap-8 sm:px-8 md:pl-20"
+        className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-border px-5 py-7 sm:px-8 md:pl-20 lg:flex-row lg:items-end lg:justify-between lg:gap-10"
       >
+        <p className="inline-flex shrink-0 items-center gap-2.5 self-start border border-border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground lg:mb-1">
+          <span className="relative flex h-1.5 w-1.5">
+            {!reduce && (
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
+            )}
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+          </span>
+          Disponible · Stage &amp; Alternance
+        </p>
+
+        <dl className="grid w-full grid-cols-3 gap-5 sm:gap-8 lg:max-w-2xl">
         {figures.map((f) => (
           <div key={f.label} className="min-w-0">
             <dt className="min-h-[2.75em] text-[9.5px] font-medium uppercase leading-snug tracking-[0.22em] text-muted-foreground sm:min-h-0">
@@ -177,7 +177,8 @@ export default function NightHero() {
             </dd>
           </div>
         ))}
-      </motion.dl>
+        </dl>
+      </motion.div>
     </section>
   );
 }

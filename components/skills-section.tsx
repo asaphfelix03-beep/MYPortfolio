@@ -41,10 +41,6 @@ export default function SkillsSection() {
   return (
     <section id="skills" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8">
       <div className="max-w-7xl mx-auto">
-        <Reveal>
-          <p className="eyebrow">Écosystème de travail</p>
-        </Reveal>
-
         <div className="mt-5 grid lg:grid-cols-12 gap-6 lg:gap-10 items-end">
           <Reveal delay={0.06} className="lg:col-span-8 min-w-0">
             <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">

@@ -101,6 +101,47 @@
   font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Des bandes, pas des cartes. Le contrat dit "no cards: full-bleed
+   horizontal bands" : dans la nuit, un conteneur ne se ferme plus par une
+   boite bordee et arrondie, il s'ouvre par un filet. Le groupement vient de
+   l'espace et du filet, pas du cadre. */
+.world-night .card-paper {
+  background-color: transparent;
+  border-width: 0;
+  border-top-width: 1px;
+  border-radius: 0;
+}
+
+/* Les boites imbriquees dans une bande redeviennent du texte pose sur le
+   tissu : une carte dans une carte est toujours une faute. */
+.world-night .card-paper :is(.rounded-md, .rounded-lg, .rounded-xl):not(.rounded-full) {
+  border-radius: 0;
+}
+
+/* La voix de la nuit ne s'arrete pas au premier ecran : les titres de
+   registre reprennent les capitales espacees du nom, au lieu du phrase
+   editorial du monde clair. */
+.world-night h2.display {
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+  font-weight: 300;
+  line-height: 1.02;
+}
+
+/* Une seule couleur saturee sur la page. Les marques technologiques
+   arrivent en couleurs de marque et formaient l'element le plus sature du
+   site, juste sous un titre qui promet de la retenue. Elles passent au
+   monochrome et retrouvent leur couleur au survol, ou l'information de
+   marque compte vraiment. */
+.world-night .animate-marquee :is(svg, img) {
+  filter: grayscale(1) brightness(1.7) opacity(0.55);
+  transition: filter 0.3s ease;
+}
+
+.world-night .animate-marquee :is(svg, img):hover {
+  filter: none;
+}
+
 /* Inside the night, a section that used to invert is already night: hold the
    same values so a band does not jump a shade darker than its neighbour. */
 .world-night .section-dark {

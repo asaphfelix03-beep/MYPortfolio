@@ -50,20 +50,21 @@ export function Selvedge() {
 }
 
 /**
- * One register of the cloth: a full-bleed band opened by a hairline, its
- * number set out in the selvedge gutter the way a plate is numbered in the
- * margin rather than titled inside the picture.
+ * One register of the cloth: a full-bleed band opened by a hairline.
+ *
+ * The band carried a plate number in the gutter until it collided with the
+ * projects' own 01..05 sequence: two numbering systems in one band and
+ * neither reads as registration. The projects' sequence carries information,
+ * a section count does not, so the gutter number is the one that goes.
  *
  * The shuttle is the page's one authored motion: when a band enters, the
  * weft thread shoots across it left to right, and the cloth is what carries
  * the state — no chrome is added to say "this section is active".
  */
 export function Register({
-  index,
   children,
   className = "",
 }: {
-  index: string;
   children: ReactNode;
   className?: string;
 }) {
@@ -87,13 +88,6 @@ export function Register({
         viewport={{ once: true, margin: IN_VIEW_MARGIN }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       />
-
-      <span
-        aria-hidden
-        className="absolute left-4 top-6 text-[11px] font-medium tabular-nums tracking-[0.3em] text-muted-foreground/70 md:left-5"
-      >
-        {index}
-      </span>
 
       {children}
     </div>

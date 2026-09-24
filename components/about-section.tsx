@@ -110,10 +110,6 @@ export default function AboutSection() {
   return (
     <section id="about" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8">
       <div className="max-w-7xl mx-auto">
-        <Reveal>
-          <p className="eyebrow">Présentation & parcours</p>
-        </Reveal>
-
         {/* Lead statement */}
         <div className="mt-5 grid lg:grid-cols-12 gap-8 lg:gap-12">
           <Reveal delay={0.06} className="lg:col-span-7 min-w-0">
@@ -142,7 +138,7 @@ export default function AboutSection() {
           {/* Identity card */}
           <Reveal delay={0.06} className="lg:col-span-4 min-w-0">
             <div className="card-paper overflow-hidden h-full">
-              <Unveil className="relative aspect-square bg-secondary">
+              <Unveil className="night-plate relative aspect-square bg-secondary">
                 <Image
                   src="/images/asaph-photo.jpg"
                   alt="Ojewumi Asaph Felix"

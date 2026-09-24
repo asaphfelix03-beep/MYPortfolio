@@ -26,16 +26,16 @@ export default function Home() {
       <div className="relative z-10">
         <NightHero />
 
-        <Register index="01" className="md:pl-14">
+        <Register className="md:pl-14">
           <AboutSection />
         </Register>
-        <Register index="02" className="md:pl-14">
+        <Register className="md:pl-14">
           <SkillsSection />
         </Register>
-        <Register index="03" className="md:pl-14">
+        <Register className="md:pl-14">
           <ProjectsSection />
         </Register>
-        <Register index="04" className="md:pl-14">
+        <Register className="md:pl-14">
           <ContactSection />
         </Register>
 

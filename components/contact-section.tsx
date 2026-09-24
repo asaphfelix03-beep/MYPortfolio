@@ -79,15 +79,11 @@ export default function ContactSection() {
   };
 
   const field =
-    "w-full rounded-md border border-border bg-card px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent focus:ring-2 focus:ring-accent/20";
+    "w-full rounded-md border border-border bg-card px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-accent focus:ring-2 focus:ring-accent/20";
 
   return (
     <section id="contact" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8">
       <div className="max-w-7xl mx-auto">
-        <Reveal>
-          <p className="eyebrow">Contact</p>
-        </Reveal>
-
         <div className="mt-5 grid lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Left: pitch + coordinates */}
           <div className="lg:col-span-5 min-w-0">
@@ -229,7 +225,7 @@ export default function ContactSection() {
               <Magnetic className="mt-6 w-full sm:w-auto">
                 <button
                   type="submit"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-foreground text-background px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] hover:opacity-90 transition-opacity"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-accent text-accent-foreground px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] hover:opacity-90 transition-opacity"
                 >
                   Envoyer le message
                   <ArrowRight
