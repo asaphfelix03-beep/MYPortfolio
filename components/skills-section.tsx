@@ -23,7 +23,7 @@ export default function SkillsSection() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-12">
           <div className="min-w-0 lg:col-span-7">
-            <RevealTitle id="competences-title" className="h-section" text="Ce que je sais faire, et où le vérifier" />
+            <RevealTitle id="competences-title" className="h-section" text="Ce que je sais faire, et où le _vérifier_" />
           </div>
           <Reveal delay={0.06} className="min-w-0 lg:col-span-5">
             <p className="prose-night text-base sm:text-[1.0625rem]">

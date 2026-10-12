@@ -126,7 +126,7 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
         <span aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[radial-gradient(circle,oklch(0.55_0.2_280/0.45),transparent_65%)] blur-2xl" />
         <div className="relative grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-5">
-            <RevealTitle id="contact-title" className="h-section" text="Parlons de votre offre de stage" />
+            <RevealTitle id="contact-title" className="h-section" text="Parlons de votre offre de _stage_" />
             <Reveal delay={0.06}>
               <p className="prose-night mt-5 text-base sm:text-[1.0625rem]">
                 {site.availability.sentence} Une question sur un projet ou sur

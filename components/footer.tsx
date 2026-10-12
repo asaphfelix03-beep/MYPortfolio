@@ -18,8 +18,23 @@ export default function Footer({
   ];
 
   return (
-    <footer className="theme-ink px-5 py-14 sm:px-8 sm:py-16">
+    <footer className="theme-ink overflow-hidden px-5 py-14 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-7xl">
+        <div className="mb-14 flex items-end justify-between gap-6 border-b border-border pb-10">
+          <p className="max-w-md text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-tight tracking-[-0.035em]">
+            Un stage à pourvoir ? <span className="serif-accent font-normal text-accent">Parlons-en.</span>
+          </p>
+          {/* The closing call: a disc that grows on hover. */}
+          <a
+            href={href("contact")}
+            className="group grid h-28 w-28 shrink-0 place-items-center rounded-full bg-[image:var(--grad-brand)] text-center text-[0.875rem] font-medium text-white shadow-[0_20px_50px_-15px_oklch(0.5_0.22_280/0.7)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 sm:h-36 sm:w-36"
+          >
+            <span className="flex flex-col items-center gap-1">
+              <ArrowUpRight size={20} aria-hidden className="transition-transform duration-500 group-hover:rotate-45" />
+              Écrire
+            </span>
+          </a>
+        </div>
         <div className="grid gap-10 sm:grid-cols-12">
           <div className="sm:col-span-5">
             <p className="text-[1.75rem] font-light leading-tight">{site.name}</p>
@@ -86,7 +101,13 @@ export default function Footer({
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-[0.8125rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <p
+          aria-hidden
+          className="mt-14 select-none whitespace-nowrap text-[clamp(3.5rem,13vw,11rem)] font-semibold leading-[0.85] tracking-[-0.06em] text-foreground/90"
+        >
+          Asaph <span className="serif-accent font-normal text-brand">Felix</span>
+        </p>
+        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-[0.8125rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {site.name}</p>
           <a
             href={site.links.source}

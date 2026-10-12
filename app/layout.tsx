@@ -1,19 +1,31 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Jost } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import { site } from '@/lib/site'
 import './globals.css'
 
-// The night's single voice: a geometric sans with real character in the
-// caps, self-hosted by next/font so the strict CSP needs no new host. The
-// editorial serif and the second sans of the light world are gone with it:
-// every page is in the night now, and two fewer families means two fewer
-// font files preloaded on every visit.
-// Loaded as the variable font: one file covers every weight the pages use,
-// including the workbook viewer's bold cells.
-const jost = Jost({
+// Three voices with three jobs: an expressive grotesque for everything
+// (variable, so one file covers display and body), a serif italic for the
+// odd accent word in a title, a mono for small labels. Self-hosted by
+// next/font, so the strict CSP needs no new host.
+const sans = Bricolage_Grotesque({
   subsets: ['latin'],
   variable: '--font-geo',
+  display: 'swap',
+})
+
+const serif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: 'italic',
+  variable: '--font-serif',
+  display: 'swap',
+})
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-code',
   display: 'swap',
 })
 
@@ -90,7 +102,7 @@ export default function RootLayout({
     // data-scroll-behavior tells Next to suspend the CSS smooth scroll
     // during route changes; without it, arriving on /#section from a
     // project page overshot the section by several hundred pixels.
-    <html lang="fr" className={jost.variable} data-scroll-behavior="smooth">
+    <html lang="fr" className={`${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth">
       <body className="bg-background text-foreground antialiased">
         <a href="#contenu" className="skip-link">
           Aller au contenu

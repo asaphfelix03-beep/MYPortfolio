@@ -18,7 +18,7 @@
  * text 5.3:1, violet 5.9:1, white on the blue/violet button ≥ 5.5:1.
  * ------------------------------------------------------------------ */
 :root {
-  --background: oklch(0.985 0.006 265);
+  --background: oklch(0.986 0.004 95);
   --foreground: oklch(0.22 0.06 268);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.06 268);
@@ -26,15 +26,15 @@
   --popover-foreground: oklch(0.22 0.06 268);
   --primary: oklch(0.53 0.21 264);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.955 0.012 268);
+  --secondary: oklch(0.958 0.006 95);
   --secondary-foreground: oklch(0.22 0.06 268);
-  --muted: oklch(0.955 0.012 268);
+  --muted: oklch(0.958 0.006 95);
   --muted-foreground: oklch(0.48 0.035 268);
   --accent: oklch(0.53 0.21 264);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.55 0.2 25);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.91 0.012 268);
+  --border: oklch(0.905 0.008 95);
   /* Field strokes clear 3:1 against white. */
   --input: oklch(0.64 0.03 268);
   --ring: oklch(0.53 0.21 264);
@@ -166,23 +166,40 @@
   /* ---- Type ------------------------------------------------------- */
 
   .display-name {
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+  }
+
+  /* One accent word per title, in serif italic. */
+  .serif-accent {
+    font-family: var(--font-serif), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Small technical labels. */
+  .mono-label {
+    font-family: var(--font-code), ui-monospace, monospace;
+    font-size: 0.6875rem;
     font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.015em;
-    line-height: 0.92;
+    color: var(--muted-foreground);
   }
 
   .h-section {
-    font-weight: 500;
-    letter-spacing: -0.028em;
+    font-weight: 600;
+    letter-spacing: -0.045em;
     line-height: 1.02;
     font-size: clamp(2.1rem, 4.6vw, 3.6rem);
     text-wrap: balance;
   }
 
   .h-title {
-    font-weight: 500;
-    letter-spacing: -0.018em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
     line-height: 1.12;
     text-wrap: balance;
   }

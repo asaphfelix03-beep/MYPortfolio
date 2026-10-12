@@ -153,15 +153,15 @@ export default function Navigation({
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 ${
-          scrolled || open
-            ? "border-b border-border bg-background/90 backdrop-blur-md"
-            : "border-b border-transparent bg-transparent"
-        }`}
+        className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4"
       >
         <nav
           aria-label="Navigation principale"
-          className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:h-20 sm:px-8 md:pl-20"
+          className={`mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full border px-2.5 pl-3 transition-[background-color,border-color,box-shadow] duration-500 sm:h-16 md:ml-[4.5rem] lg:mx-auto ${
+            scrolled || open
+              ? "border-border bg-card/80 shadow-[var(--shadow-lift)] backdrop-blur-xl"
+              : "border-transparent bg-transparent"
+          }`}
         >
           <Link
             href={onHome ? "#top" : "/"}
@@ -174,7 +174,7 @@ export default function Navigation({
               history.replaceState(null, "", "#top");
             }}
           >
-            <span className="grid h-10 w-10 place-items-center bg-foreground transition-transform duration-300 group-hover:-translate-y-0.5">
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-foreground transition-transform duration-300 group-hover:rotate-[-8deg]">
               <LogoMark className="h-5 w-5 text-background" accent="var(--accent)" />
             </span>
             <span className="hidden text-[0.9375rem] font-medium sm:block">

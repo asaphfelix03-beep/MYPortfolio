@@ -145,12 +145,30 @@ export function RevealTitle({
   className?: string;
 }) {
   const reduce = useSafeReducedMotion();
-  const words = text.split(" ");
+  // `_mot_` marks the accent word, set in serif italic.
+  const words = text.split(" ").map((w) => {
+    const m = /^_(.+)_(\W*)$/.exec(w);
+    return m ? { w: m[1], tail: m[2], accent: true } : { w, tail: "", accent: false };
+  });
+  const render = (x: (typeof words)[number]) =>
+    x.accent ? (
+      <>
+        <span className="serif-accent text-brand pr-[0.04em]">{x.w}</span>
+        {x.tail}
+      </>
+    ) : (
+      x.w
+    );
 
   if (reduce) {
     return (
       <h2 id={id} className={className}>
-        {text}
+        {words.map((x, i) => (
+          <Fragment key={i}>
+            {render(x)}
+            {i < words.length - 1 ? " " : null}
+          </Fragment>
+        ))}
       </h2>
     );
   }
@@ -174,7 +192,7 @@ export function RevealTitle({
                 show: { y: "0%", rotate: 0, transition: { duration: 0.9, ease } },
               }}
             >
-              {w}
+              {render(w)}
             </motion.span>
           </span>
           {/* A real space between the masks, so the title still wraps. */}

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight, BadgeCheck, Download, FileText } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem, RevealTitle } from "@/components/ui/reveal";
@@ -53,7 +54,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-12">
           <div className="min-w-0 lg:col-span-7">
-            <RevealTitle id="parcours-title" className="h-section" text="Deux disciplines qui se répondent" />
+            <RevealTitle id="parcours-title" className="h-section" text="Deux disciplines qui se _répondent_" />
           </div>
           <Reveal delay={0.06} className="min-w-0 lg:col-span-5">
             <p className="prose-night text-base sm:text-[1.0625rem]">
@@ -68,6 +69,22 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
         <div className="mt-14 grid gap-14 lg:mt-16 lg:grid-cols-12 lg:gap-12">
           {/* Left: how I work, and the person around it. */}
           <div className="min-w-0 space-y-12 lg:col-span-5">
+            <Reveal kind="clip" duration={1.3}>
+              <figure className="relative aspect-[4/5] max-w-sm overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
+                <Image
+                  src="/images/asaph-photo.webp"
+                  alt="Portrait d'Ojewumi Asaph Felix"
+                  fill
+                  sizes="(min-width: 1024px) 384px, 90vw"
+                  className="object-cover object-[50%_30%]"
+                />
+                <figcaption className="absolute inset-x-3 bottom-3 rounded-2xl bg-card/85 px-4 py-3 backdrop-blur-md">
+                  <span className="block text-[1rem] font-semibold tracking-[-0.02em]">Ojewumi Asaph Felix</span>
+                  <span className="mono-label">Abidjan · Côte d&apos;Ivoire</span>
+                </figcaption>
+              </figure>
+            </Reveal>
+
             <Reveal>
               <h3 className="h-title text-[1.375rem]">Ma démarche</h3>
               <ul className="mt-5 border-t border-border">
