@@ -1,48 +1,87 @@
-"use client";
-
 import Navigation from "@/components/navigation";
-import NightHero from "@/components/night/night-hero";
+import Hero from "@/components/night/hero";
 import { Register, Selvedge } from "@/components/night/weave";
-import AboutSection from "@/components/about-section";
+import ProjectsSection from "@/components/projects/projects-section";
 import SkillsSection from "@/components/skills-section";
-import ProjectsSection from "@/components/projects-section";
+import ParcoursSection from "@/components/parcours-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
+import { getCvInfo } from "@/lib/cv-file";
+import { site } from "@/lib/site";
+import { projects } from "@/lib/projects";
+import { skillDomains } from "@/lib/skills";
 
 /**
- * The home page is woven: one night ground, and the sections stacked as the
- * registers of a pagne, each opened by a hairline the shuttle crosses.
+ * The home page, in the order a recruiter needs it: who (hero), the proof
+ * (projects), what he can do (skills), where he comes from (parcours), and
+ * how to reach him (contact).
  *
- * The selvedge replaces the old top progress bar — two readouts of the same
- * quantity is one too many, and the edge of the cloth is where a measure
- * belongs.
+ * A server component: it reads the CV's size from disk at build time and
+ * hands it to the sections that offer the download. The sections themselves
+ * are client components only where they animate or hold state.
  */
 export default function Home() {
+  const cv = getCvInfo();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: site.url,
+    inLanguage: "fr",
+    mainEntity: {
+      "@type": "Person",
+      name: site.name,
+      alternateName: site.shortName,
+      url: site.url,
+      image: `${site.url}/images/asaph-photo.webp`,
+      email: `mailto:${site.email}`,
+      jobTitle: "Étudiant en cybersécurité et intelligence artificielle",
+      affiliation: {
+        "@type": "CollegeOrUniversity",
+        name: `${site.school.name} (${site.school.short})`,
+        address: { "@type": "PostalAddress", addressLocality: site.school.city, addressCountry: "CI" },
+      },
+      address: { "@type": "PostalAddress", addressLocality: site.city, addressCountry: "CI" },
+      sameAs: [site.links.github, site.links.linkedin],
+      knowsAbout: skillDomains.map((d) => d.title),
+      subjectOf: projects.map((p) => ({
+        "@type": "CreativeWork",
+        name: p.title,
+        url: `${site.url}/projets/${p.slug}`,
+      })),
+    },
+  };
+
   return (
-    <main className="world-night relative min-h-screen overflow-x-hidden">
-      <Navigation />
+    <>
+      <script
+        type="application/ld+json"
+        // Static data built from lib/site.ts; nothing user-supplied.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Navigation cv={cv} />
       <Selvedge />
 
-      <div className="relative z-10">
-        <NightHero />
+      <main id="contenu" tabIndex={-1} className="relative overflow-x-clip outline-none">
+        <Hero cv={cv} />
 
         <Register className="md:pl-14">
-          <AboutSection />
+          <ProjectsSection />
         </Register>
         <Register className="md:pl-14">
           <SkillsSection />
         </Register>
         <Register className="md:pl-14">
-          <ProjectsSection />
+          <ParcoursSection cv={cv} />
         </Register>
         <Register className="md:pl-14">
-          <ContactSection />
+          <ContactSection cv={cv} />
         </Register>
+      </main>
 
-        <div className="md:pl-14">
-          <Footer />
-        </div>
+      <div className="theme-ink md:pl-14">
+        <Footer cv={cv} />
       </div>
-    </main>
+    </>
   );
 }

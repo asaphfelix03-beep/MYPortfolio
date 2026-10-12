@@ -29,11 +29,11 @@ Read mostly on a phone, on an unreliable or metered connection, often as one tab
 ## Capabilities and Constraints
 
 - Next.js 16 (App Router) / React 19 / Tailwind 4 / Framer Motion, statically generated, deployed on Vercel at portfolio-ojewumi.tech.
-- `/projets/monnaie-electronique-uemoa` renders the six sheets of an Excel workbook as HTML — values, pivot table, quality controls and charts — deliberately not as a downloadable file.
-- `/cv` serves the CV PDF by pattern-matching the file in `public/`.
-- Contact form submits through `mailto:` with a Gmail web fallback; there is no backend.
+- Every project has a page at `/projets/<slug>`, built from `lib/projects.ts`; `/projets/monnaie-electronique-uemoa` also renders the six sheets of an Excel workbook as HTML — values, pivot table, quality controls and charts — deliberately not as a downloadable file.
+- `/cv` serves exactly `public/documents/cv-ojewumi-asaph-felix.pdf` (configured in `lib/site.ts`) under the name `CV-Ojewumi-Asaph-Felix.pdf`; the build fails if the file is missing.
+- Contact form validates its fields, then hands a pre-filled e-mail to the visitor's mail app (Gmail web and copy as fallbacks) and says nothing is sent until they send it; there is no backend.
 - Strict Content-Security-Policy in `next.config.mjs`; any new external font, script or frame host has to be added there explicitly.
-- No analytics beyond Vercel; no CMS; content lives in typed modules under `components/` and `lib/`.
+- No analytics beyond Vercel; no CMS; content lives in typed modules under `lib/` (`site.ts`, `projects.ts`, `skills.ts`, `parcours.ts`).
 
 ## Brand Commitments
 
@@ -44,9 +44,9 @@ Read mostly on a phone, on an unreliable or metered connection, often as one tab
 
 ## Evidence on Hand
 
-- Five projects, of which two are finished data analyses with published figures: UEMOA electronic money 2020-2024 (BCEAO) and Côte d'Ivoire electrification 1960-2023, the latter with a live dashboard on GitHub Pages.
+- Six projects: SynthID-Graph (synthetic-identity fraud rings, graph + encrypted cross-bank cooperation, simulated data), Côte d'Ivoire electrification 1960-2023 (live dashboard on GitHub Pages), UEMOA electronic money 2020-2024 (BCEAO), CVFacile (live product), N'ti (Android APK) and Matronassist-ci (in progress). Four have a public repository. EcoCollect and the pharmaceutical sales analysis were withdrawn by the user in August–September 2026.
 - Nine certificates as PDFs in `public/certificates/`, four issuers (DataCamp, Microsoft/Coursera, IBM/Coursera, Cisco), two with issuer verification URLs.
-- Portrait photograph, CV PDF, N'ti Android package.
+- Portrait photograph, CV PDF, N'ti Android package (88 Mo).
 - No testimonials, no grades, no employment history, no client references: none exist and none may be invented.
 
 ## Product Principles

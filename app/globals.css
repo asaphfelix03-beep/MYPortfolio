@@ -3,189 +3,99 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Warm editorial light theme: cream paper, warm near-black ink,
-   emerald accent. Section-level dark inverts via `.section-dark`. */
-:root {
-  --background: oklch(0.985 0.003 90);
-  --foreground: oklch(0.21 0.008 45);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.008 45);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.008 45);
-  --primary: oklch(0.21 0.008 45);
-  --primary-foreground: oklch(0.985 0.003 90);
-  --secondary: oklch(0.962 0.005 85);
-  --secondary-foreground: oklch(0.21 0.008 45);
-  --muted: oklch(0.962 0.005 85);
-  --muted-foreground: oklch(0.53 0.008 60);
-  --accent: oklch(0.596 0.145 163);
-  --accent-foreground: oklch(0.99 0.002 90);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0.002 90);
-  --border: oklch(0.9 0.005 80);
-  --input: oklch(0.9 0.005 80);
-  --ring: oklch(0.596 0.145 163);
-  --chart-1: oklch(0.596 0.145 163);
-  --chart-2: oklch(0.21 0.008 45);
-  --chart-3: oklch(0.55 0.1 250);
-  --chart-4: oklch(0.75 0.15 85);
-  --chart-5: oklch(0.6 0.12 30);
-  --radius: 0.5rem;
-}
-
-/* Dark bands inside the light page (projects showcase, footer). */
-.section-dark {
-  --background: oklch(0.17 0.004 50);
-  --foreground: oklch(0.97 0.003 90);
-  --card: oklch(0.22 0.005 50);
-  --card-foreground: oklch(0.97 0.003 90);
-  --secondary: oklch(0.25 0.005 50);
-  --secondary-foreground: oklch(0.97 0.003 90);
-  --muted: oklch(0.25 0.005 50);
-  --muted-foreground: oklch(0.72 0.006 70);
-  --border: oklch(0.32 0.005 50);
-  --input: oklch(0.3 0.005 50);
-  --primary: oklch(0.97 0.003 90);
-  --primary-foreground: oklch(0.19 0.006 45);
-  background-color: var(--background);
-  color: var(--foreground);
-}
-
 /* ------------------------------------------------------------------ *
- * The woven night — the home page's world.
+ * "Daylight circuit" — the site's colour system (October 2026).
  *
- * Scoped to a wrapper rather than :root so the case study page keeps the
- * editorial light world until it is brought across too. Every section
- * inside already paints from semantic tokens, so redefining them here is
- * what turns the whole page to night.
+ * A cool off-white ground, deep navy ink, and three signal colours with
+ * distinct jobs: electric blue (technology, the primary action), violet
+ * (AI and creative work), cyan (graphic highlights only — it is too light
+ * for text on white, its ink variant exists for that). Gradients are local:
+ * the primary button, the hero name's sweep, a card's hover edge — never a
+ * whole surface. Technical panels (contact, footer, the UEMOA workbook)
+ * switch to the `.theme-ink` navy scope below.
  *
- * One weft colour and nothing else is coloured: amber-coral, the colour of
- * lamplight, carried by the accent token. Red stays reserved for the single
- * anomalous value in the data.
+ * Every pair is measured: ink on ground 16.7:1, muted text 6.3:1, blue
+ * text 5.3:1, violet 5.9:1, white on the blue/violet button ≥ 5.5:1.
  * ------------------------------------------------------------------ */
-.world-night {
-  --background: oklch(0.17 0.03 258);
-  --foreground: oklch(0.96 0.005 250);
-  --card: oklch(0.22 0.045 255);
-  --card-foreground: oklch(0.96 0.005 250);
-  --popover: oklch(0.22 0.045 255);
-  --popover-foreground: oklch(0.96 0.005 250);
-  --primary: oklch(0.96 0.005 250);
-  --primary-foreground: oklch(0.16 0.03 258);
-  --secondary: oklch(0.26 0.05 255);
-  --secondary-foreground: oklch(0.96 0.005 250);
-  --muted: oklch(0.26 0.05 255);
-  --muted-foreground: oklch(0.7 0.035 250);
-  --accent: oklch(0.72 0.1 60);
-  --accent-foreground: oklch(0.16 0.03 258);
-  --border: oklch(0.33 0.055 255);
-  --input: oklch(0.31 0.05 255);
-  --ring: oklch(0.72 0.1 60);
+:root {
+  --background: oklch(0.985 0.006 265);
+  --foreground: oklch(0.22 0.06 268);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.06 268);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.06 268);
+  --primary: oklch(0.53 0.21 264);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.012 268);
+  --secondary-foreground: oklch(0.22 0.06 268);
+  --muted: oklch(0.955 0.012 268);
+  --muted-foreground: oklch(0.48 0.035 268);
+  --accent: oklch(0.53 0.21 264);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.91 0.012 268);
+  /* Field strokes clear 3:1 against white. */
+  --input: oklch(0.64 0.03 268);
+  --ring: oklch(0.53 0.21 264);
 
-  /* A cloth's geometry is orthogonal: the night squares off every corner the
-     light world rounded, so the page reads as woven rather than as the old
-     site repainted. rounded-full survives for genuine pills. */
-  --radius: 0rem;
+  --blue: oklch(0.53 0.21 264);
+  --violet: oklch(0.52 0.23 292);
+  --cyan: oklch(0.74 0.13 210);
+  --cyan-ink: oklch(0.5 0.1 220);
+  --grad-brand: linear-gradient(120deg, var(--blue), var(--violet));
+  --grad-cool: linear-gradient(120deg, var(--cyan), var(--blue));
 
-  /* The cloth itself: warp and weft hairlines, and the points of light the
-     weave holds. The pitch is the one rhythm every register repeats. */
+  --chart-1: var(--blue);
+  --chart-2: var(--violet);
+  --chart-3: var(--cyan);
+  --chart-4: oklch(0.48 0.035 268);
+  --chart-5: oklch(0.55 0.2 25);
+
+  --radius: 1rem;
+
+  /* The lattice the hero network snaps to, drawn faintly in ink. */
   --weave-pitch: 22px;
-  --weave-line: oklch(0.96 0.005 250 / 0.045);
-  --weave-dot: oklch(0.96 0.005 250 / 0.16);
+  --weave-line: oklch(0.3 0.06 268 / 0.055);
+  --weave-dot: oklch(0.45 0.15 275 / 0.22);
 
+  --shadow-soft: 0 1px 2px oklch(0.22 0.06 268 / 0.04), 0 8px 24px -12px oklch(0.22 0.06 268 / 0.12);
+  --shadow-lift: 0 2px 4px oklch(0.22 0.06 268 / 0.05), 0 24px 48px -20px oklch(0.4 0.15 275 / 0.28);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+/* Navy panels for the technical blocks. Redefining the tokens is what
+   turns a block dark: the components inside paint from the same names. */
+.theme-ink {
+  --background: oklch(0.21 0.06 268);
+  --foreground: oklch(0.97 0.006 268);
+  --card: oklch(0.26 0.065 268);
+  --card-foreground: oklch(0.97 0.006 268);
+  --popover: oklch(0.26 0.065 268);
+  --popover-foreground: oklch(0.97 0.006 268);
+  --secondary: oklch(0.29 0.065 268);
+  --secondary-foreground: oklch(0.97 0.006 268);
+  --muted: oklch(0.29 0.065 268);
+  --muted-foreground: oklch(0.8 0.03 268);
+  --accent: oklch(0.74 0.13 258);
+  --accent-foreground: oklch(0.21 0.06 268);
+  --destructive: oklch(0.72 0.16 25);
+  --border: oklch(0.36 0.06 268);
+  --input: oklch(0.6 0.05 268);
+  --ring: oklch(0.74 0.13 258);
+  --weave-line: oklch(0.97 0.006 268 / 0.05);
+  --weave-dot: oklch(0.8 0.1 258 / 0.22);
   background-color: var(--background);
   color: var(--foreground);
-  /* One voice: the geometric face carries running text too, not only
-     the display. Two families would make the night a repaint of the
-     light world rather than its own world. */
-  font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
-}
-
-/* Des bandes, pas des cartes. Le contrat dit "no cards: full-bleed
-   horizontal bands" : dans la nuit, un conteneur ne se ferme plus par une
-   boite bordee et arrondie, il s'ouvre par un filet. Le groupement vient de
-   l'espace et du filet, pas du cadre. */
-.world-night .card-paper {
-  background-color: transparent;
-  border-width: 0;
-  border-top-width: 1px;
-  border-radius: 0;
-}
-
-/* Les boites imbriquees dans une bande redeviennent du texte pose sur le
-   tissu : une carte dans une carte est toujours une faute. */
-.world-night .card-paper :is(.rounded-md, .rounded-lg, .rounded-xl):not(.rounded-full) {
-  border-radius: 0;
-}
-
-/* La voix de la nuit ne s'arrete pas au premier ecran : les titres de
-   registre reprennent les capitales espacees du nom, au lieu du phrase
-   editorial du monde clair. */
-.world-night h2.display {
-  text-transform: uppercase;
-  letter-spacing: 0.045em;
-  font-weight: 300;
-  line-height: 1.02;
-  font-size: clamp(1.6rem, 3.6vw, 2.7rem);
-}
-
-/* L'emphase d'un mot par l'italique appartenait au monde clair. Portee en
-   capitales espacees elle ne lit plus comme une emphase mais comme un
-   doublon penche : le device saute, le titre se porte tout seul. */
-.world-night h2.display .italic {
-  font-style: normal;
-}
-
-/* Une seule couleur saturee sur la page. Les marques technologiques
-   arrivent en couleurs de marque et formaient l'element le plus sature du
-   site, juste sous un titre qui promet de la retenue. Elles passent au
-   monochrome et retrouvent leur couleur au survol, ou l'information de
-   marque compte vraiment. */
-.world-night .animate-marquee :is(svg, img) {
-  filter: grayscale(1) brightness(1.7) opacity(0.55);
-  transition: filter 0.3s ease;
-}
-
-.world-night .animate-marquee :is(svg, img):hover {
-  filter: none;
-}
-
-/* Inside the night, a section that used to invert is already night: hold the
-   same values so a band does not jump a shade darker than its neighbour. */
-.world-night .section-dark {
-  --background: oklch(0.17 0.03 258);
-  --foreground: oklch(0.96 0.005 250);
-  --card: oklch(0.22 0.045 255);
-  --card-foreground: oklch(0.96 0.005 250);
-  --secondary: oklch(0.26 0.05 255);
-  --secondary-foreground: oklch(0.96 0.005 250);
-  --muted: oklch(0.26 0.05 255);
-  --muted-foreground: oklch(0.7 0.035 250);
-  --border: oklch(0.33 0.055 255);
-  --input: oklch(0.31 0.05 255);
-  --primary: oklch(0.96 0.005 250);
-  --primary-foreground: oklch(0.16 0.03 258);
-  background-color: transparent;
-}
-
-/* One geometric voice for everything. The editorial serif belongs to the
-   light world; in the night the display face is the same sans, set in
-   tracked caps, so display and body are one family. */
-.world-night .display {
-  font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.05;
-}
-
-.world-night .eyebrow {
-  font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
-  --font-mono: ui-monospace, 'Courier New', monospace;
+  --font-sans: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Courier New', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -205,65 +115,279 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-blue: var(--blue);
+  --color-violet: var(--violet);
+  --color-cyan: var(--cyan);
+  --color-cyan-ink: var(--cyan-ink);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 4px);
-  --radius-xl: calc(var(--radius) + 8px);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: 'kern' 1;
+    @apply border-border;
   }
 
-  section[id] {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: 'kern' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  [id] {
     scroll-margin-top: 5.5rem;
   }
 
-  h1, h2, h3, h4, h5 {
-    letter-spacing: -0.02em;
+  ::selection {
+    background: oklch(0.53 0.21 264 / 0.2);
+    color: var(--foreground);
   }
 }
 
 @layer components {
-  /* Small letterspaced label that opens a section. */
-  .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+  /* ---- Type ------------------------------------------------------- */
+
+  .display-name {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.015em;
+    line-height: 0.92;
   }
 
-  /* Editorial serif display type. */
-  .display {
-    font-family: var(--font-serif), ui-serif, Georgia, serif;
-    font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1.08;
+  .h-section {
+    font-weight: 500;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+    font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+    text-wrap: balance;
   }
 
-  .card-paper {
-    @apply rounded-xl border border-border bg-card;
+  .h-title {
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.12;
+    text-wrap: balance;
   }
 
-  /* Faint blueprint grid behind the hero. */
-  .grid-paper {
-    background-image:
-      linear-gradient(to right, oklch(0.21 0.008 45 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(0.21 0.008 45 / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
+  .label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--muted-foreground);
   }
 
-  /* The cloth. Warp and weft hairlines with a point of light at every
-     crossing — one primitive that draws the hero field, the register
-     grounds and the data marks alike, so the page has a single texture
-     rather than a set of decorations. */
+  .prose-night {
+    line-height: 1.7;
+    color: var(--muted-foreground);
+    text-wrap: pretty;
+  }
+
+  .figure {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Gradient ink for figures and the hero name. */
+  .text-brand {
+    background-image: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* A small pill that names a section: a coloured dot and a word. */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem 0.35rem 0.65rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--foreground);
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* ---- Actions ---------------------------------------------------- */
+
+  .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.35s var(--ease-out),
+      transform 0.35s var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 0.08s;
+  }
+
+  .btn-sm {
+    min-height: 2.5rem;
+    padding: 0.5rem 1.05rem;
+    font-size: 0.875rem;
+  }
+
+  .btn-primary {
+    background-image: var(--grad-brand);
+    background-size: 160% 100%;
+    background-position: 0% 50%;
+    color: #fff;
+    box-shadow: 0 8px 22px -10px oklch(0.45 0.2 275 / 0.7);
+    transition:
+      background-position 0.6s var(--ease-out),
+      box-shadow 0.35s var(--ease-out),
+      transform 0.35s var(--ease-out);
+  }
+
+  .btn-primary:hover {
+    background-position: 100% 50%;
+    box-shadow: 0 16px 34px -12px oklch(0.45 0.2 275 / 0.75);
+  }
+
+  /* A band of light crosses the primary button on hover. */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 30%, oklch(1 0 0 / 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s var(--ease-out);
+  }
+  .btn-primary:hover::after {
+    transform: translateX(120%);
+  }
+
+  .btn-outline {
+    border-color: var(--border);
+    background-color: var(--card);
+    color: var(--foreground);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .theme-ink .btn-outline {
+    background-color: transparent;
+    border-color: oklch(0.97 0.006 268 / 0.28);
+    box-shadow: none;
+  }
+
+  .btn-quiet {
+    padding-inline: 0.5rem;
+    color: var(--muted-foreground);
+  }
+
+  .btn-quiet:hover {
+    color: var(--foreground);
+  }
+
+  .btn .icon-go,
+  .link-go .icon-go,
+  .btn .icon-out,
+  .link-go .icon-out,
+  .btn .icon-down,
+  .link-go .icon-down {
+    transition: transform 0.3s var(--ease-out);
+  }
+  .btn:hover .icon-go,
+  .link-go:hover .icon-go,
+  .group:hover .icon-go {
+    transform: translateX(4px);
+  }
+  .btn:hover .icon-out,
+  .link-go:hover .icon-out {
+    transform: translate(3px, -3px);
+  }
+  .btn:hover .icon-down,
+  .link-go:hover .icon-down {
+    transform: translateY(3px);
+  }
+
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition:
+      background-size 0.35s var(--ease-out),
+      color 0.2s ease;
+  }
+  .link-line:hover,
+  .link-line:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--muted);
+    padding: 0.22rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--foreground);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* ---- Surfaces --------------------------------------------------- */
+
+  .surface {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 1.75rem;
+    box-shadow: var(--shadow-soft);
+  }
+
   .weave-field {
     background-image:
       radial-gradient(circle at 50% 50%, var(--weave-dot) 1px, transparent 1.7px),
@@ -273,148 +397,253 @@
     background-position: center center;
   }
 
-  /* Tracked uppercase display, the night's headline voice. */
-  .woven-title {
-    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
-    text-transform: uppercase;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    line-height: 0.95;
-  }
-
-  /* A plate on the night ground. Photographs and embedded dashboards come
-     in on white; left alone they punch a lit hole through the cloth. The
-     plate cools them toward the ground's own indigo and drops their
-     brightness, so they read as printed on the cloth rather than pasted
-     over it. */
-  .world-night .night-plate {
+  /* A frame for screenshots and photographs. On the light ground they
+     need no dimming, only a hairline and a radius to sit in the page. */
+  .night-plate {
     position: relative;
     isolation: isolate;
-  }
-
-  .world-night .night-plate :is(img, iframe) {
-    filter: brightness(0.82) contrast(1.04) saturate(0.85);
-  }
-
-  .world-night .night-plate::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: oklch(0.34 0.07 258);
-    mix-blend-mode: color;
-    opacity: 0.55;
-  }
-
-  .world-night .project-visualization {
-    background: oklch(0.22 0.045 255);
-    border-radius: 0;
-  }
-
-  .project-img {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-    object-fit: cover;
-    border: 1px solid var(--border);
+    background-color: var(--muted);
+    border-radius: 1.25rem;
+    overflow: hidden;
   }
 
   .project-visualization {
     width: 100%;
-    min-height: 420px;
+    min-height: 520px;
     border: 0;
-    border-radius: 0.5rem;
-    background: #fff;
+    background: var(--card);
   }
 
   @media (max-width: 768px) {
     .project-visualization {
-      min-height: 320px;
+      min-height: 420px;
     }
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 0.75rem;
+    z-index: 100;
+    transform: translateY(-160%);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-foreground);
+    padding: 0.75rem 1.1rem;
+    font-weight: 500;
+    transition: transform 0.2s var(--ease-out);
+  }
+  .skip-link:focus-visible {
+    transform: none;
   }
 }
 
-/* Infinite technology marquee */
-@keyframes marquee-x {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* ---- The first viewport's entrance -----------------------------------
+ * CSS, not JavaScript: it starts at first paint, before hydration, so
+ * nothing in the first screen waits on a bundle to appear. */
+@keyframes line-up {
+  from {
+    transform: translateY(110%) rotate(2deg);
+  }
+  to {
+    transform: none;
+  }
 }
 
-.animate-marquee {
-  animation: marquee-x 42s linear infinite;
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* Declared here rather than as a Tailwind `hover:` utility: this rule sits
-   outside @layer, so the shorthand above would otherwise win the cascade and
-   keep resetting animation-play-state to running. */
-.animate-marquee:hover {
-  animation-play-state: paused;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.marquee-mask {
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@keyframes caret-blink {
-  0%, 45% { opacity: 1; }
-  55%, 100% { opacity: 0; }
+/* The portrait opens like a shutter, from the centre out. */
+@keyframes iris {
+  from {
+    clip-path: inset(48% 48% 48% 48% round 2rem);
+    transform: scale(1.12);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 2rem);
+    transform: none;
+  }
 }
 
-.animate-caret {
-  animation: caret-blink 1s steps(1) infinite;
+/* Light runs once across the name after it has landed. */
+@keyframes sweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 10px;
+/* Slow drift for the hero's colour fields: long, eased, alternating, so
+   the eye reads it as light moving rather than as an animation. */
+@keyframes drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(40px, -30px, 0) scale(1.12); }
+}
+@keyframes drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to { transform: translate3d(-36px, 28px, 0) scale(0.95); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes cue {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(7px); opacity: 0.5; }
 }
 
-::-webkit-scrollbar-track {
-  background: oklch(0.962 0.005 85);
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.08em;
+  margin-block: -0.08em;
 }
 
-::-webkit-scrollbar-thumb {
-  background: oklch(0.8 0.006 70);
-  border-radius: 6px;
+.line-up {
+  display: block;
+  transform-origin: 0 100%;
+  animation: line-up 1.15s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.6 0.008 60);
+.rise-in {
+  animation: rise-in 1s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
 }
 
-::selection {
-  background: oklch(0.596 0.145 163 / 0.22);
+.pop-in {
+  animation: pop-in 0.9s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
 }
 
-.world-night ::selection {
-  background: oklch(0.72 0.17 45 / 0.28);
-  color: oklch(0.96 0.005 250);
+.fade-in {
+  animation: fade-in 1.4s ease both;
+  animation-delay: var(--d, 0ms);
 }
 
-/* La barre de defilement de la page appartient a la racine, pas au
-   conteneur de la nuit : une regle posee sur .world-night ne l'atteint
-   jamais. :has remonte a la racine sans forcer une classe sur <body>, donc
-   la route claire garde la sienne. */
-html:has(.world-night) {
-  scrollbar-color: oklch(0.33 0.055 255) oklch(0.17 0.03 258);
+.iris-in {
+  animation: iris 1.5s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
 }
 
-html:has(.world-night) ::-webkit-scrollbar-track {
-  background: oklch(0.17 0.03 258);
+/* The name is ink; a brand-coloured band crosses it once, after the line
+   has landed. Both animations run on the same span. */
+.line-up.name-sweep {
+  animation-name: line-up, sweep;
+  animation-duration: 1.15s, 2.4s;
+  animation-timing-function: var(--ease-out), var(--ease-out);
+  animation-delay: var(--d, 0ms), calc(var(--d, 0ms) + 650ms);
+  animation-fill-mode: both, both;
 }
 
-html:has(.world-night) ::-webkit-scrollbar-thumb {
-  background: oklch(0.33 0.055 255);
-  border-radius: 0;
+.name-sweep {
+  background-image: linear-gradient(
+    100deg,
+    var(--foreground) 0%,
+    var(--foreground) 38%,
+    var(--blue) 46%,
+    var(--violet) 54%,
+    var(--foreground) 62%,
+    var(--foreground) 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sweep 2.4s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
 }
 
-html:has(.world-night) ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.72 0.1 60);
+.drift-a {
+  animation: drift-a 14s ease-in-out infinite alternate;
+}
+.drift-b {
+  animation: drift-b 17s ease-in-out infinite alternate;
+}
+.spin-slow {
+  animation: spin-slow 48s linear infinite;
+}
+.cue {
+  animation: cue 1.8s ease-in-out infinite;
 }
 
+/* Each page fades up on arrival, including client-side navigations: the
+   template re-mounts this wrapper on every route change. */
+/* Opacity only: a transform on this wrapper would make it the containing
+   block of the fixed header for the length of the animation. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.page-enter {
+  animation: page-enter 0.5s ease-out both;
+}
+
+.signal-dot {
+  animation: signal 1.8s ease-out 1.2s 3;
+}
+@keyframes signal {
+  0% { box-shadow: 0 0 0 0 oklch(0.53 0.21 264 / 0.5); }
+  100% { box-shadow: 0 0 0 10px oklch(0.53 0.21 264 / 0); }
+}
+
+/* ---- Scrollbar -------------------------------------------------------- */
+html {
+  scrollbar-color: oklch(0.8 0.03 268) oklch(0.97 0.006 265);
+}
+
+/* Reduced motion: nothing travels. Content appears at once; colour and
+   focus changes stay, since they answer the reader without moving. */
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-caret {
-    animation: none;
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .btn:hover,
+  .btn:active {
+    transform: none;
   }
 }

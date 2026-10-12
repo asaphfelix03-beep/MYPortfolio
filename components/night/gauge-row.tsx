@@ -23,18 +23,18 @@ const nf = new Intl.NumberFormat("fr-FR", {
  * value the workbook itself flags as anomalous. Every other country stays in
  * the cloth's own grey.
  */
-export default function GaugeRow() {
+export default function GaugeRow({ onProjectPage = false }: { onProjectPage?: boolean }) {
   const reduce = useSafeReducedMotion();
   const countries = dashboard.ranking;
 
   return (
     <div className="flex h-full flex-col justify-center gap-5 p-6 sm:p-8">
       <div className="flex items-baseline justify-between gap-4">
-        <p className="text-[9.5px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-          Taux d&apos;activité des comptes · 2024
+        <p className="text-[0.8125rem] font-medium text-muted-foreground">
+          Taux d&apos;activité des comptes en 2024
         </p>
-        <p className="text-[9.5px] tabular-nums tracking-[0.18em] text-muted-foreground/70">
-          0 – {SCALE_MAX} %
+        <p className="whitespace-nowrap text-[0.75rem] tabular-nums text-muted-foreground/80">
+          échelle 0–{SCALE_MAX}{" "}%
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export default function GaugeRow() {
           return (
             <li key={c.pays} className="flex min-w-0 flex-1 flex-col items-center">
               <span
-                className={`mb-2 text-[9.5px] tabular-nums ${
+                className={`mb-2 text-[10.5px] tabular-nums sm:text-[11px] ${
                   isSubject
                     ? "text-accent"
                     : isAnomaly
@@ -98,10 +98,12 @@ export default function GaugeRow() {
         })}
       </ul>
 
-      <p className="text-[11px] leading-relaxed text-muted-foreground">
+      <p className="text-[0.8125rem] leading-relaxed text-muted-foreground">
         Le Niger tient la valeur la plus basse de la zone et la Côte d&apos;Ivoire
-        la deuxième, alors qu&apos;elle concentre 40,1 % des comptes ouverts. Les
-        six feuilles du classeur sont consultables sur la page du projet.
+        la deuxième, alors qu&apos;elle concentre 40,1 % des comptes ouverts.
+        {onProjectPage
+          ? " Les six feuilles du classeur se consultent plus bas."
+          : " Les six feuilles du classeur sont consultables sur la page du projet."}
       </p>
     </div>
   );

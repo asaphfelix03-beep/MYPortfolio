@@ -19,18 +19,18 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 /**
  * The four charts of the workbook, redrawn from the same series Excel plots.
  *
- * They always sit on the `.section-dark` card, so the palette is validated
- * against that one surface (#1d1a19) rather than against both themes:
- *   blue #3987e5 / orange #d95926 — all five checks PASS
- *   accent #009965 vs de-emphasis #6b6866 — CVD ΔE 8.9, contrast ≥ 3:1
- * The grey is meant to read as grey: it is a de-emphasis mark, not a
- * categorical slot, so the chroma floor does not apply to it.
+ * They sit on the night's plate (#0b1b2f), and the palette is checked
+ * against that surface:
+ *   blue #3987e5 4.76:1 · orange #d95926 4.46:1 — both clear 3:1 for marks;
+ *   Côte d'Ivoire takes the site's amber (#d39562, 6.8:1), the same mark it
+ *   carries in the gauge row on the home page, against a grey (#657383,
+ *   3.6:1) meant to read as grey: a de-emphasis mark, not a category.
  */
 const SERIES_1 = "#3987e5"; // comptes ouverts, indice ouverts
 const SERIES_2 = "#d95926"; // comptes actifs, indice actifs
-const EMPHASIS = "#009965"; // Côte d'Ivoire
-const DE_EMPHASIS = "#6b6866"; // les sept autres pays
-const SURFACE = "#1d1a19"; // le fond de carte, pour les anneaux et écarts
+const EMPHASIS = "#d39562"; // Côte d'Ivoire — l'ambre du site
+const DE_EMPHASIS = "#657383"; // les sept autres pays
+const SURFACE = "#0b1b2f"; // le fond de carte, pour les anneaux et écarts
 
 const NBSP = " "; // insécable : garde « 4,53 % » sur une seule ligne
 const nf = new Intl.NumberFormat("fr-FR");
@@ -55,7 +55,7 @@ function Frame({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="m-0 rounded-lg border border-border bg-card p-4 sm:p-5">
+    <figure className="m-0 border border-border bg-card p-4 sm:p-5">
       <figcaption>
         <p className="text-sm font-semibold text-foreground text-balance">
           {title}
@@ -86,7 +86,7 @@ function TooltipBox({
   const format = (v: number) =>
     digits === 2 ? nf2.format(v) : nf.format(Math.round(v));
   return (
-    <div className="rounded-md border border-border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+    <div className="border border-border bg-background/95 px-3 py-2 backdrop-blur-sm">
       <p className="text-[11px] font-semibold text-foreground">{label}</p>
       <ul className="mt-1.5 space-y-1">
         {payload.map((p) => (

@@ -1,140 +1,137 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Shield, Database, Code2, Network, LineChart } from "lucide-react";
-import { WordRevealRich } from "@/components/ui/text-reveal";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
-import { brandIcons } from "@/lib/brand-icons";
+import Link from "next/link";
+import { Reveal, RevealGroup, RevealItem, RevealTitle } from "@/components/ui/reveal";
+import { levels, skillDomains, type SkillLevel, type SkillProof } from "@/lib/skills";
 
-const pillars = [
-  {
-    icon: Shield,
-    title: "Sécurité par défaut",
-    body: "Sécurité des réseaux, tests d'intrusion, cryptographie et supervision. La protection des données pensée dès la conception, pas ajoutée après coup.",
-    footer: "Défense & analyse",
-  },
-  {
-    icon: LineChart,
-    title: "La donnée qui décide",
-    body: "Nettoyage, agrégation et exploration de jeux de données réels. Je transforme des fichiers bruts en tendances lisibles et en visualisations qui éclairent une décision.",
-    footer: "Analyse de données",
-  },
-  {
-    icon: Code2,
-    title: "Des applications qui tiennent",
-    body: "Applications web et mobiles construites de bout en bout, du modèle de données à l'interface, avec le souci du détail et de la fiabilité.",
-    footer: "Web & mobile",
-  },
-];
-
-const domains = [
-  { icon: Code2, label: "Développement Full-stack", items: "React · Node.js · TypeScript · SQL" },
-  { icon: Database, label: "Big Data", items: "Hadoop · Spark · Kafka · NoSQL" },
-  { icon: Network, label: "Réseaux & Infrastructure", items: "Routage · Firewall · VPN · Monitoring" },
-];
-
+/**
+ * Skills as a ledger: five domains, and on every line the proof — the
+ * project that uses it, the certificate that covers it — or the honest
+ * admission that it is still a notion. A recruiter can check any line in
+ * one click instead of taking a logo wall on trust.
+ */
 export default function SkillsSection() {
-  const reduce = useSafeReducedMotion();
-
   return (
-    <section id="skills" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mt-5 grid lg:grid-cols-12 gap-6 lg:gap-10 items-end">
-          <Reveal delay={0.06} className="lg:col-span-8 min-w-0">
-            <h2 className="display text-[clamp(1.9rem,4.6vw,3.4rem)] text-balance">
-              <WordRevealRich
-                italicClassName="italic"
-                parts={[
-                  { text: "Une expertise à la croisée de la sécurité, de la donnée et du " },
-                  { text: "code", italic: true },
-                  { text: "." },
-                ]}
-              />
-            </h2>
-          </Reveal>
-          <Reveal delay={0.12} className="lg:col-span-4 min-w-0">
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
-              Une sélection de technologies pratiquées en cours, en projet et en
-              autoformation, de l&apos;analyse de données au durcissement réseau.
+    <section
+      id="competences"
+      tabIndex={-1}
+      aria-labelledby="competences-title"
+      className="relative px-5 py-20 outline-none sm:px-8 sm:py-28 lg:py-32"
+    >
+      <span id="skills" aria-hidden className="absolute top-0" />
+
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-12">
+          <div className="min-w-0 lg:col-span-7">
+            <RevealTitle id="competences-title" className="h-section" text="Ce que je sais faire, et où le vérifier" />
+          </div>
+          <Reveal delay={0.06} className="min-w-0 lg:col-span-5">
+            <p className="prose-night text-base sm:text-[1.0625rem]">
+              Chaque compétence renvoie à sa preuve : un projet publié ici,
+              une certification ou la formation à l&apos;ESATIC. Ce qui
+              n&apos;est encore qu&apos;une notion est présenté comme tel.
             </p>
           </Reveal>
         </div>
 
-        {/* Infinite technology marquee */}
-        <div className="mt-12 sm:mt-16 border-y border-border py-7 marquee-mask overflow-hidden">
-          <div
-            className={
-              reduce
-                ? "flex flex-wrap justify-center gap-x-9 gap-y-6"
-                : // .animate-marquee pauses on hover (see globals.css), which
-                  // makes the per-logo colour reveal reachable.
-                  "flex w-max animate-marquee gap-10 sm:gap-14"
-            }
-          >
-            {/* Duplicated once so the -50% translation loops seamlessly.
-                The copy is aria-hidden so screen readers hear each tech once. */}
-            {(reduce ? brandIcons : [...brandIcons, ...brandIcons]).map((icon, i) => (
-              <span
-                key={`${icon.title}-${i}`}
-                title={icon.title}
-                aria-hidden={i >= brandIcons.length ? true : undefined}
-                className="group/logo shrink-0 grid place-items-center"
-              >
-                <svg
-                  role="img"
-                  viewBox="0 0 24 24"
-                  aria-label={i < brandIcons.length ? icon.title : undefined}
-                  className="h-7 w-7 sm:h-8 sm:w-8 fill-[var(--brand)] opacity-70 saturate-[0.85] transition duration-300 group-hover/logo:opacity-100 group-hover/logo:saturate-100 group-hover/logo:scale-110"
-                  style={{ "--brand": `#${icon.hex}` } as React.CSSProperties}
-                >
-                  <path d={icon.path} />
-                </svg>
-              </span>
+        <Reveal delay={0.08}>
+          <ul aria-label="Légende" className="mt-10 flex flex-wrap gap-x-8 gap-y-3 sm:mt-12">
+            {(Object.keys(levels) as SkillLevel[]).map((l) => (
+              <li key={l} className="flex items-center gap-3 text-[0.875rem] text-muted-foreground">
+                <LevelMark level={l} />
+                <span title={levels[l].description}>{levels[l].label}</span>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </Reveal>
 
-        {/* Three pillars */}
-        <RevealGroup
-          className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6"
-          stagger={0.1}
-        >
-          {pillars.map((p) => (
-            <RevealItem key={p.title} className="h-full">
-              <SpotlightCard className="card-paper h-full p-6 sm:p-7 flex flex-col">
-                <p.icon size={20} className="text-accent" />
-                <h3 className="mt-5 text-base font-bold tracking-tight">{p.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground text-pretty flex-1">
-                  {p.body}
-                </p>
-                <p className="display italic text-lg mt-5 text-foreground/70">
-                  {p.footer}
-                </p>
-              </SpotlightCard>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-
-        {/* Secondary domains */}
-        <RevealGroup
-          className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6"
-          stagger={0.08}
-        >
-          {domains.map((d) => (
-            <RevealItem key={d.label}>
-              <div className="flex h-full items-start gap-3.5 border-t border-border pt-5 pr-5">
-                <d.icon size={18} className="text-foreground mt-0.5 shrink-0" />
-                <div className="min-w-0">
-                  <h3 className="text-sm font-bold tracking-tight">{d.label}</h3>
-                  <p className="mt-1 text-xs text-muted-foreground">{d.items}</p>
+        <div className="mt-8 grid gap-5">
+          {skillDomains.map((d, i) => (
+            <Reveal key={d.id} kind={i % 2 ? "right" : "left"}>
+              <div className="surface group grid gap-5 p-6 transition-shadow duration-500 hover:shadow-[var(--shadow-lift)] sm:p-8 lg:grid-cols-12 lg:gap-12">
+                <div className="min-w-0 lg:col-span-4">
+                  <span aria-hidden className={`mb-4 block h-1 w-12 rounded-full transition-[width] duration-500 group-hover:w-20 ${domainColor[i % domainColor.length]}`} />
+                  <h3 className="h-title text-[1.375rem] sm:text-[1.5rem]">{d.title}</h3>
+                  <p className="mt-2 max-w-sm text-[0.9375rem] leading-relaxed text-muted-foreground">
+                    {d.description}
+                  </p>
                 </div>
+
+                <RevealGroup as="ul" stagger={0.07} className="min-w-0 lg:col-span-8">
+                  {d.skills.map((s) => (
+                    <RevealItem
+                      as="li"
+                      kind="right"
+                      key={s.name}
+                      className="grid grid-cols-[auto_1fr] items-baseline gap-x-4 gap-y-1 border-b border-border/50 py-3.5 last:border-b-0 sm:grid-cols-[auto_1fr_auto] sm:gap-x-6"
+                    >
+                      <LevelMark level={s.level} />
+                      <span className="text-[0.9375rem] leading-snug text-foreground text-pretty">
+                        {s.name}
+                        <span className="sr-only"> ({levels[s.level].label})</span>
+                      </span>
+                      <span className="col-start-2 text-[0.8125rem] leading-snug text-muted-foreground sm:col-start-3 sm:max-w-[16rem] sm:text-right">
+                        {s.proofs.length ? (
+                          <Proofs proofs={s.proofs} />
+                        ) : (
+                          "Pas encore de projet publié"
+                        )}
+                      </span>
+                    </RevealItem>
+                  ))}
+                </RevealGroup>
               </div>
-            </RevealItem>
+            </Reveal>
           ))}
-        </RevealGroup>
+        </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Three marks that differ by shape, not only by colour: a filled amber
+ * square for what has been put to work, an outlined square for what has
+ * been studied, a dashed one for a notion.
+ */
+const domainColor = ["bg-blue", "bg-violet", "bg-[image:var(--grad-brand)]", "bg-cyan", "bg-[image:var(--grad-cool)]"];
+
+function LevelMark({ level }: { level: SkillLevel }) {
+  const shape =
+    level === "projet"
+      ? "rounded-full bg-[image:var(--grad-brand)]"
+      : level === "formation"
+        ? "rounded-full border-2 border-blue"
+        : "rounded-full border border-dashed border-muted-foreground";
+  return (
+    <span
+      aria-hidden
+      className={`inline-block h-2.5 w-2.5 shrink-0 translate-y-[0.05em] ${shape}`}
+    />
+  );
+}
+
+function Proofs({ proofs }: { proofs: SkillProof[] }) {
+  return (
+    <>
+      {proofs.map((p, i) => (
+        <span key={p.label}>
+          {i > 0 ? ", " : null}
+          {p.href ? (
+            p.href.startsWith("/") ? (
+              <Link href={p.href} className="link-line inline-block py-1.5 text-foreground/80 hover:text-accent">
+                {p.label}
+              </Link>
+            ) : (
+              <a href={p.href} className="link-line inline-block py-1.5 text-foreground/80 hover:text-accent">
+                {p.label}
+              </a>
+            )
+          ) : (
+            p.label
+          )}
+        </span>
+      ))}
+    </>
   );
 }

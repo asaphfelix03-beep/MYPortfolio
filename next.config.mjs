@@ -66,9 +66,7 @@ const securityHeaders = [
 
 const nextConfig = {
   poweredByHeader: false,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // Type errors fail the build: `tsc --noEmit` is clean, keep it that way.
   images: {
     unoptimized: true,
   },

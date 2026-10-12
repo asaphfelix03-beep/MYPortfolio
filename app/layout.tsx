@@ -1,54 +1,63 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Plus_Jakarta_Sans, Instrument_Serif, Jost } from 'next/font/google'
+import { Jost } from 'next/font/google'
+import { site } from '@/lib/site'
 import './globals.css'
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-})
-
-// The woven night's single voice: a geometric sans with real character in
-// the caps, self-hosted by next/font so the strict CSP needs no new host.
+// The night's single voice: a geometric sans with real character in the
+// caps, self-hosted by next/font so the strict CSP needs no new host. The
+// editorial serif and the second sans of the light world are gone with it:
+// every page is in the night now, and two fewer families means two fewer
+// font files preloaded on every visit.
+// Loaded as the variable font: one file covers every weight the pages use,
+// including the workbook viewer's bold cells.
 const jost = Jost({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
   variable: '--font-geo',
   display: 'swap',
 })
 
-const instrument = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  style: ['normal', 'italic'],
-  variable: '--font-serif',
-  display: 'swap',
-})
-
-const siteUrl = 'https://portfolio-ojewumi.tech'
-const title = 'Asaph Felix | Cybersécurité & Intelligence Artificielle'
+const title = `${site.name} | Cybersécurité & intelligence artificielle`
 const description =
-  'Portfolio de Ojewumi Asaph Felix - Étudiant en Cybersécurité et Intelligence Artificielle à Abidjan. Projets en analyse de données, sécurité des réseaux et développement web et mobile.'
+  "Portfolio d'Ojewumi Asaph Felix, étudiant en Licence 3 Cybersécurité et Intelligence Artificielle à l'ESATIC (Abidjan). Détection de fraude sur graphe, analyses de données publiques ivoiriennes, applications web et mobiles. Disponible pour un stage dès fin février 2027."
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title,
+  metadataBase: new URL(site.url),
+  title: {
+    default: title,
+    template: `%s | ${site.shortName}`,
+  },
   description,
+  applicationName: site.shortName,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  keywords: [
+    'Ojewumi Asaph Felix',
+    'Asaph Felix',
+    'cybersécurité',
+    'intelligence artificielle',
+    'analyse de données',
+    'ESATIC',
+    'Abidjan',
+    'stage',
+    'portfolio',
+  ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'profile',
     locale: 'fr_FR',
-    url: siteUrl,
-    siteName: 'Asaph Felix',
+    url: site.url,
+    siteName: site.shortName,
     title,
     description,
+    firstName: 'Asaph Felix',
+    lastName: 'Ojewumi',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Ojewumi Asaph Felix — Cybersécurité, données et développement',
+        alt: 'Ojewumi Asaph Felix, cybersécurité et intelligence artificielle',
       },
     ],
   },
@@ -62,9 +71,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // Icons are picked up from app/icon.svg and app/apple-icon.png. Next
-  // fingerprints those URLs, which is what finally evicts the v0 favicon
-  // browsers had cached under the bare /icon.svg path.
+  formatDetection: { telephone: false },
+  // Icons come from app/icon.svg and app/apple-icon.png, fingerprinted by
+  // Next so browsers never keep a stale favicon.
+}
+
+export const viewport: Viewport = {
+  themeColor: '#f8fafe',
+  colorScheme: 'light',
 }
 
 export default function RootLayout({
@@ -73,11 +87,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="fr"
-      className={`${jakarta.variable} ${instrument.variable} ${jost.variable}`}
-    >
-      <body className="font-sans antialiased bg-background text-foreground">
+    // data-scroll-behavior tells Next to suspend the CSS smooth scroll
+    // during route changes; without it, arriving on /#section from a
+    // project page overshot the section by several hundred pixels.
+    <html lang="fr" className={jost.variable} data-scroll-behavior="smooth">
+      <body className="bg-background text-foreground antialiased">
+        <a href="#contenu" className="skip-link">
+          Aller au contenu
+        </a>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

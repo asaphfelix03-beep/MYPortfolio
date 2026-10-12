@@ -1,85 +1,103 @@
-"use client";
+import Link from "next/link";
+import { ArrowUpRight, Download, Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/brand";
+import { sections, site, type CvInfo } from "@/lib/site";
 
-import { Github, Linkedin, Mail } from "lucide-react";
+export default function Footer({
+  cv,
+  onHome = true,
+}: {
+  cv: CvInfo;
+  onHome?: boolean;
+}) {
+  const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
 
-const links = [
-  { name: "Profil", href: "#about" },
-  { name: "Expertise", href: "#skills" },
-  { name: "Réalisations", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
+  const elsewhere = [
+    { label: "GitHub", href: site.links.github, icon: <GithubIcon size={15} /> },
+    { label: "LinkedIn", href: site.links.linkedin, icon: <LinkedinIcon size={15} /> },
+  ];
 
-const socials = [
-  {
-    icon: Github,
-    // Le depot qui porte reellement ce site. asaphfelix03-beep/portfolio-asaph
-    // est une ancienne copie, figee depuis juillet 2026.
-    href: "https://github.com/asaphfelix03-beep/MYPortfolio",
-    label: "GitHub",
-  },
-  {
-    icon: Linkedin,
-    href: "https://www.linkedin.com/in/asaph-felix-ojewumi-469054324/",
-    label: "LinkedIn",
-  },
-  { icon: Mail, href: "mailto:asaphfelix02@gmail.com", label: "Email" },
-];
-
-export default function Footer() {
   return (
-    <footer className="section-dark px-5 sm:px-8 py-14 sm:py-16">
-      <div className="max-w-7xl mx-auto">
+    <footer className="theme-ink px-5 py-14 sm:px-8 sm:py-16">
+      <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 sm:grid-cols-12">
           <div className="sm:col-span-5">
-            <p className="display text-3xl sm:text-4xl">Asaph Felix</p>
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground leading-relaxed">
-              Étudiant en Cybersécurité et Intelligence Artificielle, basé à
-              Abidjan.
+            <p className="text-[1.75rem] font-light leading-tight">{site.name}</p>
+            <p className="mt-3 max-w-xs text-[0.9375rem] leading-relaxed text-muted-foreground">
+              Étudiant en cybersécurité et intelligence artificielle à
+              l&apos;{site.school.short}, {site.school.city}.
             </p>
           </div>
 
-          <nav className="sm:col-span-4">
-            <p className="eyebrow">Navigation</p>
-            <ul className="mt-4 space-y-2.5">
-              {links.map((l) => (
-                <li key={l.name}>
-                  <a
-                    href={l.href}
-                    className="-my-1 inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          <nav aria-label="Pied de page" className="sm:col-span-3">
+            <p className="label">Sur ce site</p>
+            <ul className="mt-3">
+              {sections.map((s) => (
+                <li key={s.id}>
+                  <Link
+                    href={href(s.id)}
+                    className="inline-flex min-h-10 items-center text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    {l.name}
-                  </a>
+                    {s.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
-          <div className="sm:col-span-3">
-            <p className="eyebrow">Me suivre</p>
-            <div className="mt-4 flex gap-2.5">
-              {socials.map((s) => (
+          <div className="sm:col-span-4">
+            <p className="label">Ailleurs</p>
+            <ul className="mt-3">
+              <li>
                 <a
-                  key={s.label}
-                  href={s.href}
-                  target={s.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel={s.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors"
+                  href={`mailto:${site.email}`}
+                  className="inline-flex min-h-10 items-center gap-2.5 text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  <s.icon size={16} />
+                  <Mail size={15} aria-hidden />
+                  {site.email}
                 </a>
+              </li>
+              {elsewhere.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-go inline-flex min-h-10 items-center gap-2.5 text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {l.icon}
+                    {l.label}
+                    <ArrowUpRight size={14} aria-hidden className="icon-out" />
+                    <span className="sr-only">(nouvel onglet)</span>
+                  </a>
+                </li>
               ))}
-            </div>
+              <li>
+                <a
+                  href={cv.href}
+                  download={cv.downloadName}
+                  className="inline-flex min-h-10 items-center gap-2.5 text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <Download size={15} aria-hidden />
+                  {cv.label}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Ojewumi Asaph Felix
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Conçu et développé en Côte d&apos;Ivoire
-          </p>
+        <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-[0.8125rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {site.name}</p>
+          <a
+            href={site.links.source}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-go inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+          >
+            Code source de ce site, conçu et développé en Côte d&apos;Ivoire
+            <ArrowUpRight size={13} aria-hidden className="icon-out" />
+            <span className="sr-only">(nouvel onglet)</span>
+          </a>
         </div>
       </div>
     </footer>
