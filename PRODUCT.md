@@ -44,7 +44,7 @@ Read mostly on a phone, on an unreliable or metered connection, often as one tab
 
 ## Evidence on Hand
 
-- Six projects: SynthID-Graph (synthetic-identity fraud rings, graph + encrypted cross-bank cooperation, simulated data), Côte d'Ivoire electrification 1960-2023 (live dashboard on GitHub Pages), UEMOA electronic money 2020-2024 (BCEAO), CVFacile (live product), N'ti (Android APK) and Matronassist-ci (in progress). Four have a public repository. EcoCollect and the pharmaceutical sales analysis were withdrawn by the user in August–September 2026.
+- Seven projects: SynthID-Graph (synthetic-identity fraud rings, simulated data), Côte d'Ivoire electrification 1960-2023 (live dashboard), UEMOA electronic money 2020-2024 (BCEAO), CVFacile (live product), N'ti (Android APK), EcoCollect (in progress) and Matronassist-ci (in progress). Four have a public repository. The pharmaceutical sales analysis was removed for good on the user's request (Oct 2026).
 - Nine certificates as PDFs in `public/certificates/`, four issuers (DataCamp, Microsoft/Coursera, IBM/Coursera, Cisco), two with issuer verification URLs.
 - Portrait photograph, CV PDF, N'ti Android package (88 Mo).
 - No testimonials, no grades, no employment history, no client references: none exist and none may be invented.

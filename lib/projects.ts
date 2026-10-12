@@ -36,7 +36,7 @@ export type ProjectVisual =
   /** Matronassist-ci's role matrix, drawn from its README. */
   | { kind: "roles" }
   /** No screenshot exists yet: a typographic cover, with no invented data. */
-  | { kind: "cover"; icon: "pill" | "map"; words: string[] };
+  | { kind: "cover"; icon: "map"; words: string[] };
 
 export type Project = {
   slug: string;
@@ -255,30 +255,6 @@ export const projects: Project[] = [
       { label: "Classeur PROJET UEMOA.xlsx (feuilles Analyse et Tableau de bord)", href: "#classeur" },
       { label: "Dépôt analyse-data-BCEAO", href: "https://github.com/asaphfelix03-beep/analyse-data-BCEAO#readme" },
     ],
-  },
-  {
-    slug: "analyse-ventes-pharmaceutiques",
-    title: "Analyse des ventes pharmaceutiques",
-    category: "Analyse de données",
-    families: ["donnees"],
-    year: "2026",
-    tagline: "Six années de données transformées en tendances lisibles",
-    summary:
-      "Analyse exploratoire de six années de ventes (2014–2019) à partir de fichiers CSV : nettoyage, agrégation, filtres temporels et gestion des valeurs manquantes.",
-    objective:
-      "Faire ressortir, à partir de fichiers de ventes bruts, les médicaments les plus vendus et les variations saisonnières.",
-    // TODO(contenu) : lien vers le notebook ou le dépôt, contribution, chiffres.
-    highlights: {
-      title: "Ce que montrent les visualisations",
-      items: [
-        "Les médicaments les plus vendus sur la période 2014–2019.",
-        "Une saisonnalité marquée de la catégorie R03 en hiver.",
-      ],
-    },
-    technologies: ["Python", "Pandas", "Matplotlib"],
-    visual: { kind: "cover", icon: "pill", words: ["2014", "2019", "CSV", "R03"] },
-    links: {},
-    sources: [{ label: "Description d'origine du projet sur ce portfolio", href: "/#projets" }],
   },
   {
     slug: "cvfacile",
