@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { MapPin } from "lucide-react";
 import GaugeRow from "@/components/night/gauge-row";
 import type { Project } from "@/lib/projects";
 
@@ -31,26 +30,6 @@ export function ProjectVisual({
   }
 
   if (v.kind === "roles") return <RolesVisual />;
-
-  if (v.kind === "cover") {
-    return (
-      <div
-        role="img"
-        aria-label={`Couverture du projet ${project.title} : aucune capture publiée pour l'instant.`}
-        className="relative flex aspect-[16/10] flex-col justify-between overflow-hidden rounded-[1.25rem] bg-[oklch(0.95_0.02_155)] p-7 sm:p-9"
-      >
-        <span aria-hidden className="weave-field pointer-events-none absolute inset-0 opacity-70" />
-        <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-card text-cyan-ink shadow-[var(--shadow-soft)]">
-          <MapPin size={26} aria-hidden />
-        </span>
-        <p aria-hidden className="relative flex flex-wrap gap-x-5 gap-y-1 text-[clamp(1.6rem,3.6vw,2.6rem)] font-medium leading-none tracking-[-0.03em] text-foreground/80">
-          {v.words.map((w) => (
-            <span key={w}>{w}</span>
-          ))}
-        </p>
-      </div>
-    );
-  }
 
   const isPortrait = v.height > v.width;
 

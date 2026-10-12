@@ -34,9 +34,7 @@ export type ProjectVisual =
   /** The eight UEMOA gauges, drawn live from the workbook's values. */
   | { kind: "uemoa-gauges" }
   /** Matronassist-ci's role matrix, drawn from its README. */
-  | { kind: "roles" }
-  /** No screenshot exists yet: a typographic cover, with no invented data. */
-  | { kind: "cover"; icon: "map"; words: string[] };
+  | { kind: "roles" };
 
 export type Project = {
   slug: string;
@@ -333,32 +331,6 @@ export const projects: Project[] = [
       },
     },
     sources: [{ label: "Application N'ti (APK)", href: "/files/nti-app-release.apk" }],
-  },
-  {
-    slug: "ecocollect",
-    title: "EcoCollect",
-    category: "Application mobile",
-    families: ["web"],
-    year: "2025 — 2026",
-    status: "En cours",
-    tagline: "Signaler, localiser et réduire les dépôts sauvages",
-    summary:
-      "Application mobile citoyenne pour signaler les dépôts sauvages de déchets, localiser les points de collecte et de recyclage, et sensibiliser à l'éco-responsabilité.",
-    objective:
-      "Donner aux habitants un moyen simple de signaler un dépôt sauvage et de trouver le point de collecte le plus proche.",
-    // TODO(contenu) : captures, dépôt, contribution — projet en cours.
-    highlights: {
-      title: "Fonctionnalités prévues",
-      items: [
-        "Signalement des dépôts sauvages de déchets.",
-        "Localisation des points de collecte et de recyclage.",
-        "Sensibilisation à l'éco-responsabilité.",
-      ],
-    },
-    technologies: ["Flutter", "Django", "PostgreSQL", "Google Maps API"],
-    visual: { kind: "cover", icon: "map", words: ["Signaler", "Localiser", "Recycler"] },
-    links: {},
-    sources: [{ label: "Description d'origine du projet sur ce portfolio", href: "/#projets" }],
   },
   {
     slug: "matronassist-ci",
