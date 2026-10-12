@@ -1,6 +1,6 @@
 ---
 name: Asaph Felix — Cobalt on Paper
-description: A light, editorial portfolio — warm off-white paper, blue-black ink, deep cobalt as the rare accent, sage for data & AI, muted teal for graphics.
+description: Warm paper, blue-black ink, soft greys; deep cobalt for actions and accent words, sage for data & AI, muted teal for graphics. No decorative gradients or glows.
 colors:
   ground: "oklch(0.985 0.006 265)"
   surface: "oklch(1 0 0)"
@@ -28,15 +28,16 @@ rounded:
   pill: "9999px"
 ---
 
-# Design System: Asaph Felix — Daylight Circuit
+# Design System: Asaph Felix — Cobalt on Paper
 
-Since October 2026 (second redesign, at the user's request: "plus claire, colorée et harmonieuse"), the site is light. The night world is retired; its network motif survives, recoloured.
+October 2026, third pass: the violet and the glows read as generated, so they are gone. The site reads as print: warm off-white paper, blue-black ink, soft greys, colour spent rarely.
 
-## Colour (revised 12 Oct 2026: violet removed at the user's request)
-- Warm off-white paper, white cards, blue-black ink (16:1), soft greys; muted text 6.9:1.
-- **Cobalt** `oklch(0.46 0.15 262)` = actions, links, the accent word of a title, the progress thread. Spent rarely.
-- **Sage** = the data & AI family; **muted teal** = graphics only. Security = cobalt, web & mobile = teal.
-- No decorative gradients, glows or frosted glass. `--grad-brand` is a cobalt shift of a few points; the primary button is solid cobalt that deepens on hover; shadows are neutral ink.
+## Colour
+- Paper `oklch(0.982 0.004 85)`, white cards, ink `oklch(0.23 0.025 255)` (16:1), muted text 6.9:1.
+- **Cobalt** `oklch(0.46 0.15 262)` (7.3:1): primary button (solid, deepens on hover), links, the serif accent word of each title, focus ring, progress thread.
+- **Sage** `oklch(0.62 0.055 155)` / sage-ink for text: the data & AI family. **Muted teal**: graphics, web & mobile family.
+- Families: security cobalt, data & AI sage, web & mobile teal.
+- `--grad-brand` is now a cobalt shift of a few points — no rainbow anywhere. No glows, no frosted glass; shadows are neutral ink.
 - `.theme-ink` blue-black panels: contact, footer, UEMOA workbook/gauges, Matronassist roles.
 
 ## Type
