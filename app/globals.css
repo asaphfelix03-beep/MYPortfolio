@@ -4,90 +4,95 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ *
- * "Daylight circuit" — the site's colour system (October 2026).
+ * "Cobalt on paper" — the site's colour system (October 2026).
  *
- * A cool off-white ground, deep navy ink, and three signal colours with
- * distinct jobs: electric blue (technology, the primary action), violet
- * (AI and creative work), cyan (graphic highlights only — it is too light
- * for text on white, its ink variant exists for that). Gradients are local:
- * the primary button, the hero name's sweep, a card's hover edge — never a
- * whole surface. Technical panels (contact, footer, the UEMOA workbook)
- * switch to the `.theme-ink` navy scope below.
+ * Warm off-white paper, blue-black ink, soft greys, and colour spent
+ * rarely: deep cobalt for actions, links and the accent word of a title;
+ * sage for the data & AI family; a muted teal for graphics only. No
+ * decorative gradients and no glows: --grad-brand survives as a cobalt
+ * shift of a few points, so nothing that uses it reads as a rainbow.
+ * Technical panels (contact, footer, the UEMOA workbook) switch to the
+ * `.theme-ink` scope below.
  *
- * Every pair is measured: ink on ground 16.7:1, muted text 6.3:1, blue
- * text 5.3:1, violet 5.9:1, white on the blue/violet button ≥ 5.5:1.
+ * Measured on white: ink 16:1, muted text 6.9:1, cobalt 7.3:1,
+ * sage-ink 6.6:1, white on the cobalt button 7.3:1.
  * ------------------------------------------------------------------ */
 :root {
-  --background: oklch(0.986 0.004 95);
-  --foreground: oklch(0.22 0.06 268);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.06 268);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.06 268);
-  --primary: oklch(0.53 0.21 264);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.958 0.006 95);
-  --secondary-foreground: oklch(0.22 0.06 268);
-  --muted: oklch(0.958 0.006 95);
-  --muted-foreground: oklch(0.48 0.035 268);
-  --accent: oklch(0.53 0.21 264);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.55 0.2 25);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.905 0.008 95);
+  --background: oklch(0.982 0.004 85);
+  --foreground: oklch(0.23 0.025 255);
+  --card: oklch(0.998 0.002 85);
+  --card-foreground: oklch(0.23 0.025 255);
+  --popover: oklch(0.998 0.002 85);
+  --popover-foreground: oklch(0.23 0.025 255);
+  --primary: oklch(0.46 0.15 262);
+  --primary-foreground: oklch(0.99 0.003 85);
+  --secondary: oklch(0.955 0.005 85);
+  --secondary-foreground: oklch(0.23 0.025 255);
+  --muted: oklch(0.955 0.005 85);
+  --muted-foreground: oklch(0.46 0.015 255);
+  --accent: oklch(0.46 0.15 262);
+  --accent-foreground: oklch(0.99 0.003 85);
+  --destructive: oklch(0.52 0.17 28);
+  --destructive-foreground: oklch(0.99 0.003 85);
+  --border: oklch(0.9 0.006 85);
   /* Field strokes clear 3:1 against white. */
-  --input: oklch(0.64 0.03 268);
-  --ring: oklch(0.53 0.21 264);
+  --input: oklch(0.64 0.015 255);
+  --ring: oklch(0.46 0.15 262);
 
-  --blue: oklch(0.53 0.21 264);
-  --violet: oklch(0.52 0.23 292);
-  --cyan: oklch(0.74 0.13 210);
-  --cyan-ink: oklch(0.5 0.1 220);
-  --grad-brand: linear-gradient(120deg, var(--blue), var(--violet));
+  --blue: oklch(0.46 0.15 262);
+  --sage: oklch(0.62 0.055 155);
+  --sage-ink: oklch(0.46 0.06 155);
+  --cyan: oklch(0.66 0.07 210);
+  --cyan-ink: oklch(0.46 0.07 215);
+  --grad-brand: linear-gradient(120deg, oklch(0.46 0.15 262), oklch(0.5 0.13 250));
   --grad-cool: linear-gradient(120deg, var(--cyan), var(--blue));
 
   --chart-1: var(--blue);
-  --chart-2: var(--violet);
+  --chart-2: var(--sage);
   --chart-3: var(--cyan);
-  --chart-4: oklch(0.48 0.035 268);
-  --chart-5: oklch(0.55 0.2 25);
+  --chart-4: oklch(0.46 0.015 255);
+  --chart-5: oklch(0.52 0.17 28);
 
   --radius: 1rem;
 
-  /* The lattice the hero network snaps to, drawn faintly in ink. */
   --weave-pitch: 22px;
-  --weave-line: oklch(0.3 0.06 268 / 0.055);
-  --weave-dot: oklch(0.45 0.15 275 / 0.22);
+  --weave-line: oklch(0.3 0.02 255 / 0.05);
+  --weave-dot: oklch(0.35 0.03 255 / 0.18);
 
-  --shadow-soft: 0 1px 2px oklch(0.22 0.06 268 / 0.04), 0 8px 24px -12px oklch(0.22 0.06 268 / 0.12);
-  --shadow-lift: 0 2px 4px oklch(0.22 0.06 268 / 0.05), 0 24px 48px -20px oklch(0.4 0.15 275 / 0.28);
+  /* Neutral shadows: paper lifting, not light glowing. */
+  --shadow-soft: 0 1px 2px oklch(0.23 0.025 255 / 0.05), 0 8px 24px -14px oklch(0.23 0.025 255 / 0.14);
+  --shadow-lift: 0 2px 4px oklch(0.23 0.025 255 / 0.05), 0 22px 44px -22px oklch(0.23 0.025 255 / 0.3);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   color-scheme: light;
 }
 
-/* Navy panels for the technical blocks. Redefining the tokens is what
-   turns a block dark: the components inside paint from the same names. */
+/* Blue-black panels for the technical blocks. Redefining the tokens is
+   what turns a block dark: the components inside paint from the same
+   names. */
 .theme-ink {
-  --background: oklch(0.21 0.06 268);
-  --foreground: oklch(0.97 0.006 268);
-  --card: oklch(0.26 0.065 268);
-  --card-foreground: oklch(0.97 0.006 268);
-  --popover: oklch(0.26 0.065 268);
-  --popover-foreground: oklch(0.97 0.006 268);
-  --secondary: oklch(0.29 0.065 268);
-  --secondary-foreground: oklch(0.97 0.006 268);
-  --muted: oklch(0.29 0.065 268);
-  --muted-foreground: oklch(0.8 0.03 268);
-  --accent: oklch(0.74 0.13 258);
-  --accent-foreground: oklch(0.21 0.06 268);
-  --destructive: oklch(0.72 0.16 25);
-  --border: oklch(0.36 0.06 268);
-  --input: oklch(0.6 0.05 268);
-  --ring: oklch(0.74 0.13 258);
-  --weave-line: oklch(0.97 0.006 268 / 0.05);
-  --weave-dot: oklch(0.8 0.1 258 / 0.22);
+  --background: oklch(0.22 0.025 255);
+  --foreground: oklch(0.96 0.004 85);
+  --card: oklch(0.265 0.028 255);
+  --card-foreground: oklch(0.96 0.004 85);
+  --popover: oklch(0.265 0.028 255);
+  --popover-foreground: oklch(0.96 0.004 85);
+  --secondary: oklch(0.29 0.03 255);
+  --secondary-foreground: oklch(0.96 0.004 85);
+  --muted: oklch(0.29 0.03 255);
+  --muted-foreground: oklch(0.78 0.012 255);
+  --accent: oklch(0.78 0.08 250);
+  --accent-foreground: oklch(0.22 0.025 255);
+  --destructive: oklch(0.72 0.14 28);
+  --border: oklch(0.35 0.025 255);
+  --input: oklch(0.6 0.02 255);
+  --ring: oklch(0.78 0.08 250);
+  --blue: oklch(0.78 0.08 250);
+  --sage: oklch(0.78 0.06 155);
+  --weave-line: oklch(0.96 0.004 85 / 0.045);
+  --weave-dot: oklch(0.96 0.004 85 / 0.14);
+  --grad-brand: linear-gradient(120deg, oklch(0.8 0.07 250), oklch(0.84 0.05 230));
   background-color: var(--background);
   color: var(--foreground);
   color-scheme: dark;
@@ -116,7 +121,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-blue: var(--blue);
-  --color-violet: var(--violet);
+  --color-sage: var(--sage);
+  --color-sage-ink: var(--sage-ink);
   --color-cyan: var(--cyan);
   --color-cyan-ink: var(--cyan-ink);
   --color-chart-1: var(--chart-1);
@@ -157,7 +163,7 @@
   }
 
   ::selection {
-    background: oklch(0.53 0.21 264 / 0.2);
+    background: oklch(0.46 0.15 262 / 0.16);
     color: var(--foreground);
   }
 }
@@ -289,34 +295,19 @@
   }
 
   .btn-primary {
-    background-image: var(--grad-brand);
-    background-size: 160% 100%;
-    background-position: 0% 50%;
-    color: #fff;
-    box-shadow: 0 8px 22px -10px oklch(0.45 0.2 275 / 0.7);
-    transition:
-      background-position 0.6s var(--ease-out),
-      box-shadow 0.35s var(--ease-out),
-      transform 0.35s var(--ease-out);
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.12) inset, 0 6px 16px -10px oklch(0.23 0.025 255 / 0.5);
   }
 
+  /* Hover deepens the cobalt instead of lighting it up. */
   .btn-primary:hover {
-    background-position: 100% 50%;
-    box-shadow: 0 16px 34px -12px oklch(0.45 0.2 275 / 0.75);
+    background-color: oklch(0.39 0.14 262);
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.12) inset, 0 14px 28px -14px oklch(0.23 0.025 255 / 0.55);
   }
 
-  /* A band of light crosses the primary button on hover. */
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(105deg, transparent 30%, oklch(1 0 0 / 0.35) 50%, transparent 70%);
-    transform: translateX(-120%);
-    transition: transform 0.7s var(--ease-out);
-  }
-  .btn-primary:hover::after {
-    transform: translateX(120%);
+  .theme-ink .btn-primary:hover {
+    background-color: oklch(0.86 0.06 250);
   }
 
   .btn-outline {
@@ -520,16 +511,6 @@
   }
 }
 
-/* Slow drift for the hero's colour fields: long, eased, alternating, so
-   the eye reads it as light moving rather than as an animation. */
-@keyframes drift-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(40px, -30px, 0) scale(1.12); }
-}
-@keyframes drift-b {
-  from { transform: translate3d(0, 0, 0) scale(1.05); }
-  to { transform: translate3d(-36px, 28px, 0) scale(0.95); }
-}
 @keyframes spin-slow {
   to { transform: rotate(360deg); }
 }
@@ -587,8 +568,8 @@
     100deg,
     var(--foreground) 0%,
     var(--foreground) 38%,
-    var(--blue) 46%,
-    var(--violet) 54%,
+    var(--blue) 47%,
+    var(--cyan-ink) 53%,
     var(--foreground) 62%,
     var(--foreground) 100%
   );
@@ -601,12 +582,6 @@
   animation-delay: var(--d, 0ms);
 }
 
-.drift-a {
-  animation: drift-a 14s ease-in-out infinite alternate;
-}
-.drift-b {
-  animation: drift-b 17s ease-in-out infinite alternate;
-}
 .spin-slow {
   animation: spin-slow 48s linear infinite;
 }
@@ -634,8 +609,8 @@
   animation: signal 1.8s ease-out 1.2s 3;
 }
 @keyframes signal {
-  0% { box-shadow: 0 0 0 0 oklch(0.53 0.21 264 / 0.5); }
-  100% { box-shadow: 0 0 0 10px oklch(0.53 0.21 264 / 0); }
+  0% { box-shadow: 0 0 0 0 oklch(0.46 0.15 262 / 0.45); }
+  100% { box-shadow: 0 0 0 10px oklch(0.46 0.15 262 / 0); }
 }
 
 /* ---- Scrollbar -------------------------------------------------------- */

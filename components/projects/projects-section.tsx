@@ -176,7 +176,7 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
                   <dt className="mt-2 text-[0.8125rem] leading-snug text-muted-foreground text-pretty">
                     {r.label}
                   </dt>
-                  <dd className="figure text-brand text-[2.1rem]">{r.value}</dd>
+                  <dd className="figure text-foreground text-[2.1rem]">{r.value}</dd>
                 </div>
               ))}
             </dl>
@@ -207,9 +207,9 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
   );
 }
 
-/** Blue for security, violet for data and AI, cyan for web and mobile. */
+/** Cobalt for security, sage for data and AI, teal for web and mobile. */
 function familyEdge(p: Project) {
   if (p.families.includes("securite")) return "bg-blue";
-  if (p.families.includes("donnees")) return "bg-violet";
+  if (p.families.includes("donnees")) return "bg-sage";
   return "bg-cyan";
 }

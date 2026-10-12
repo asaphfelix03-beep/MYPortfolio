@@ -123,7 +123,6 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
         {/* The closing panel: navy, with one localised glow behind the form. */}
         <div className="theme-ink relative overflow-hidden rounded-[2rem] px-5 py-12 sm:px-10 sm:py-16 lg:px-14">
         <span aria-hidden className="weave-field pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(70%_60%_at_80%_10%,black,transparent)]" />
-        <span aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[radial-gradient(circle,oklch(0.55_0.2_280/0.45),transparent_65%)] blur-2xl" />
         <div className="relative grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-5">
             <RevealTitle id="contact-title" className="h-section" text="Parlons de votre offre de _stage_" />

@@ -30,10 +30,6 @@ export default function Hero({ cv }: { cv: CvInfo }) {
       aria-labelledby="hero-title"
       className="relative isolate overflow-hidden pt-24 sm:pt-28"
     >
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
-        <div className="drift-a absolute -right-[12%] -top-[20%] h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.12_265/0.4),transparent_65%)] blur-2xl" />
-        <div className="drift-b absolute -bottom-[30%] left-[30%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,oklch(0.82_0.1_205/0.35),transparent_65%)] blur-2xl" />
-      </div>
       <div
         aria-hidden
         className="weave-field pointer-events-none absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(90%_70%_at_75%_40%,black,transparent_75%)]"
@@ -74,7 +70,7 @@ export default function Hero({ cv }: { cv: CvInfo }) {
 
           <p className="rise-in prose-night mt-7 max-w-[34rem] text-base sm:text-[1.0625rem]" style={delay(620)}>
             Étudiant en <span className="font-medium text-blue">cybersécurité</span> et{" "}
-            <span className="font-medium text-violet">intelligence artificielle</span>. Détection
+            <span className="font-medium text-sage-ink">intelligence artificielle</span>. Détection
             de fraude sur graphe, analyses de données publiques ivoiriennes,
             applications web et mobiles : chaque projet ici a sa méthode et ses
             sources.
@@ -187,7 +183,7 @@ function ProjectStack() {
                 exit={reduce ? undefined : { opacity: 0, y: 60, x: -60, rotate: -10, scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 160, damping: 22 }}
                 style={{ zIndex: depth }}
-                className="absolute inset-0 overflow-hidden rounded-[1.4rem] border border-border bg-card shadow-[0_30px_70px_-30px_oklch(0.3_0.12_275/0.45)]"
+                className="absolute inset-0 overflow-hidden rounded-[1.4rem] border border-border bg-card shadow-[var(--shadow-lift)]"
               >
                 <div className="flex items-center gap-1.5 border-b border-border bg-muted px-4 py-2.5">
                   <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.7_0.17_25)]" />

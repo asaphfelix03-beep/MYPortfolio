@@ -37,7 +37,7 @@ export function Selvedge() {
       <div className="absolute inset-y-0 left-0 w-[3px] md:left-1/2 md:w-px md:-translate-x-1/2 bg-border/70" />
       <motion.div
         style={{ scaleY: reduce ? 1 : thread }}
-        className="absolute inset-y-0 left-0 w-[3px] origin-top bg-[linear-gradient(to_bottom,var(--blue),var(--violet),var(--cyan))] md:left-1/2 md:w-[2px] md:-translate-x-1/2"
+        className="absolute inset-y-0 left-0 w-[3px] origin-top bg-accent md:left-1/2 md:w-[2px] md:-translate-x-1/2"
       />
 
       <span className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 md:block">
@@ -82,7 +82,7 @@ export function Register({
       {/* The shuttle crossing the warp. */}
       <motion.div
         aria-hidden
-        className="absolute left-0 top-0 h-[2px] origin-left bg-[linear-gradient(90deg,var(--blue),var(--violet)_55%,var(--cyan))]"
+        className="absolute left-0 top-0 h-[2px] origin-left bg-accent"
         initial={reduce ? { width: "100%" } : { width: "100%", scaleX: 0 }}
         whileInView={reduce ? undefined : { scaleX: 1 }}
         viewport={{ once: true, margin: IN_VIEW_MARGIN }}

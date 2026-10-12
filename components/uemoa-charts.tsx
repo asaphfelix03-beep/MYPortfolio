@@ -86,7 +86,7 @@ function TooltipBox({
   const format = (v: number) =>
     digits === 2 ? nf2.format(v) : nf.format(Math.round(v));
   return (
-    <div className="border border-border bg-background/95 px-3 py-2 backdrop-blur-sm">
+    <div className="border border-border bg-background px-3 py-2">
       <p className="text-[11px] font-semibold text-foreground">{label}</p>
       <ul className="mt-1.5 space-y-1">
         {payload.map((p) => (

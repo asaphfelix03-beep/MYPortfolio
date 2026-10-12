@@ -94,7 +94,7 @@ export default function SkillsSection() {
  * square for what has been put to work, an outlined square for what has
  * been studied, a dashed one for a notion.
  */
-const domainColor = ["bg-blue", "bg-violet", "bg-[image:var(--grad-brand)]", "bg-cyan", "bg-[image:var(--grad-cool)]"];
+const domainColor = ["bg-blue", "bg-sage", "bg-cyan", "bg-blue", "bg-sage"];
 
 function LevelMark({ level }: { level: SkillLevel }) {
   const shape =

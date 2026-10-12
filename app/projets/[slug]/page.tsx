@@ -268,7 +268,7 @@ export default async function ProjectPage({
                               <dt className="mt-2.5 text-[0.875rem] leading-snug text-muted-foreground text-pretty">
                                 {r.label}
                               </dt>
-                              <dd className="figure text-brand text-[clamp(2rem,4vw,2.75rem)]">
+                              <dd className="figure text-foreground text-[clamp(2rem,4vw,2.75rem)]">
                                 {r.value}
                               </dd>
                             </div>

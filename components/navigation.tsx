@@ -159,7 +159,7 @@ export default function Navigation({
           aria-label="Navigation principale"
           className={`mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full border px-2.5 pl-3 transition-[background-color,border-color,box-shadow] duration-500 sm:h-16 md:ml-[4.5rem] lg:mx-auto ${
             scrolled || open
-              ? "border-border bg-card/80 shadow-[var(--shadow-lift)] backdrop-blur-xl"
+              ? "border-border bg-card shadow-[var(--shadow-soft)]"
               : "border-transparent bg-transparent"
           }`}
         >

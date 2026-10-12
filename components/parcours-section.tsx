@@ -78,7 +78,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
                   sizes="(min-width: 1024px) 384px, 90vw"
                   className="object-cover object-[50%_30%]"
                 />
-                <figcaption className="absolute inset-x-3 bottom-3 rounded-2xl bg-card/85 px-4 py-3 backdrop-blur-md">
+                <figcaption className="absolute inset-x-3 bottom-3 rounded-2xl bg-card px-4 py-3 shadow-[var(--shadow-soft)]">
                   <span className="block text-[1rem] font-semibold tracking-[-0.02em]">Ojewumi Asaph Felix</span>
                   <span className="mono-label">Abidjan · Côte d&apos;Ivoire</span>
                 </figcaption>

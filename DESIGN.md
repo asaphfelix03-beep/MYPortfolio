@@ -1,6 +1,6 @@
 ---
-name: Asaph Felix — Daylight Circuit
-description: A light, technical portfolio — cool off-white ground, navy ink, electric blue for security, violet for AI, cyan for graphics.
+name: Asaph Felix — Cobalt on Paper
+description: A light, editorial portfolio — warm off-white paper, blue-black ink, deep cobalt as the rare accent, sage for data & AI, muted teal for graphics.
 colors:
   ground: "oklch(0.985 0.006 265)"
   surface: "oklch(1 0 0)"
@@ -10,7 +10,8 @@ colors:
   hairline: "oklch(0.91 0.012 268)"
   field-stroke: "oklch(0.64 0.03 268)"
   blue: "oklch(0.53 0.21 264)"
-  violet: "oklch(0.52 0.23 292)"
+  sage: "oklch(0.62 0.055 155)"
+  sage-ink: "oklch(0.46 0.06 155)"
   cyan: "oklch(0.74 0.13 210)"
   cyan-ink: "oklch(0.5 0.1 220)"
   error: "oklch(0.55 0.2 25)"
@@ -31,12 +32,12 @@ rounded:
 
 Since October 2026 (second redesign, at the user's request: "plus claire, colorée et harmonieuse"), the site is light. The night world is retired; its network motif survives, recoloured.
 
-## Colour
-- Ground off-white, white surfaces, navy ink (16.7:1). Muted text 6.3:1.
-- **Blue** = technology, security, the primary action. **Violet** = AI, data, creative work. **Cyan** = graphic highlights only (2.1:1 on white — never text; `cyan-ink` for text).
-- Project families keep these colours everywhere: security blue, data & AI violet, web & mobile cyan.
-- Gradients are local and different per use: brand (blue→violet) on the primary button, the active filter pill, figures and the hero name's one-time sweep; cool (cyan→blue) on the orbit and a skill bar. Never a whole surface.
-- `.theme-ink` turns a block navy by redefining tokens: the contact panel, the footer, the UEMOA workbook and gauges, Matronassist's role matrix.
+## Colour (revised 12 Oct 2026: violet removed at the user's request)
+- Warm off-white paper, white cards, blue-black ink (16:1), soft greys; muted text 6.9:1.
+- **Cobalt** `oklch(0.46 0.15 262)` = actions, links, the accent word of a title, the progress thread. Spent rarely.
+- **Sage** = the data & AI family; **muted teal** = graphics only. Security = cobalt, web & mobile = teal.
+- No decorative gradients, glows or frosted glass. `--grad-brand` is a cobalt shift of a few points; the primary button is solid cobalt that deepens on hover; shadows are neutral ink.
+- `.theme-ink` blue-black panels: contact, footer, UEMOA workbook/gauges, Matronassist roles.
 
 ## Type
 Jost only. Name in uppercase 500; section titles sentence case 500, tight tracking; body 400 at 1.7 line-height.

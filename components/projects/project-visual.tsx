@@ -40,12 +40,12 @@ export function ProjectVisual({
         aria-label={`Couverture du projet ${project.title} : aucune capture publiée pour l'instant.`}
         className={`relative flex aspect-[16/10] flex-col justify-between overflow-hidden rounded-[1.25rem] p-7 sm:p-9 ${
           v.icon === "pill"
-            ? "bg-[linear-gradient(135deg,oklch(0.95_0.04_292),oklch(0.97_0.02_264))]"
-            : "bg-[linear-gradient(135deg,oklch(0.95_0.05_195),oklch(0.97_0.02_150))]"
+            ? "bg-[oklch(0.95_0.012_255)]"
+            : "bg-[oklch(0.95_0.02_155)]"
         }`}
       >
         <span aria-hidden className="weave-field pointer-events-none absolute inset-0 opacity-70" />
-        <span className={`relative grid h-14 w-14 place-items-center rounded-2xl bg-card shadow-[var(--shadow-soft)] ${v.icon === "pill" ? "text-violet" : "text-cyan-ink"}`}>
+        <span className={`relative grid h-14 w-14 place-items-center rounded-2xl bg-card shadow-[var(--shadow-soft)] ${v.icon === "pill" ? "text-blue" : "text-cyan-ink"}`}>
           <Icon size={26} aria-hidden />
         </span>
         <p aria-hidden className="relative flex flex-wrap gap-x-5 gap-y-1 text-[clamp(1.6rem,3.6vw,2.6rem)] font-medium leading-none tracking-[-0.03em] text-foreground/80">
