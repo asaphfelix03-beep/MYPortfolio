@@ -12,6 +12,7 @@ import {
   Phone,
 } from "lucide-react";
 import { Reveal, RevealTitle } from "@/components/ui/reveal";
+import { SwapIcon } from "@/components/ui/swap-icon";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand";
 import { site, type CvInfo } from "@/lib/site";
 
@@ -148,7 +149,7 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
                     onClick={() => copy("email")}
                     className="btn btn-outline btn-sm"
                   >
-                    {copied === "email" ? <Check size={15} aria-hidden /> : <Copy size={15} aria-hidden />}
+                    <SwapIcon active={copied === "email"} on={<Check size={15} aria-hidden />} off={<Copy size={15} aria-hidden />} />
                     {copied === "email" ? "Adresse copiée" : "Copier"}
                   </button>
                 </div>
@@ -297,7 +298,7 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
                         <span className="sr-only">(nouvel onglet)</span>
                       </a>
                       <button type="button" onClick={() => copy("message")} className="btn btn-outline btn-sm">
-                        {copied === "message" ? <Check size={15} aria-hidden /> : <Copy size={15} aria-hidden />}
+                        <SwapIcon active={copied === "message"} on={<Check size={15} aria-hidden />} off={<Copy size={15} aria-hidden />} />
                         {copied === "message" ? "Message copié" : "Copier le message et l'adresse"}
                       </button>
                     </div>

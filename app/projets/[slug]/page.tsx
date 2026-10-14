@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -14,6 +15,7 @@ import { getCaseStudy } from "@/lib/case-studies";
 import { getCvInfo } from "@/lib/cv-file";
 import { getNeighbours, getProject, projects } from "@/lib/projects";
 import { site } from "@/lib/site";
+import { PageTransition } from "@/components/motion/page-transition";
 
 /**
  * One page per project, all on the same skeleton: what the problem was,
@@ -100,6 +102,7 @@ export default async function ProjectPage({
       <Navigation cv={cv} onHome={false} />
       <Selvedge />
 
+      <PageTransition>
       <main id="contenu" tabIndex={-1} className="relative overflow-x-clip outline-none md:pl-14">
         {/* Title */}
         <section className="relative isolate overflow-hidden px-5 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-36">
@@ -113,6 +116,7 @@ export default async function ProjectPage({
                 <li>
                   <Link
                     href="/#projets"
+                    transitionTypes={['nav-back']}
                     className="link-go inline-flex min-h-11 items-center gap-1.5 transition-colors hover:text-foreground"
                   >
                     <ArrowLeft size={15} aria-hidden />
@@ -136,7 +140,9 @@ export default async function ProjectPage({
               className="rise-in mt-4 text-[clamp(2.4rem,6.4vw,4.75rem)] font-light leading-[1.02] tracking-[-0.015em] text-balance"
               style={{ "--d": "60ms" } as React.CSSProperties}
             >
-              {p.title}
+              <ViewTransition name={`title-${p.slug}`} share="morph" default="none">
+                <span className="inline-block">{p.title}</span>
+              </ViewTransition>
             </h1>
             <p
               className="rise-in mt-5 max-w-3xl text-[clamp(1.15rem,2vw,1.45rem)] font-light leading-snug text-foreground/85 text-pretty"
@@ -168,7 +174,11 @@ export default async function ProjectPage({
             {/* Not a scroll reveal: this is in the first screen, and content
                 hidden until hydration is content a phone waits seconds for. */}
             <figure className="group rise-in" style={{ "--d": "300ms" } as React.CSSProperties}>
-              <ProjectVisual project={p} variant="page" priority />
+              <ViewTransition name={`visual-${p.slug}`} share="morph" default="none">
+                <div>
+                  <ProjectVisual project={p} variant="page" priority />
+                </div>
+              </ViewTransition>
               {caption ? (
                 <figcaption className="mt-3 text-[0.8125rem] text-muted-foreground">{caption}</figcaption>
               ) : null}
@@ -415,6 +425,7 @@ export default async function ProjectPage({
               >
                 <Link
                   href={`/projets/${previous.slug}`}
+                  transitionTypes={['nav-back']}
                   className="link-go group/prev flex flex-col gap-2 bg-background p-6 transition-colors hover:bg-card sm:p-8"
                 >
                   <span className="label inline-flex items-center gap-1.5">
@@ -425,6 +436,7 @@ export default async function ProjectPage({
                 </Link>
                 <Link
                   href={`/projets/${next.slug}`}
+                  transitionTypes={['nav-forward']}
                   className="link-go flex flex-col items-end gap-2 bg-background p-6 text-right transition-colors hover:bg-card sm:p-8"
                 >
                   <span className="label inline-flex items-center gap-1.5">
@@ -438,6 +450,7 @@ export default async function ProjectPage({
           </div>
         </Register>
       </main>
+      </PageTransition>
 
       <div className="theme-ink md:pl-14">
         <Footer cv={cv} onHome={false} />

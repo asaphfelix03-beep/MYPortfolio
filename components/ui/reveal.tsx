@@ -22,7 +22,7 @@ const from: Record<Kind, Record<string, number | string>> = {
   left: { opacity: 0, x: -48 },
   right: { opacity: 0, x: 48 },
   scale: { opacity: 0, scale: 0.94, y: 24 },
-  clip: { opacity: 0.4, clipPath: "inset(0 0 100% 0 round 1.25rem)", scale: 1.04 },
+  clip: { opacity: 0.4, clipPath: "inset(0 0 100% 0 round 1rem)", scale: 1.04 },
 };
 
 const to: Record<Kind, Record<string, number | string>> = {
@@ -30,7 +30,7 @@ const to: Record<Kind, Record<string, number | string>> = {
   left: { opacity: 1, x: 0 },
   right: { opacity: 1, x: 0 },
   scale: { opacity: 1, scale: 1, y: 0 },
-  clip: { opacity: 1, clipPath: "inset(0 0 0% 0 round 1.25rem)", scale: 1 },
+  clip: { opacity: 1, clipPath: "inset(0 0 0% 0 round 1rem)", scale: 1 },
 };
 
 export function Reveal({

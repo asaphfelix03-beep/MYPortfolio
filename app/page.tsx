@@ -7,6 +7,7 @@ import ParcoursSection from "@/components/parcours-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import { TechMarquee } from "@/components/motion/tech-marquee";
+import { PageTransition } from "@/components/motion/page-transition";
 import { getCvInfo } from "@/lib/cv-file";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
@@ -68,6 +69,7 @@ export default function Home() {
       <Navigation cv={cv} />
       <Selvedge />
 
+      <PageTransition>
       <main id="contenu" tabIndex={-1} className="relative overflow-x-clip outline-none">
         <Hero cv={cv} />
         <div className="md:pl-14">
@@ -87,6 +89,7 @@ export default function Home() {
           <ContactSection cv={cv} />
         </Register>
       </main>
+      </PageTransition>
 
       <div className="theme-ink md:pl-14">
         <Footer cv={cv} />

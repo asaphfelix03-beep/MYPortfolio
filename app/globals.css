@@ -60,8 +60,8 @@
   --weave-dot: oklch(0.35 0.03 255 / 0.18);
 
   /* Neutral shadows: paper lifting, not light glowing. */
-  --shadow-soft: 0 1px 2px oklch(0.23 0.025 255 / 0.05), 0 8px 24px -14px oklch(0.23 0.025 255 / 0.14);
-  --shadow-lift: 0 2px 4px oklch(0.23 0.025 255 / 0.05), 0 22px 44px -22px oklch(0.23 0.025 255 / 0.3);
+  --shadow-soft: 0 0 0 1px oklch(0.23 0.025 255 / 0.07), 0 1px 2px oklch(0.23 0.025 255 / 0.05), 0 8px 24px -14px oklch(0.23 0.025 255 / 0.14);
+  --shadow-lift: 0 0 0 1px oklch(0.23 0.025 255 / 0.08), 0 2px 4px oklch(0.23 0.025 255 / 0.05), 0 22px 44px -22px oklch(0.23 0.025 255 / 0.3);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -284,7 +284,7 @@
   }
 
   .btn:active {
-    transform: translateY(0) scale(0.97);
+    transform: translateY(0) scale(0.96);
     transition-duration: 0.08s;
   }
 
@@ -389,11 +389,20 @@
 
   /* ---- Surfaces --------------------------------------------------- */
 
+  /* Depth from layered shadow (a 1px ring + soft drop), not a border. */
   .surface {
     background: var(--card);
-    border: 1px solid var(--border);
     border-radius: 1.75rem;
     box-shadow: var(--shadow-soft);
+  }
+
+  /* Images get a neutral hairline so light screenshots keep an edge. */
+  .img-outline {
+    outline: 1px solid oklch(0 0 0 / 0.1);
+    outline-offset: -1px;
+  }
+  .theme-ink .img-outline {
+    outline-color: oklch(1 0 0 / 0.1);
   }
 
   .weave-field {
@@ -411,7 +420,7 @@
     position: relative;
     isolation: isolate;
     background-color: var(--muted);
-    border-radius: 1.25rem;
+    border-radius: 1rem;
     overflow: hidden;
   }
 
@@ -793,5 +802,79 @@ body::after {
     width: auto;
     justify-content: center;
     row-gap: 1.5rem;
+  }
+}
+
+/* ---- View transitions between pages ---------------------------------- */
+
+/* The project image and title travel from the card to the project page. */
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+
+/* Content slides 60px in the direction of travel. */
+::view-transition-old(.nav-forward) {
+  --slide-offset: -60px;
+  animation: 150ms ease-in both fade reverse, 400ms ease-in-out both slide reverse;
+}
+::view-transition-new(.nav-forward) {
+  --slide-offset: 60px;
+  animation: 210ms ease-out 150ms both fade, 400ms ease-in-out both slide;
+}
+::view-transition-old(.nav-back) {
+  --slide-offset: 60px;
+  animation: 150ms ease-in both fade reverse, 400ms ease-in-out both slide reverse;
+}
+::view-transition-new(.nav-back) {
+  --slide-offset: -60px;
+  animation: 210ms ease-out 150ms both fade, 400ms ease-in-out both slide;
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide {
+  from { translate: var(--slide-offset); }
+  to { translate: 0; }
+}
+
+/* Fixed chrome is the spatial anchor: it never slides. */
+::view-transition-group(site-header),
+::view-transition-group(selvedge) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header),
+::view-transition-old(selvedge) {
+  display: none;
+}
+::view-transition-new(site-header),
+::view-transition-new(selvedge) {
+  animation: none;
+}
+
+/* The opening curtain plays on the first visit of a session only. */
+html[data-intro-played] .intro {
+  display: none;
+}
+html[data-intro-played] #top {
+  --intro: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }

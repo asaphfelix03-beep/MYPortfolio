@@ -70,7 +70,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
           {/* Left: how I work, and the person around it. */}
           <div className="min-w-0 space-y-12 lg:col-span-5">
             <Reveal kind="clip" duration={1.3}>
-              <figure className="relative aspect-[4/5] max-w-sm overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
+              <figure className="img-outline relative aspect-[4/5] max-w-sm overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
                 <Image
                   src="/images/asaph-photo.webp"
                   alt="Portrait d'Ojewumi Asaph Felix"

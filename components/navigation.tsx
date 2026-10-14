@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
 import { LogoMark } from "@/components/ui/logo-mark";
+import { SwapIcon } from "@/components/ui/swap-icon";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { sections, site, type CvInfo } from "@/lib/site";
 
@@ -156,6 +157,7 @@ export default function Navigation({
   return (
     <>
       <header
+        style={{ viewTransitionName: "site-header" }}
         className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4"
       >
         <nav
@@ -168,6 +170,7 @@ export default function Navigation({
         >
           <Link
             href={onHome ? "#top" : "/"}
+            transitionTypes={onHome ? undefined : ["nav-back"]}
             className="group flex shrink-0 items-center gap-3"
             aria-label={`${site.shortName}, retour à l'accueil`}
             onClick={(e) => {
@@ -192,6 +195,7 @@ export default function Navigation({
                 <li key={s.id}>
                   <Link
                     href={href(s.id)}
+                    transitionTypes={onHome ? undefined : ["nav-back"]}
                     onClick={(e) => goTo(e, s.id)}
                     aria-current={isActive ? "true" : undefined}
                     className={`relative py-2 text-[0.9375rem] transition-colors ${
@@ -225,6 +229,7 @@ export default function Navigation({
             </a>
             <Link
               href={href("contact")}
+              transitionTypes={onHome ? undefined : ["nav-back"]}
               onClick={(e) => goTo(e, "contact")}
               className="btn btn-primary btn-sm hidden sm:inline-flex"
             >
@@ -238,7 +243,7 @@ export default function Navigation({
               aria-controls="menu-mobile"
               className="btn btn-outline btn-sm lg:hidden"
             >
-              {open ? <X size={17} aria-hidden /> : <Menu size={17} aria-hidden />}
+              <SwapIcon active={open} on={<X size={17} aria-hidden />} off={<Menu size={17} aria-hidden />} />
               {open ? "Fermer" : "Menu"}
             </button>
           </div>
@@ -272,6 +277,7 @@ export default function Navigation({
                   >
                     <Link
                       href={href(s.id)}
+                    transitionTypes={onHome ? undefined : ["nav-back"]}
                       onClick={(e) => goTo(e, s.id)}
                       className="flex items-baseline justify-between py-5 text-[2rem] font-light leading-none text-foreground"
                     >
@@ -289,6 +295,7 @@ export default function Navigation({
                 </a>
                 <Link
                   href={href("contact")}
+              transitionTypes={onHome ? undefined : ["nav-back"]}
                   onClick={(e) => goTo(e, "contact")}
                   className="btn btn-primary"
                 >

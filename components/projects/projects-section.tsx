@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, ViewTransition } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -130,7 +130,7 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
     <Reveal kind="scale">
       <article
         aria-labelledby={titleId}
-        className="surface group relative grid gap-8 p-4 transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)] sm:p-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-8"
+        className="surface group relative grid gap-8 rounded-[32px] p-4 sm:rounded-[40px] lg:rounded-[48px] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)] sm:p-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-8"
       >
         {/* A thin edge in the project's family colour, drawn on hover. */}
         <span
@@ -141,13 +141,18 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
             screen reader users get the single link on the title. */}
         <Link
           href={href}
+          transitionTypes={['nav-forward']}
           tabIndex={-1}
           aria-hidden
           data-cursor="Voir"
           className={`block min-w-0 lg:col-span-7 ${flip ? "lg:order-2" : ""}`}
         >
           <Reveal kind="clip" delay={0.15} duration={1.2}>
-            <ProjectVisual project={p} />
+            <ViewTransition name={`visual-${p.slug}`} share="morph" default="none">
+              <div>
+                <ProjectVisual project={p} />
+              </div>
+            </ViewTransition>
           </Reveal>
         </Link>
 
@@ -161,8 +166,10 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
           </p>
 
           <h3 id={titleId} className="h-title mt-3 text-[clamp(1.7rem,3vw,2.3rem)]">
-            <Link href={href} className="transition-colors duration-300 hover:text-accent">
-              {p.title}
+            <Link href={href} transitionTypes={['nav-forward']} className="transition-colors duration-300 hover:text-accent">
+              <ViewTransition name={`title-${p.slug}`} share="morph" default="none">
+                <span className="inline-block">{p.title}</span>
+              </ViewTransition>
             </Link>
           </h3>
           <p className="mt-3 text-[1.0625rem] leading-snug text-foreground/85 text-pretty">
@@ -194,6 +201,7 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-1">
             <Link
               href={href}
+              transitionTypes={['nav-forward']}
               className="link-go inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium text-accent"
             >
               Lire la fiche du projet

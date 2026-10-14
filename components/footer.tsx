@@ -27,7 +27,7 @@ export default function Footer({
           {/* The closing call: a disc that grows on hover. */}
           <a
             href={href("contact")}
-            className="group grid h-28 w-28 shrink-0 place-items-center rounded-full bg-accent text-center text-[0.875rem] font-medium text-accent-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 sm:h-36 sm:w-36"
+            className="group grid h-28 w-28 shrink-0 place-items-center rounded-full bg-accent text-center text-[0.875rem] font-medium text-accent-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 active:scale-[0.96] sm:h-36 sm:w-36"
           >
             <span className="flex flex-col items-center gap-1">
               <ArrowUpRight size={20} aria-hidden className="transition-transform duration-500 group-hover:rotate-45" />

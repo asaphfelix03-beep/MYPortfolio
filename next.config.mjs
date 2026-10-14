@@ -66,6 +66,8 @@ const securityHeaders = [
 
 const nextConfig = {
   poweredByHeader: false,
+  // React <ViewTransition> between pages (shared project image and title).
+  experimental: { viewTransition: true },
   // Type errors fail the build: `tsc --noEmit` is clean, keep it that way.
   images: {
     unoptimized: true,

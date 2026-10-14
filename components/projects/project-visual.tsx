@@ -20,7 +20,7 @@ export function ProjectVisual({
 
   if (v.kind === "uemoa-gauges") {
     return (
-      <div className="theme-ink relative h-full min-h-[20rem] overflow-hidden rounded-[1.25rem]">
+      <div className="theme-ink relative h-full min-h-[20rem] overflow-hidden rounded-[1rem]">
         <span aria-hidden className="weave-field pointer-events-none absolute inset-0 opacity-60" />
         <div className="relative h-full">
           <GaugeRow onProjectPage={variant === "page"} />
@@ -35,7 +35,7 @@ export function ProjectVisual({
 
   return (
     <div
-      className={`night-plate relative ring-1 ring-border ${
+      className={`night-plate img-outline relative ${
         variant === "card"
           ? "aspect-[16/10]"
           : isPortrait
@@ -78,7 +78,7 @@ const roles = [
  */
 function RolesVisual() {
   return (
-    <figure className="theme-ink relative flex h-full min-h-[20rem] flex-col justify-center overflow-hidden rounded-[1.25rem] p-6 sm:p-9">
+    <figure className="theme-ink relative flex h-full min-h-[20rem] flex-col justify-center overflow-hidden rounded-[1rem] p-6 sm:p-9">
       <span
         aria-hidden
         className="weave-field pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(90%_80%_at_80%_20%,black,transparent)]"

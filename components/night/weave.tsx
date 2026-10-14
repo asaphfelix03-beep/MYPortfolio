@@ -31,6 +31,7 @@ export function Selvedge() {
   return (
     <div
       aria-hidden
+      style={{ viewTransitionName: "selvedge" }}
       className="pointer-events-none fixed inset-y-0 left-0 z-40 w-[3px] md:w-14 md:border-r md:border-border"
     >
       {/* The thread runs the full height; its filled part is the progress. */}
