@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import { site } from '@/lib/site'
+import { SmoothScroll } from '@/components/motion/smooth-scroll'
+import { Cursor } from '@/components/motion/cursor'
 import './globals.css'
 
 // Three voices with three jobs: an expressive grotesque for everything
@@ -108,6 +110,8 @@ export default function RootLayout({
           Aller au contenu
         </a>
         {children}
+        <SmoothScroll />
+        <Cursor />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

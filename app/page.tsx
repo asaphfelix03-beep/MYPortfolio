@@ -6,6 +6,7 @@ import SkillsSection from "@/components/skills-section";
 import ParcoursSection from "@/components/parcours-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
+import { TechMarquee } from "@/components/motion/tech-marquee";
 import { getCvInfo } from "@/lib/cv-file";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
@@ -59,11 +60,19 @@ export default function Home() {
         // Static data built from lib/site.ts; nothing user-supplied.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {/* Opening curtain, CSS only (see .intro in globals.css). */}
+      <div aria-hidden className="intro">
+        <p>Asaph Felix</p>
+        <i />
+      </div>
       <Navigation cv={cv} />
       <Selvedge />
 
       <main id="contenu" tabIndex={-1} className="relative overflow-x-clip outline-none">
         <Hero cv={cv} />
+        <div className="md:pl-14">
+          <TechMarquee />
+        </div>
 
         <Register className="md:pl-14">
           <ProjectsSection />

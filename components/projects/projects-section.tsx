@@ -143,6 +143,7 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
           href={href}
           tabIndex={-1}
           aria-hidden
+          data-cursor="Voir"
           className={`block min-w-0 lg:col-span-7 ${flip ? "lg:order-2" : ""}`}
         >
           <Reveal kind="clip" delay={0.15} duration={1.2}>

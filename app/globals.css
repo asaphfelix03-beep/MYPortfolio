@@ -639,3 +639,159 @@ html {
     transform: none;
   }
 }
+
+/* ---- Signature motion (aquidev-inspired) ------------------------------ */
+
+/* Lenis owns wheel scrolling; the CSS smooth scroll would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Film grain over the whole page: texture, not decoration. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(5) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Trailing cursor ring. */
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 95;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -1.125rem 0 0 -1.125rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  opacity: 0;
+  transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out), margin 0.35s var(--ease-out),
+    background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+}
+.cursor-ring[data-on='1'] {
+  opacity: 1;
+}
+.cursor-ring[data-state='hover'] {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: -1.75rem 0 0 -1.75rem;
+  background-color: oklch(0.46 0.15 262 / 0.08);
+}
+.cursor-ring[data-state='label'] {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: -2.75rem 0 0 -2.75rem;
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+.cursor-ring span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-foreground);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.cursor-ring[data-state='label'] span {
+  opacity: 1;
+}
+
+/* Opening curtain: the name, a line that fills, then the page rises in.
+   CSS only, under a second, and the hero's entrance waits for it. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  background: var(--foreground);
+  color: var(--background);
+  pointer-events: none;
+  animation: intro-out 0.8s var(--ease-out) 0.6s both;
+}
+.intro p {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  animation: rise-in 0.6s var(--ease-out) both;
+}
+.intro i {
+  display: block;
+  height: 2px;
+  background: oklch(0.78 0.08 250);
+  transform-origin: left;
+  animation: intro-line 0.6s var(--ease-out) both;
+}
+@keyframes intro-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes intro-out {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+#top {
+  --intro: 900ms;
+}
+#top :is(.line-up, .rise-in, .pop-in) {
+  animation-delay: calc(var(--d, 0ms) + var(--intro));
+}
+
+/* Technology strip. */
+.marquee {
+  animation: marquee 38s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .cursor-ring {
+    display: none;
+  }
+  body::after {
+    animation: none;
+  }
+  #top {
+    --intro: 0ms;
+  }
+  .marquee {
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+    row-gap: 1.5rem;
+  }
+}

@@ -95,6 +95,7 @@ export default function Navigation({
     const root = document.documentElement;
     const previous = root.style.overflow;
     root.style.overflow = "hidden";
+    window.__lenis?.stop();
 
     // The close button lives in the header, above the panel: it belongs to
     // the trap too.
@@ -129,6 +130,7 @@ export default function Navigation({
     document.addEventListener("keydown", onKey);
     return () => {
       root.style.overflow = previous;
+      window.__lenis?.start();
       document.removeEventListener("keydown", onKey);
     };
   }, [open, close]);
@@ -144,7 +146,8 @@ export default function Navigation({
     setOpen(false);
     // Wait for the menu to release the page's scroll before moving it.
     requestAnimationFrame(() => {
-      target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+      if (window.__lenis) window.__lenis.scrollTo(target);
+      else target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
       history.replaceState(null, "", `#${id}`);
       target.focus({ preventScroll: true });
     });
