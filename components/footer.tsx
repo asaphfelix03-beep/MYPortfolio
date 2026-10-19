@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Download, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand";
+import { Magnetic, Swash, Wordmark } from "@/components/motion/kinetics";
 import { sections, site, type CvInfo } from "@/lib/site";
 
 export default function Footer({
@@ -22,9 +23,10 @@ export default function Footer({
       <div className="mx-auto max-w-7xl">
         <div className="mb-14 flex items-end justify-between gap-6 border-b border-border pb-10">
           <p className="max-w-md text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-tight tracking-[-0.035em]">
-            Un stage à pourvoir ? <span className="serif-accent font-normal text-accent">Parlons-en.</span>
+            Un stage à pourvoir ? <span className="relative serif-accent font-normal text-accent">Parlons-en.<Swash delay={0.3} /></span>
           </p>
           {/* The closing call: a disc that grows on hover. */}
+          <Magnetic strength={0.35} className="shrink-0">
           <a
             href={href("contact")}
             className="group grid h-28 w-28 shrink-0 place-items-center rounded-full bg-accent text-center text-[0.875rem] font-medium text-accent-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 active:scale-[0.96] sm:h-36 sm:w-36"
@@ -34,6 +36,7 @@ export default function Footer({
               Écrire
             </span>
           </a>
+          </Magnetic>
         </div>
         <div className="grid gap-10 sm:grid-cols-12">
           <div className="sm:col-span-5">
@@ -101,12 +104,11 @@ export default function Footer({
           </div>
         </div>
 
-        <p
-          aria-hidden
+        <Wordmark
+          first="Asaph"
+          last="Felix"
           className="mt-14 select-none whitespace-nowrap text-[clamp(3.5rem,13vw,11rem)] font-semibold leading-[0.85] tracking-[-0.06em] text-foreground/90"
-        >
-          Asaph <span className="serif-accent font-normal text-brand">Felix</span>
-        </p>
+        />
         <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-[0.8125rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {site.name}</p>
           <a

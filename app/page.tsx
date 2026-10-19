@@ -8,6 +8,7 @@ import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import { TechMarquee } from "@/components/motion/tech-marquee";
 import { PageTransition } from "@/components/motion/page-transition";
+import { Lift } from "@/components/motion/kinetics";
 import { getCvInfo } from "@/lib/cv-file";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
@@ -86,7 +87,9 @@ export default function Home() {
           <ParcoursSection cv={cv} />
         </Register>
         <Register className="md:pl-14">
-          <ContactSection cv={cv} />
+          <Lift>
+            <ContactSection cv={cv} />
+          </Lift>
         </Register>
       </main>
       </PageTransition>

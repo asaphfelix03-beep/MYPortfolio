@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import { Magnetic, Swash, useFineDesktop } from "@/components/motion/kinetics";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Download } from "lucide-react";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { site, type CvInfo } from "@/lib/site";
@@ -24,19 +25,42 @@ const shots = projects.flatMap((p) =>
  * next card on a click or every few seconds.
  */
 export default function Hero({ cv }: { cv: CvInfo }) {
+  const reduce = useSafeReducedMotion();
+  const fine = useFineDesktop();
+  const ref = useRef<HTMLElement>(null);
+  // Desktop only: the copy drifts up as the hero scrolls away, and the
+  // background weave moves against the pointer.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
+  const mx = useSpring(useMotionValue(0), { stiffness: 60, damping: 20 });
+  const my = useSpring(useMotionValue(0), { stiffness: 60, damping: 20 });
+  const on = fine && !reduce;
+
+  useEffect(() => {
+    if (!on) return;
+    const move = (e: globalThis.PointerEvent) => {
+      mx.set((e.clientX / window.innerWidth - 0.5) * -28);
+      my.set((e.clientY / window.innerHeight - 0.5) * -20);
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => window.removeEventListener("pointermove", move);
+  }, [on, mx, my]);
+
   return (
     <section
+      ref={ref}
       id="top"
       aria-labelledby="hero-title"
       className="relative isolate overflow-hidden pt-24 sm:pt-28"
     >
-      <div
+      <motion.div
         aria-hidden
-        className="weave-field pointer-events-none absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(90%_70%_at_75%_40%,black,transparent_75%)]"
+        style={on ? { x: mx, y: my } : undefined}
+        className="weave-field pointer-events-none absolute -inset-8 -z-10 opacity-70 [mask-image:radial-gradient(90%_70%_at_75%_40%,black,transparent_75%)]"
       />
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-5 pb-16 sm:px-8 md:pl-20 lg:min-h-[calc(100svh-7rem)] lg:grid-cols-12 lg:gap-10 lg:pb-20">
-        <div className="min-w-0 lg:col-span-6">
+        <motion.div style={on ? { y: copyY } : undefined} className="min-w-0 lg:col-span-6">
           <p className="pop-in kicker" style={delay(0)}>
             <span aria-hidden className="signal-dot inline-block h-2 w-2 rounded-full bg-blue" />
             <span>
@@ -59,11 +83,11 @@ export default function Hero({ cv }: { cv: CvInfo }) {
             <span className="display-name mt-7 block text-[clamp(2.8rem,6.4vw,5.6rem)] text-foreground">
               <Line d={180}>Sécuriser les</Line>
               <Line d={280}>
-                <span className="serif-accent text-brand pr-[0.06em]">systèmes</span>.
+                <span className="relative serif-accent text-brand pr-[0.06em]">systèmes<Swash delay={1.2} at="bottom-[0.1em]" /></span>.
               </Line>
               <Line d={380}>Faire parler</Line>
               <Line d={480}>
-                les <span className="serif-accent text-brand pr-[0.06em]">données</span>.
+                les <span className="relative serif-accent text-brand pr-[0.06em]">données<Swash delay={1.45} at="bottom-[0.1em]" /></span>.
               </Line>
             </span>
           </h1>
@@ -89,10 +113,12 @@ export default function Hero({ cv }: { cv: CvInfo }) {
           </ul>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <a href="#projets" className="pop-in btn btn-primary" style={delay(900)}>
-              Voir mes projets
-              <ArrowDown size={17} aria-hidden className="icon-down" />
-            </a>
+            <Magnetic className="inline-flex">
+              <a href="#projets" className="pop-in btn btn-primary w-full" style={delay(900)}>
+                Voir mes projets
+                <ArrowDown size={17} aria-hidden className="icon-down" />
+              </a>
+            </Magnetic>
             <a href={cv.href} download={cv.downloadName} className="pop-in btn btn-outline" style={delay(980)}>
               <Download size={17} aria-hidden className="icon-down" />
               Télécharger mon CV
@@ -102,7 +128,7 @@ export default function Hero({ cv }: { cv: CvInfo }) {
               Me contacter
             </a>
           </div>
-        </div>
+        </motion.div>
 
         <div className="pop-in min-w-0 lg:col-span-6" style={delay(350)}>
           <ProjectStack />

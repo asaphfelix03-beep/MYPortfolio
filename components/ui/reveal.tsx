@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { Fragment, type ReactNode } from "react";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { IN_VIEW_MARGIN } from "@/lib/motion";
+import { Swash } from "@/components/motion/kinetics";
 
 /**
  * Scroll reveals. Each section uses a different entrance so the page has a
@@ -153,7 +154,10 @@ export function RevealTitle({
   const render = (x: (typeof words)[number]) =>
     x.accent ? (
       <>
-        <span className="serif-accent text-brand pr-[0.04em]">{x.w}</span>
+        <span className="relative serif-accent text-brand pr-[0.04em]">
+          {x.w}
+          <Swash />
+        </span>
         {x.tail}
       </>
     ) : (
