@@ -282,8 +282,8 @@ export const projects: Project[] = [
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     visual: {
       kind: "image",
-      src: "/images/projets/cvfacile.webp",
-      alt: "Page d'accueil de CVFacile : « Votre CV mérite mieux qu'un modèle Word ».",
+      src: "/images/projets/cvfacile-2026.webp",
+      alt: "Page d'accueil de CVFacile : « Votre CV pro, sans surprise sur le prix. », à côté d'un exemple de CV et de son récapitulatif de prix.",
       width: 1600,
       height: 1000,
       position: "50% 0%",
