@@ -255,6 +255,57 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "oibsip",
+    title: "Stage Data Analytics OIBSIP",
+    category: "Analyse de données & ML",
+    families: ["donnees"],
+    year: "2026",
+    tagline: "Neuf analyses de données, du nettoyage à la détection de fraude",
+    summary:
+      "Les neuf tâches des niveaux 1 et 2 du parcours Data Analytics d'Oasis Infobyte, chacune livrée avec son notebook, ses données, ses graphiques et un README qui présente la méthode, les résultats et les limites.",
+    problem:
+      "Un jeu de données réel est rarement propre ni équilibré : valeurs manquantes, doublons, classes rares. Un indicateur mal choisi peut alors annoncer un excellent score pour un modèle inutile.",
+    objective:
+      "Mener chaque analyse jusqu'à une conclusion exploitable, avec des métriques adaptées au problème et les limites écrites noir sur blanc.",
+    contribution:
+      "Seul contributeur du dépôt public : notebooks, nettoyage des données, modèles, graphiques et README des neuf tâches.",
+    results: [
+      { value: "9/9", label: "tâches des niveaux 1 et 2 terminées et publiées" },
+      { value: "75/95", label: "fraudes du jeu de test détectées, avec 6 fausses alertes sur 56 651 transactions légitimes" },
+      { value: "0,909", label: "de R² pour la prédiction des prix immobiliers par régression linéaire" },
+    ],
+    highlights: {
+      title: "Les neuf tâches",
+      items: [
+        "Nettoyage des ventes d'un café : 1 951 valeurs manquantes retrouvées exactement grâce à deux règles métier.",
+        "Analyse exploratoire des ventes de centres commerciaux d'Istanbul : vêtements, chaussures et technologie font 95 % du chiffre d'affaires.",
+        "Segmentation RFM et K-Means : 4 segments, dont les « Champions », 16 % des clients et 64 % du chiffre d'affaires.",
+        "Sentiment des tweets adressés aux compagnies aériennes : régression logistique à 79,3 % d'exactitude, contre 44,7 % pour TextBlob.",
+        "Prix immobiliers par régression linéaire : R² de 0,909 avec 14 variables, effet de chaque variable exprimé en % du prix.",
+        "Qualité des vins : Random Forest à 81,3 % d'exactitude pour repérer les vins notés 7 ou plus.",
+        "Fraude à la carte bancaire (0,17 % de fraudes) : SMOTE et Random Forest, F1 de 0,852 et PR-AUC de 0,828.",
+        "Google Play Store : 92 % d'applications gratuites, 68 % d'avis positifs selon VADER.",
+        "Saisie semi-automatique et correction : trigrammes avec repli, et Damerau-Levenshtein qui corrige 23 fautes courantes sur 25.",
+      ],
+    },
+    technologies: ["Python", "pandas", "scikit-learn", "imbalanced-learn", "NLTK", "VADER", "plotly", "Jupyter"],
+    visual: {
+      kind: "image",
+      src: "/images/projets/oibsip.webp",
+      alt: "Courbes ROC et précision-rappel des modèles de détection de fraude, au-dessus des nuages de points des quatre segments de clients RFM.",
+      width: 1600,
+      height: 1000,
+      position: "50% 0%",
+      caption: "Graphiques tirés du dépôt : détection de fraude (en haut) et segmentation RFM des clients (en bas).",
+    },
+    links: { repo: "https://github.com/asaphfelix03-beep/OIBSIP" },
+    sources: [
+      { label: "Dépôt OIBSIP", href: "https://github.com/asaphfelix03-beep/OIBSIP#readme" },
+      { label: "README de la détection de fraude", href: "https://github.com/asaphfelix03-beep/OIBSIP/tree/main/DataAnalytics-L2-FraudDetection" },
+      { label: "README des prix immobiliers", href: "https://github.com/asaphfelix03-beep/OIBSIP/tree/main/DataAnalytics-L2-HousePricePrediction" },
+    ],
+  },
+  {
     slug: "cvfacile",
     title: "CVFacile",
     category: "Produit web",

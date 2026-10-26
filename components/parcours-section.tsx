@@ -163,7 +163,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
                       rel="noopener noreferrer"
                       className="link-go mt-4 inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-medium text-accent"
                     >
-                      Voir les 6 projets du stage
+                      Voir les 9 projets du stage
                       <ArrowUpRight size={15} aria-hidden className="icon-out" />
                       <span className="sr-only">sur GitHub (nouvel onglet)</span>
                     </a>

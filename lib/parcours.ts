@@ -85,7 +85,7 @@ export const experience = [
     title: "Stagiaire Data Analytics",
     org: "Oasis Infobyte (OIBSIP) · à distance",
     summary:
-      "Six projets d'analyse de données publiés sur GitHub : nettoyage, analyse exploratoire, segmentation RFM + K-Means, analyse de sentiment, prédiction de prix immobiliers et de la qualité de vins.",
+      "Les neuf tâches des niveaux 1 et 2 publiées sur GitHub : nettoyage, analyse exploratoire, segmentation RFM + K-Means, analyse de sentiment, prédiction de prix immobiliers et de qualité de vins, détection de fraude, analyse du Google Play Store, saisie semi-automatique.",
     tools: ["Python", "pandas", "scikit-learn", "seaborn", "NLTK"],
     href: "https://github.com/asaphfelix03-beep/OIBSIP",
   },

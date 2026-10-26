@@ -146,7 +146,7 @@ export const skillDomains: SkillDomain[] = [
       {
         name: "Apprentissage automatique : régression, K-Means, forêts aléatoires (scikit-learn)",
         level: "projet",
-        proofs: [{ label: "Stage OIBSIP", href: "https://github.com/asaphfelix03-beep/OIBSIP" }],
+        proofs: [p("oibsip", "Stage OIBSIP")],
       },
       {
         name: "Fondamentaux de la data science et de l'IA",
