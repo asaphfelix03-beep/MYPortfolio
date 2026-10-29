@@ -3,7 +3,7 @@ import { brandIcons } from "@/lib/brand-icons";
 /** Only tools put to work in a published project or a certificate. */
 const shown = new Set([
   "Python", "pandas", "NumPy", "Jupyter", "PostgreSQL", "JavaScript", "TypeScript",
-  "React", "Flutter", "Dart", "Firebase", "Docker", "Git", "Cisco",
+  "React", "Firebase", "Docker", "Git", "Cisco",
 ]);
 const icons = brandIcons.filter((i) => shown.has(i.title));
 
