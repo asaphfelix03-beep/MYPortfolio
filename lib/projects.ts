@@ -343,47 +343,6 @@ export const projects: Project[] = [
     sources: [{ label: "cvfacile.site", href: "https://www.cvfacile.site/" }],
   },
   {
-    slug: "nti",
-    title: "N'ti",
-    category: "Application mobile",
-    families: ["web"],
-    year: "2026",
-    tagline: "Apprendre le Baoulé, hors ligne et en autonomie",
-    summary:
-      "Application mobile d'apprentissage de la langue Baoulé : leçons, vocabulaire, audios de prononciation, quiz et dictionnaire Baoulé–Français consultable sans connexion.",
-    objective: "Permettre d'apprendre le Baoulé en autonomie, y compris sans connexion internet.",
-    // TODO(contenu) : contribution personnelle, problème précis et étapes de
-    // réalisation — rien de public ne permet de les écrire.
-    highlights: {
-      title: "Fonctionnalités",
-      items: [
-        "Leçons et vocabulaire.",
-        "Audios de prononciation.",
-        "Quiz.",
-        "Dictionnaire Baoulé–Français consultable hors ligne.",
-      ],
-    },
-    technologies: ["Flutter", "Firebase", "Traitement audio"],
-    visual: {
-      kind: "image",
-      src: "/images/projets/nti.webp",
-      alt: "Écran d'accueil de N'ti sur un téléphone : progression, mot du jour et raccourcis vers les leçons, le quiz et le dictionnaire.",
-      width: 630,
-      height: 840,
-      position: "50% 22%",
-      caption: "Visuel de présentation fourni avec l'application.",
-    },
-    links: {
-      download: {
-        href: "/files/nti-app-release.apk",
-        label: "Télécharger l'APK",
-        size: "88 Mo",
-        note: "Fichier Android à installer manuellement. Préférez une connexion Wi-Fi.",
-      },
-    },
-    sources: [{ label: "Application N'ti (APK)", href: "/files/nti-app-release.apk" }],
-  },
-  {
     slug: "matronassist-ci",
     title: "Matronassist-ci",
     category: "Plateforme web",

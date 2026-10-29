@@ -177,8 +177,8 @@ export const skillDomains: SkillDomain[] = [
       },
       {
         name: "Flutter et Firebase",
-        level: "projet",
-        proofs: [p("nti", "N'ti")],
+        level: "notions",
+        proofs: [],
       },
       {
         name: "Node.js, Express, Django",
