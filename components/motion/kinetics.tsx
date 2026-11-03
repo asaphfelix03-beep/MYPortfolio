@@ -125,6 +125,70 @@ export function Wordmark({ first, last, className }: { first: string; last: stri
   );
 }
 
+/**
+ * A figure whose digits roll up through 0–9 into place once it shows.
+ * Screen readers get the plain value; other characters stay still.
+ */
+export function RollingFigure({ value }: { value: string }) {
+  const reduce = useSafeReducedMotion();
+  if (reduce) return <>{value}</>;
+  return (
+    <motion.span
+      aria-label={value}
+      role="img"
+      className="inline-flex whitespace-pre"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.6 }}
+    >
+      {value.split("").map((c, i) =>
+        /\d/.test(c) ? (
+          <span key={i} aria-hidden className="roll-col">
+            <motion.span
+              variants={{ hidden: { y: "0%" }, show: { y: `${-Number(c) * 10}%` } }}
+              transition={{ duration: 1.4, delay: i * 0.06, ease: expo }}
+            >
+              {"0123456789".split("").map((d) => (
+                <span key={d}>{d}</span>
+              ))}
+            </motion.span>
+          </span>
+        ) : (
+          <span key={i} aria-hidden>
+            {c}
+          </span>
+        ),
+      )}
+    </motion.span>
+  );
+}
+
+/** Tilts its child toward the pointer in 3D (desktop only). */
+export function Tilt({ children, max = 5 }: { children: ReactNode; max?: number }) {
+  const reduce = useSafeReducedMotion();
+  const fine = useFineDesktop();
+  const spring = { stiffness: 150, damping: 18 };
+  const rx = useSpring(useMotionValue(0), spring);
+  const ry = useSpring(useMotionValue(0), spring);
+  if (reduce || !fine) return <div>{children}</div>;
+  return (
+    <motion.div
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1100 }}
+      onPointerMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        ry.set(((e.clientX - r.left) / r.width - 0.5) * 2 * max);
+        rx.set(-((e.clientY - r.top) / r.height - 0.5) * 2 * max);
+      }}
+      onPointerLeave={() => {
+        rx.set(0);
+        ry.set(0);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 /** A block that settles from 94 % to full size as it scrolls into place (desktop only). */
 export function Lift({ children, className }: { children: ReactNode; className?: string }) {
   const reduce = useSafeReducedMotion();

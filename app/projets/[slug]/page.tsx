@@ -16,6 +16,7 @@ import { getCvInfo } from "@/lib/cv-file";
 import { getNeighbours, getProject, projects } from "@/lib/projects";
 import { site } from "@/lib/site";
 import { PageTransition } from "@/components/motion/page-transition";
+import { RollingFigure } from "@/components/motion/kinetics";
 
 /**
  * One page per project, all on the same skeleton: what the problem was,
@@ -279,7 +280,7 @@ export default async function ProjectPage({
                                 {r.label}
                               </dt>
                               <dd className="figure text-foreground text-[clamp(2rem,4vw,2.75rem)]">
-                                {r.value}
+                                <RollingFigure value={r.value} />
                               </dd>
                             </div>
                           ))}

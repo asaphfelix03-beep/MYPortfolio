@@ -4,6 +4,7 @@ import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from 'next/font
 import { site } from '@/lib/site'
 import { SmoothScroll } from '@/components/motion/smooth-scroll'
 import { Cursor } from '@/components/motion/cursor'
+import { ScrollProgress } from '@/components/motion/scroll-progress'
 import './globals.css'
 
 // Three voices with three jobs: an expressive grotesque for everything
@@ -91,9 +92,15 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#f8fafe',
-  colorScheme: 'light',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f8fafe' },
+    { media: '(prefers-color-scheme: dark)', color: '#0d1420' },
+  ],
+  colorScheme: 'light dark',
 }
+
+// Runs before first paint so a stored or system dark theme never flashes light.
+const themeScript = `try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`
 
 export default function RootLayout({
   children,
@@ -104,8 +111,12 @@ export default function RootLayout({
     // data-scroll-behavior tells Next to suspend the CSS smooth scroll
     // during route changes; without it, arriving on /#section from a
     // project page overshot the section by several hundred pixels.
-    <html lang="fr" className={`${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth">
+    <html lang="fr" className={`${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="bg-background text-foreground antialiased">
+        <ScrollProgress />
         <a href="#contenu" className="skip-link">
           Aller au contenu
         </a>

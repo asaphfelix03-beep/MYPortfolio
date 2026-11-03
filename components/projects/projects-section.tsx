@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { Reveal, RevealTitle } from "@/components/ui/reveal";
 import { ProjectVisual } from "@/components/projects/project-visual";
 import { ProjectLinks, StatusChip } from "@/components/projects/project-links";
+import { RollingFigure, Tilt } from "@/components/motion/kinetics";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { families, projects, type Project, type ProjectFamily } from "@/lib/projects";
 
@@ -77,7 +78,7 @@ export default function ProjectsSection() {
                   type="button"
                   aria-pressed={pressed}
                   onClick={() => setFilter(o.id)}
-                  className={`btn btn-sm gap-2 border-border ${pressed ? "text-white" : "bg-card text-foreground hover:border-accent"}`}
+                  className={`btn btn-sm gap-2 border-border ${pressed ? "text-primary-foreground" : "bg-card text-foreground hover:border-accent"}`}
                 >
                   {/* The active pill slides from one filter to the next. */}
                   {pressed ? (
@@ -89,7 +90,7 @@ export default function ProjectsSection() {
                     />
                   ) : null}
                   {o.label}
-                  <span className={`tabular-nums text-[0.8125rem] ${pressed ? "text-white/80" : "text-muted-foreground"}`}>
+                  <span className={`tabular-nums text-[0.8125rem] ${pressed ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
                     {o.count}
                   </span>
                 </button>
@@ -149,9 +150,9 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
         >
           <Reveal kind="clip" delay={0.15} duration={1.2}>
             <ViewTransition name={`visual-${p.slug}`} share="morph" default="none">
-              <div>
+              <Tilt>
                 <ProjectVisual project={p} />
-              </div>
+              </Tilt>
             </ViewTransition>
           </Reveal>
         </Link>
@@ -184,7 +185,7 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
                   <dt className="mt-2 text-[0.8125rem] leading-snug text-muted-foreground text-pretty">
                     {r.label}
                   </dt>
-                  <dd className="figure text-foreground text-[2.1rem]">{r.value}</dd>
+                  <dd className="figure text-foreground text-[2.1rem]"><RollingFigure value={r.value} /></dd>
                 </div>
               ))}
             </dl>

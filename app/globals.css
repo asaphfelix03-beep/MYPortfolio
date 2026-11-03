@@ -68,6 +68,49 @@
   color-scheme: light;
 }
 
+/* Night mode, chosen with the header toggle or inherited from the system
+   (the script in app/layout.tsx sets `.dark` before first paint). Same
+   cobalt, lifted so it reads on blue-black; `.theme-ink` panels stay a
+   step lighter than the ground so they still read as panels. */
+:root.dark {
+  --background: oklch(0.165 0.02 258);
+  --foreground: oklch(0.95 0.005 85);
+  --card: oklch(0.205 0.024 258);
+  --card-foreground: oklch(0.95 0.005 85);
+  --popover: oklch(0.205 0.024 258);
+  --popover-foreground: oklch(0.95 0.005 85);
+  --primary: oklch(0.74 0.11 255);
+  --primary-foreground: oklch(0.17 0.02 258);
+  --secondary: oklch(0.245 0.026 258);
+  --secondary-foreground: oklch(0.95 0.005 85);
+  --muted: oklch(0.245 0.026 258);
+  --muted-foreground: oklch(0.76 0.014 255);
+  --accent: oklch(0.74 0.11 255);
+  --accent-foreground: oklch(0.17 0.02 258);
+  --destructive: oklch(0.72 0.14 28);
+  --destructive-foreground: oklch(0.17 0.02 258);
+  --border: oklch(0.31 0.024 258);
+  --input: oklch(0.58 0.02 255);
+  --ring: oklch(0.74 0.11 255);
+
+  --blue: oklch(0.74 0.11 255);
+  --sage: oklch(0.76 0.07 155);
+  --sage-ink: oklch(0.8 0.07 155);
+  --cyan: oklch(0.76 0.08 210);
+  --cyan-ink: oklch(0.8 0.07 210);
+  --grad-brand: linear-gradient(120deg, oklch(0.74 0.11 255), oklch(0.79 0.09 240));
+  --chart-4: oklch(0.76 0.014 255);
+  --chart-5: oklch(0.72 0.14 28);
+
+  --weave-line: oklch(0.96 0.004 85 / 0.045);
+  --weave-dot: oklch(0.96 0.004 85 / 0.14);
+
+  --shadow-soft: 0 0 0 1px oklch(1 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.3), 0 8px 24px -14px oklch(0 0 0 / 0.6);
+  --shadow-lift: 0 0 0 1px oklch(1 0 0 / 0.09), 0 2px 4px oklch(0 0 0 / 0.3), 0 22px 44px -22px oklch(0 0 0 / 0.8);
+
+  color-scheme: dark;
+}
+
 /* Blue-black panels for the technical blocks. Redefining the tokens is
    what turns a block dark: the components inside paint from the same
    names. */
@@ -306,7 +349,8 @@
     box-shadow: 0 1px 0 oklch(1 0 0 / 0.12) inset, 0 14px 28px -14px oklch(0.23 0.025 255 / 0.55);
   }
 
-  .theme-ink .btn-primary:hover {
+  .theme-ink .btn-primary:hover,
+  .dark .btn-primary:hover {
     background-color: oklch(0.86 0.06 250);
   }
 
@@ -401,7 +445,8 @@
     outline: 1px solid oklch(0 0 0 / 0.1);
     outline-offset: -1px;
   }
-  .theme-ink .img-outline {
+  .theme-ink .img-outline,
+  .dark .img-outline {
     outline-color: oklch(1 0 0 / 0.1);
   }
 
@@ -625,6 +670,38 @@
 /* ---- Scrollbar -------------------------------------------------------- */
 html {
   scrollbar-color: oklch(0.8 0.03 268) oklch(0.97 0.006 265);
+}
+html.dark {
+  scrollbar-color: oklch(0.38 0.03 258) oklch(0.165 0.02 258);
+}
+
+/* ---- Theme switch: the new theme opens as a circle from the toggle ---- */
+html.theme-vt header {
+  /* Keep the header in the root snapshot so the circle sweeps over it too. */
+  view-transition-name: none !important;
+}
+html.theme-vt::view-transition-old(root) {
+  animation: none;
+}
+html.theme-vt::view-transition-new(root) {
+  animation: theme-reveal 0.7s var(--ease-out) both;
+}
+@keyframes theme-reveal {
+  from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0%)); }
+  to { clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0%)); }
+}
+
+/* ---- Rolling figures: each digit climbs a column 0-9 to its value ----- */
+.roll-col {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+  vertical-align: top;
+}
+.roll-col > span {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Reduced motion: nothing travels. Content appears at once; colour and

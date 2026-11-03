@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
 import { LogoMark } from "@/components/ui/logo-mark";
 import { SwapIcon } from "@/components/ui/swap-icon";
+import { ThemeToggle } from "@/components/motion/theme-toggle";
 import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
 import { sections, site, type CvInfo } from "@/lib/site";
 
@@ -219,6 +220,7 @@ export default function Navigation({
           </ul>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <a
               href={cv.href}
               download={cv.downloadName}
