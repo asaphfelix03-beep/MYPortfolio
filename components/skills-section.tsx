@@ -48,7 +48,7 @@ export default function SkillsSection() {
         <div className="mt-8 grid gap-5">
           {skillDomains.map((d, i) => (
             <Reveal key={d.id} kind={i % 2 ? "right" : "left"}>
-              <div className="surface group grid gap-5 p-6 transition-shadow duration-500 hover:shadow-[var(--shadow-lift)] sm:p-8 lg:grid-cols-12 lg:gap-12">
+              <div className="surface spot group relative grid gap-5 p-6 transition-shadow duration-500 hover:shadow-[var(--shadow-lift)] sm:p-8 lg:grid-cols-12 lg:gap-12">
                 <div className="min-w-0 lg:col-span-4">
                   <span aria-hidden className={`mb-4 block h-1 w-12 rounded-full transition-[width] duration-500 group-hover:w-20 ${domainColor[i % domainColor.length]}`} />
                   <h3 className="h-title text-[1.375rem] sm:text-[1.5rem]">{d.title}</h3>

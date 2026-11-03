@@ -5,6 +5,7 @@ import { site } from '@/lib/site'
 import { SmoothScroll } from '@/components/motion/smooth-scroll'
 import { Cursor } from '@/components/motion/cursor'
 import { ScrollProgress } from '@/components/motion/scroll-progress'
+import { Spotlight } from '@/components/motion/spotlight'
 import './globals.css'
 
 // Three voices with three jobs: an expressive grotesque for everything
@@ -123,6 +124,7 @@ export default function RootLayout({
         {children}
         <SmoothScroll />
         <Cursor />
+        <Spotlight />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

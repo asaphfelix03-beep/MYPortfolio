@@ -947,7 +947,40 @@ html[data-intro-played] #top {
   --intro: 0ms;
 }
 
+/* A soft light that follows the pointer across a card (set by <Spotlight />). */
+.spot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  background: radial-gradient(28rem circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklch, var(--accent) 9%, transparent), transparent 65%);
+}
+.spot:hover::after { opacity: 1; }
+
+/* A band of light sweeps across a project picture on hover. */
+.night-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, oklch(1 0 0 / 0.2) 50%, transparent 62%);
+  transform: translateX(-120%);
+}
+.group:hover .night-plate::after {
+  transform: translateX(120%);
+  transition: transform 1.1s var(--ease-out);
+}
+
+@media (hover: none) {
+  .spot::after, .night-plate::after { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .night-plate::after { display: none; }
   ::view-transition-old(*),
   ::view-transition-new(*),
   ::view-transition-group(*) {

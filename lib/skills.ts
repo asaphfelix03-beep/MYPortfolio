@@ -62,6 +62,11 @@ export const skillDomains: SkillDomain[] = [
         proofs: [p("synthid-graph", "SynthID-Graph")],
       },
       {
+        name: "Supervision SIEM et ingénierie de détection : Wazuh, règles mappées MITRE ATT&CK",
+        level: "projet",
+        proofs: [p("soc-homelab", "SOC Homelab")],
+      },
+      {
         name: "Cryptographie appliquée : OPRF, chiffrement homomorphe Paillier, HMAC",
         level: "projet",
         proofs: [p("synthid-graph", "SynthID-Graph")],

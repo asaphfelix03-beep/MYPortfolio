@@ -14,7 +14,8 @@ const securityHeaders = [
       "img-src 'self' data: blob:",
       "font-src 'self' data:",
       "style-src 'self' 'unsafe-inline'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      // React needs eval only in development (stack reconstruction).
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'production' ? '' : " 'unsafe-eval'"}`,
       "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com",
       "worker-src 'self' blob:",
       "manifest-src 'self'",

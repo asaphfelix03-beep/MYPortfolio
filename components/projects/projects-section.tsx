@@ -131,7 +131,7 @@ function ProjectBand({ project: p, flip }: { project: Project; flip: boolean }) 
     <Reveal kind="scale">
       <article
         aria-labelledby={titleId}
-        className="surface group relative grid gap-8 rounded-[32px] p-4 sm:rounded-[40px] lg:rounded-[48px] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)] sm:p-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-8"
+        className="surface spot group relative grid gap-8 rounded-[32px] p-4 sm:rounded-[40px] lg:rounded-[48px] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)] sm:p-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-8"
       >
         {/* A thin edge in the project's family colour, drawn on hover. */}
         <span

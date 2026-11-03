@@ -150,6 +150,77 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "soc-homelab",
+    title: "SOC Homelab",
+    category: "Détection & SOC",
+    families: ["securite", "donnees"],
+    year: "2026",
+    tagline: "Des règles de détection mappées MITRE ATT&CK, et des données pour prouver qu'elles marchent.",
+    summary:
+      "Un mini-SOC Wazuh surveille un poste Ubuntu. Dix techniques MITRE ATT&CK y sont reproduites sans danger, puis chaque alerte est rapprochée du scénario qui l'a produite pour mesurer détection, délai et bruit.",
+    problem:
+      "Les règles natives d'un SIEM voient les événements, pas la menace : une tâche cron ou une règle sudoers ajoutée donne « File added to the system », au niveau 5, sous le seuil de triage et sans technique MITRE.",
+    objective:
+      "Écrire des règles qui nomment la menace et fixent le bon niveau, puis mesurer leur efficacité comme dans un vrai SOC : taux de détection, temps de détection et faux positifs, avec une vérité terrain horodatée.",
+    contribution:
+      "Seul contributeur du dépôt public : lab Docker, règles de détection, scénarios de test, analyse pandas, dashboard et documentation.",
+    steps: {
+      title: "La démarche",
+      items: [
+        "Déployer le SIEM : Wazuh 4.14.9 (manager, indexer OpenSearch, dashboard) en Docker Compose, avec TLS entre composants, et un agent sur un poste Ubuntu 24.04.",
+        "Écrire 12 règles personnalisées : 11 de détection reliées à MITRE ATT&CK, dont 2 corrélations, et 1 de réduction du bruit.",
+        "Reproduire 10 techniques par des actions d'administration inoffensives (cron, clé SSH, sudoers, service systemd, port non standard…), avec une vérité terrain horodatée et une activité normale témoin.",
+        "Exporter les alertes par l'API, les rapprocher des scénarios avec pandas et publier les indicateurs dans un dashboard Chart.js.",
+        "Comparer la même campagne avec et sans les règles (test A/B), puis la répéter 3 fois.",
+        "Durcir le poste d'après l'audit CIS automatique du module SCA.",
+      ],
+    },
+    results: [
+      { value: "10/10", label: "techniques détectées au-dessus du seuil de triage, à chacune des 3 campagnes, contre 4/10 avec les règles natives seules" },
+      { value: "0", label: "faux positif au seuil de triage pendant l'activité normale, sur les 3 campagnes" },
+      { value: `0,1${NB}s`, label: "de temps de détection médian pour les fichiers surveillés en temps réel" },
+    ],
+    highlights: {
+      title: "Autres résultats mesurés",
+      items: [
+        "Alertes portant la bonne technique MITRE : 10/10 avec les règles, 2/10 sans.",
+        "Une corrélation repère un compte créé puis promu administrateur en moins de 10 minutes (niveau 14).",
+        "Score CIS du poste porté de 48 % à 62 % par le script de durcissement.",
+        "11 problèmes réels trouvés et documentés, dont la perte de surveillance FIM quand « sed -i » remplace un fichier surveillé.",
+        "Lab supprimé puis redéployé depuis un clone neuf du dépôt, avec les mêmes résultats.",
+      ],
+    },
+    notes: [
+      {
+        title: "Limites, documentées dans le dépôt",
+        items: [
+          "Un seul poste Linux, en conteneur : pas de Windows ni d'attaque réseau réelle.",
+          "Certains contrôles CIS (partitions, pare-feu, noyau) ne s'appliquent pas à un conteneur.",
+          "Les scénarios reproduisent des traces d'attaque par des actions d'administration ; ils ne remplacent pas un exercice Red Team.",
+        ],
+      },
+    ],
+    technologies: ["Wazuh", "OpenSearch", "MITRE ATT&CK", "Docker Compose", "Python", "pandas", "Chart.js"],
+    visual: {
+      kind: "image",
+      src: "/images/projets/soc-homelab.webp",
+      alt: "Explorateur Wazuh : onze alertes des règles personnalisées, chacune avec son niveau et sa technique MITRE ATT&CK.",
+      width: 1440,
+      height: 900,
+      position: "50% 30%",
+      caption: "Les alertes des règles personnalisées dans Wazuh : une par technique testée, avec son identifiant MITRE.",
+    },
+    links: {
+      demo: { href: "https://asaphfelix03-beep.github.io/soc-homelab/dashboard/", label: "Dashboard des résultats" },
+      repo: "https://github.com/asaphfelix03-beep/soc-homelab",
+    },
+    embed: { src: "https://asaphfelix03-beep.github.io/soc-homelab/dashboard/", title: "Dashboard des résultats du SOC Homelab" },
+    sources: [
+      { label: "README du dépôt soc-homelab", href: "https://github.com/asaphfelix03-beep/soc-homelab#readme" },
+      { label: "Rapport complet", href: "https://github.com/asaphfelix03-beep/soc-homelab/blob/main/docs/rapport.md" },
+    ],
+  },
+  {
     slug: "electrification-cote-divoire",
     title: "Électrification de la Côte d'Ivoire",
     category: "Analyse de données",
