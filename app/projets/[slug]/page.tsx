@@ -197,7 +197,7 @@ export default async function ProjectPage({
                   En bref
                 </h2>
               </Reveal>
-              <Reveal delay={0.06} className="min-w-0 lg:col-span-8">
+              <Reveal className="min-w-0 lg:col-span-8">
                 <dl className="divide-y divide-border border-y border-border">
                   {p.problem ? <Row term="Le problème">{p.problem}</Row> : null}
                   <Row term="L'objectif">{p.objective}</Row>
@@ -341,7 +341,7 @@ export default async function ProjectPage({
                       Le classeur, feuille par feuille
                     </h2>
                   </Reveal>
-                  <Reveal delay={0.06} className="lg:col-span-5">
+                  <Reveal className="lg:col-span-5">
                     <p className="prose-night text-[0.9375rem]">
                       Rien n&apos;est caché derrière une capture unique. Chaque
                       onglet est une feuille du classeur, dans l&apos;ordre où

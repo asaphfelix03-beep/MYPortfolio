@@ -4,64 +4,67 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ *
- * "Cobalt on paper" — the site's colour system (October 2026).
+ * Warm paper, ink and one orange.
  *
- * Warm off-white paper, blue-black ink, soft greys, and colour spent
- * rarely: deep cobalt for actions, links and the accent word of a title;
- * sage for the data & AI family; a muted teal for graphics only. No
- * decorative gradients and no glows: --grad-brand survives as a cobalt
- * shift of a few points, so nothing that uses it reads as a rainbow.
- * Technical panels (contact, footer, the UEMOA workbook) switch to the
- * `.theme-ink` scope below.
+ * Sections alternate paper / paper-2 / full accent / ink. The orange is
+ * two tokens because it has two jobs: --accent-fill (#F2541B) is a
+ * surface and always carries ink (5.6:1); --accent (#B8380A) is the
+ * darker text version, since the raw orange only reaches 3.3:1 on paper.
  *
- * Measured on white: ink 16:1, muted text 6.9:1, cobalt 7.3:1,
- * sage-ink 6.6:1, white on the cobalt button 7.3:1.
+ * Measured: --accent 5.6:1 on paper, 4.7:1 on paper-2; muted text 7:1 on
+ * paper, 5.9:1 on paper-2.
  * ------------------------------------------------------------------ */
 :root {
-  --background: oklch(0.982 0.004 85);
-  --foreground: oklch(0.23 0.025 255);
-  --card: oklch(0.998 0.002 85);
-  --card-foreground: oklch(0.23 0.025 255);
-  --popover: oklch(0.998 0.002 85);
-  --popover-foreground: oklch(0.23 0.025 255);
-  --primary: oklch(0.46 0.15 262);
-  --primary-foreground: oklch(0.99 0.003 85);
-  --secondary: oklch(0.955 0.005 85);
-  --secondary-foreground: oklch(0.23 0.025 255);
-  --muted: oklch(0.955 0.005 85);
-  --muted-foreground: oklch(0.46 0.015 255);
-  --accent: oklch(0.46 0.15 262);
-  --accent-foreground: oklch(0.99 0.003 85);
-  --destructive: oklch(0.52 0.17 28);
-  --destructive-foreground: oklch(0.99 0.003 85);
-  --border: oklch(0.9 0.006 85);
-  /* Field strokes clear 3:1 against white. */
-  --input: oklch(0.64 0.015 255);
-  --ring: oklch(0.46 0.15 262);
+  --paper: #fbfbf9;
+  --paper-2: #ebe6da;
+  --ink: #0e0d0b;
+  --accent-fill: #f2541b;
 
-  --blue: oklch(0.46 0.15 262);
-  --sage: oklch(0.62 0.055 155);
-  --sage-ink: oklch(0.46 0.06 155);
-  --cyan: oklch(0.66 0.07 210);
-  --cyan-ink: oklch(0.46 0.07 215);
-  --grad-brand: linear-gradient(120deg, oklch(0.46 0.15 262), oklch(0.5 0.13 250));
+  --background: var(--paper);
+  --band: var(--paper-2);
+  --foreground: var(--ink);
+  --card: #fffdf8;
+  --card-foreground: var(--ink);
+  --popover: #fffdf8;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-2);
+  --muted-foreground: #5a564e;
+  --accent: #b8380a;
+  --accent-foreground: var(--paper);
+  --destructive: #a8200d;
+  --destructive-foreground: var(--paper);
+  --border: #d9d3c5;
+  /* Field strokes clear 3:1 against the card. */
+  --input: #8a8478;
+  --ring: #b8380a;
+
+  /* Project families and charts stay in the warm range. */
+  --blue: #b8380a;
+  --sage: #77763f;
+  --sage-ink: #57572f;
+  --cyan: #8a7f6b;
+  --cyan-ink: #5e5546;
+  --grad-brand: linear-gradient(120deg, var(--accent), var(--accent));
   --grad-cool: linear-gradient(120deg, var(--cyan), var(--blue));
 
   --chart-1: var(--blue);
   --chart-2: var(--sage);
   --chart-3: var(--cyan);
-  --chart-4: oklch(0.46 0.015 255);
-  --chart-5: oklch(0.52 0.17 28);
+  --chart-4: #5a564e;
+  --chart-5: #a8200d;
 
   --radius: 1rem;
 
   --weave-pitch: 22px;
-  --weave-line: oklch(0.3 0.02 255 / 0.05);
-  --weave-dot: oklch(0.35 0.03 255 / 0.18);
+  --weave-line: rgb(14 13 11 / 0.05);
+  --weave-dot: rgb(14 13 11 / 0.18);
 
-  /* Neutral shadows: paper lifting, not light glowing. */
-  --shadow-soft: 0 0 0 1px oklch(0.23 0.025 255 / 0.07), 0 1px 2px oklch(0.23 0.025 255 / 0.05), 0 8px 24px -14px oklch(0.23 0.025 255 / 0.14);
-  --shadow-lift: 0 0 0 1px oklch(0.23 0.025 255 / 0.08), 0 2px 4px oklch(0.23 0.025 255 / 0.05), 0 22px 44px -22px oklch(0.23 0.025 255 / 0.3);
+  --shadow-soft: 0 0 0 1px rgb(14 13 11 / 0.07), 0 1px 2px rgb(14 13 11 / 0.05), 0 8px 24px -14px rgb(14 13 11 / 0.14);
+  --shadow-lift: 0 0 0 1px rgb(14 13 11 / 0.08), 0 2px 4px rgb(14 13 11 / 0.05), 0 22px 44px -22px rgb(14 13 11 / 0.3);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -69,82 +72,109 @@
 }
 
 /* Night mode, chosen with the header toggle or inherited from the system
-   (the script in app/layout.tsx sets `.dark` before first paint). Same
-   cobalt, lifted so it reads on blue-black; `.theme-ink` panels stay a
-   step lighter than the ground so they still read as panels. */
+   (the script in app/layout.tsx sets `.dark` before first paint). */
 :root.dark {
-  --background: oklch(0.165 0.02 258);
-  --foreground: oklch(0.95 0.005 85);
-  --card: oklch(0.205 0.024 258);
-  --card-foreground: oklch(0.95 0.005 85);
-  --popover: oklch(0.205 0.024 258);
-  --popover-foreground: oklch(0.95 0.005 85);
-  --primary: oklch(0.74 0.11 255);
-  --primary-foreground: oklch(0.17 0.02 258);
-  --secondary: oklch(0.245 0.026 258);
-  --secondary-foreground: oklch(0.95 0.005 85);
-  --muted: oklch(0.245 0.026 258);
-  --muted-foreground: oklch(0.76 0.014 255);
-  --accent: oklch(0.74 0.11 255);
-  --accent-foreground: oklch(0.17 0.02 258);
-  --destructive: oklch(0.72 0.14 28);
-  --destructive-foreground: oklch(0.17 0.02 258);
-  --border: oklch(0.31 0.024 258);
-  --input: oklch(0.58 0.02 255);
-  --ring: oklch(0.74 0.11 255);
+  --background: var(--ink);
+  --band: #1a1815;
+  --foreground: var(--paper);
+  --card: #1f1c18;
+  --card-foreground: var(--paper);
+  --popover: #1f1c18;
+  --popover-foreground: var(--paper);
+  --primary: var(--paper);
+  --primary-foreground: var(--ink);
+  --secondary: #26231e;
+  --secondary-foreground: var(--paper);
+  --muted: #26231e;
+  --muted-foreground: #b5b0a5;
+  --accent: #ff7a45;
+  --accent-foreground: var(--ink);
+  --destructive: #ff8a7a;
+  --destructive-foreground: var(--ink);
+  --border: #34302a;
+  --input: #7f796d;
+  --ring: #ff7a45;
 
-  --blue: oklch(0.74 0.11 255);
-  --sage: oklch(0.76 0.07 155);
-  --sage-ink: oklch(0.8 0.07 155);
-  --cyan: oklch(0.76 0.08 210);
-  --cyan-ink: oklch(0.8 0.07 210);
-  --grad-brand: linear-gradient(120deg, oklch(0.74 0.11 255), oklch(0.79 0.09 240));
-  --chart-4: oklch(0.76 0.014 255);
-  --chart-5: oklch(0.72 0.14 28);
+  --blue: #ff7a45;
+  --sage: #b8b87a;
+  --sage-ink: #c6c68c;
+  --cyan: #bdb29c;
+  --cyan-ink: #cbc1ad;
+  --chart-4: #b5b0a5;
+  --chart-5: #ff8a7a;
 
-  --weave-line: oklch(0.96 0.004 85 / 0.045);
-  --weave-dot: oklch(0.96 0.004 85 / 0.14);
+  --weave-line: rgb(251 251 249 / 0.045);
+  --weave-dot: rgb(251 251 249 / 0.14);
 
-  --shadow-soft: 0 0 0 1px oklch(1 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.3), 0 8px 24px -14px oklch(0 0 0 / 0.6);
-  --shadow-lift: 0 0 0 1px oklch(1 0 0 / 0.09), 0 2px 4px oklch(0 0 0 / 0.3), 0 22px 44px -22px oklch(0 0 0 / 0.8);
+  --shadow-soft: 0 0 0 1px rgb(255 255 255 / 0.06), 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -14px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 0 0 1px rgb(255 255 255 / 0.09), 0 2px 4px rgb(0 0 0 / 0.3), 0 22px 44px -22px rgb(0 0 0 / 0.8);
 
   color-scheme: dark;
 }
 
-/* Blue-black panels for the technical blocks. Redefining the tokens is
-   what turns a block dark: the components inside paint from the same
-   names. */
+/* Ink sections. Redefining the tokens is what turns a block dark: the
+   components inside paint from the same names. */
 .theme-ink {
-  --background: oklch(0.22 0.025 255);
-  --foreground: oklch(0.96 0.004 85);
-  --card: oklch(0.265 0.028 255);
-  --card-foreground: oklch(0.96 0.004 85);
-  --popover: oklch(0.265 0.028 255);
-  --popover-foreground: oklch(0.96 0.004 85);
-  --secondary: oklch(0.29 0.03 255);
-  --secondary-foreground: oklch(0.96 0.004 85);
-  --muted: oklch(0.29 0.03 255);
-  --muted-foreground: oklch(0.78 0.012 255);
-  --accent: oklch(0.78 0.08 250);
-  --accent-foreground: oklch(0.22 0.025 255);
-  --destructive: oklch(0.72 0.14 28);
-  --border: oklch(0.35 0.025 255);
-  --input: oklch(0.6 0.02 255);
-  --ring: oklch(0.78 0.08 250);
-  --blue: oklch(0.78 0.08 250);
-  --sage: oklch(0.78 0.06 155);
-  --weave-line: oklch(0.96 0.004 85 / 0.045);
-  --weave-dot: oklch(0.96 0.004 85 / 0.14);
-  --grad-brand: linear-gradient(120deg, oklch(0.8 0.07 250), oklch(0.84 0.05 230));
+  --background: var(--ink);
+  --band: #1a1815;
+  --foreground: var(--paper);
+  --card: #1f1c18;
+  --card-foreground: var(--paper);
+  --popover: #1f1c18;
+  --popover-foreground: var(--paper);
+  --primary: var(--paper);
+  --primary-foreground: var(--ink);
+  --secondary: #26231e;
+  --secondary-foreground: var(--paper);
+  --muted: #26231e;
+  --muted-foreground: #b5b0a5;
+  --accent: #ff7a45;
+  --accent-foreground: var(--ink);
+  --destructive: #ff8a7a;
+  --border: #34302a;
+  --input: #7f796d;
+  --ring: #ff7a45;
+  --blue: #ff7a45;
+  --sage: #b8b87a;
+  --weave-line: rgb(251 251 249 / 0.045);
+  --weave-dot: rgb(251 251 249 / 0.14);
   background-color: var(--background);
   color: var(--foreground);
   color-scheme: dark;
 }
 
+/* The full-orange section. Ink carries everything on it, including the
+   accent word and error messages; fields stay on paper. */
+.theme-accent {
+  --background: var(--accent-fill);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --muted-foreground: #2a1206;
+  --accent: var(--ink);
+  --accent-foreground: var(--paper);
+  --destructive: var(--ink);
+  --border: rgb(14 13 11 / 0.32);
+  --input: var(--ink);
+  --ring: var(--ink);
+  background-color: var(--background);
+  color: var(--foreground);
+  color-scheme: light;
+}
+
+/* The second paper tone, redefined in night mode through --band. */
+.tone-band {
+  background-color: var(--band);
+}
+
 @theme inline {
-  --font-sans: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Mono', 'Courier New', monospace;
   --color-background: var(--background);
+  --color-band: var(--band);
+  --color-accent-fill: var(--accent-fill);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -191,7 +221,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: 'kern' 1;
     text-rendering: optimizeLegibility;
   }
@@ -205,8 +235,12 @@
     scroll-margin-top: 5.5rem;
   }
 
+  h1, h2, h3, h4 {
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+  }
+
   ::selection {
-    background: oklch(0.46 0.15 262 / 0.16);
+    background: color-mix(in srgb, var(--accent-fill) 28%, transparent);
     color: var(--foreground);
   }
 }
@@ -215,9 +249,11 @@
   /* ---- Type ------------------------------------------------------- */
 
   .display-name {
-    font-weight: 600;
-    letter-spacing: -0.045em;
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
     line-height: 0.98;
+    text-wrap: balance;
   }
 
   /* One accent word per title, in serif italic. */
@@ -239,17 +275,19 @@
   }
 
   .h-section {
-    font-weight: 600;
-    letter-spacing: -0.045em;
-    line-height: 1.02;
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
     font-size: clamp(2.1rem, 4.6vw, 3.6rem);
     text-wrap: balance;
   }
 
   .h-title {
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.12;
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
     text-wrap: balance;
   }
 
@@ -267,18 +305,16 @@
   }
 
   .figure {
-    font-weight: 500;
+    font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1;
     font-variant-numeric: tabular-nums;
   }
 
-  /* Gradient ink for figures and the hero name. */
+  /* The accent word of a title. */
   .text-brand {
-    background-image: var(--grad-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent);
   }
 
   /* A small pill that names a section: a coloured dot and a word. */
@@ -338,20 +374,17 @@
   }
 
   .btn-primary {
-    background-color: var(--accent);
-    color: var(--accent-foreground);
-    box-shadow: 0 1px 0 oklch(1 0 0 / 0.12) inset, 0 6px 16px -10px oklch(0.23 0.025 255 / 0.5);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
   }
 
-  /* Hover deepens the cobalt instead of lighting it up. */
   .btn-primary:hover {
-    background-color: oklch(0.39 0.14 262);
-    box-shadow: 0 1px 0 oklch(1 0 0 / 0.12) inset, 0 14px 28px -14px oklch(0.23 0.025 255 / 0.55);
+    background-color: var(--accent-fill);
+    color: var(--ink);
   }
 
-  .theme-ink .btn-primary:hover,
-  .dark .btn-primary:hover {
-    background-color: oklch(0.86 0.06 250);
+  .theme-accent .btn-primary:hover {
+    background-color: var(--paper);
   }
 
   .btn-outline {
@@ -369,7 +402,7 @@
 
   .theme-ink .btn-outline {
     background-color: transparent;
-    border-color: oklch(0.97 0.006 268 / 0.28);
+    border-color: rgb(251 251 249 / 0.28);
     box-shadow: none;
   }
 
@@ -663,16 +696,16 @@
   animation: signal 1.8s ease-out 1.2s 3;
 }
 @keyframes signal {
-  0% { box-shadow: 0 0 0 0 oklch(0.46 0.15 262 / 0.45); }
-  100% { box-shadow: 0 0 0 10px oklch(0.46 0.15 262 / 0); }
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-fill) 45%, transparent); }
+  100% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent-fill) 0%, transparent); }
 }
 
 /* ---- Scrollbar -------------------------------------------------------- */
 html {
-  scrollbar-color: oklch(0.8 0.03 268) oklch(0.97 0.006 265);
+  scrollbar-color: #c9c2b2 var(--paper);
 }
 html.dark {
-  scrollbar-color: oklch(0.38 0.03 258) oklch(0.165 0.02 258);
+  scrollbar-color: #4a453c var(--ink);
 }
 
 /* ---- Theme switch: the new theme opens as a circle from the toggle ---- */
@@ -726,7 +759,7 @@ html.theme-vt::view-transition-new(root) {
   }
 }
 
-/* ---- Signature motion (aquidev-inspired) ------------------------------ */
+/* ---- Signature motion ------------------------------------------------- */
 
 /* Lenis owns wheel scrolling; the CSS smooth scroll would fight it. */
 html.lenis,
@@ -740,120 +773,185 @@ html.lenis body {
   overflow: hidden;
 }
 
+
 /* Film grain over the whole page: texture, not decoration. */
-body::after {
-  content: '';
+.grain {
   position: fixed;
-  inset: -50%;
+  inset: 0;
   z-index: 90;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 0.9s steps(5) infinite;
-}
-@keyframes grain {
-  0% { transform: translate(0, 0); }
-  20% { transform: translate(-3%, 2%); }
-  40% { transform: translate(2%, -3%); }
-  60% { transform: translate(-2%, -1%); }
-  80% { transform: translate(3%, 2%); }
-  100% { transform: translate(0, 0); }
 }
 
-/* Trailing cursor ring. */
-.cursor-ring {
+/* Trailing dot. The face is one large disc scaled down, so its states
+   only ever animate a transform. */
+.cursor {
   position: fixed;
   left: 0;
   top: 0;
   z-index: 95;
+  width: 0;
+  height: 0;
   pointer-events: none;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  margin: -1.125rem 0 0 -1.125rem;
-  border: 1.5px solid var(--accent);
-  border-radius: 999px;
   opacity: 0;
-  transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out), margin 0.35s var(--ease-out),
-    background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
-.cursor-ring[data-on='1'] {
+.cursor[data-on='1'] {
   opacity: 1;
 }
-.cursor-ring[data-state='hover'] {
-  width: 3.5rem;
-  height: 3.5rem;
-  margin: -1.75rem 0 0 -1.75rem;
-  background-color: oklch(0.46 0.15 262 / 0.08);
+.cursor-face {
+  position: absolute;
+  left: -2.5rem;
+  top: -2.5rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 999px;
+  background: var(--accent-fill);
+  /* The paper ring keeps the dot visible over the orange section. */
+  box-shadow: 0 0 0 10px var(--paper);
+  transform: scale(0.15);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), opacity 0.3s ease;
 }
-.cursor-ring[data-state='label'] {
-  width: 5.5rem;
-  height: 5.5rem;
-  margin: -2.75rem 0 0 -2.75rem;
-  background-color: var(--accent);
-  border-color: var(--accent);
+.cursor[data-state='hover'] .cursor-face {
+  transform: scale(0.5);
+  opacity: 0.45;
+  box-shadow: 0 0 0 3px var(--paper);
 }
-.cursor-ring span {
+.cursor[data-state='label'] .cursor-face {
+  transform: scale(1);
+  box-shadow: 0 0 0 1.5px var(--paper);
+}
+.cursor-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
   font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--accent-foreground);
+  font-weight: 700;
+  color: var(--ink);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-.cursor-ring[data-state='label'] span {
+.cursor[data-state='label'] .cursor-label {
   opacity: 1;
 }
 
-/* Opening curtain: the name, a line that fills, then the page rises in.
-   CSS only, under a second, and the hero's entrance waits for it. */
-.intro {
+/* Opening curtain. Only shown when the head script adds html.intro, so a
+   visitor without JavaScript never meets it. */
+.loader {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 120;
-  display: grid;
   place-content: center;
   gap: 1rem;
-  background: var(--foreground);
-  color: var(--background);
-  pointer-events: none;
-  animation: intro-out 0.8s var(--ease-out) 0.6s both;
+  background: var(--ink);
+  color: var(--paper);
 }
-.intro p {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  animation: rise-in 0.6s var(--ease-out) both;
+html.intro .loader {
+  display: grid;
 }
-.intro i {
+.loader-name {
+  overflow: hidden;
+  font-family: var(--font-geo), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+.loader-name > span {
+  display: block;
+}
+.loader-line {
   display: block;
   height: 2px;
-  background: oklch(0.78 0.08 250);
+  background: var(--accent-fill);
   transform-origin: left;
-  animation: intro-line 0.6s var(--ease-out) both;
-}
-@keyframes intro-line {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-@keyframes intro-out {
-  to {
-    transform: translateY(-100%);
-    visibility: hidden;
-  }
-}
-#top {
-  --intro: 900ms;
-}
-#top :is(.line-up, .rise-in, .pop-in) {
-  animation-delay: calc(var(--d, 0ms) + var(--intro));
 }
 
-/* Technology strip. */
-.marquee {
-  animation: marquee 38s linear infinite;
+/* First-paint pose of the hero, set only when the head script confirmed
+   JavaScript runs. GSAP takes over from these exact values. */
+html.motion [data-hero-line] {
+  transform: translateY(110%);
 }
-.marquee:hover {
+html.motion [data-hero-fade] {
+  opacity: 0;
+}
+html.motion [data-hero-mock] {
+  transform: translateY(60px) rotateY(-24deg) scale(0.94);
+}
+
+/* Title mask: the padding gives descenders room, the margin cancels it. */
+.mask {
+  display: block;
+  overflow: hidden;
+  padding: 0 0.08em 0.14em 0;
+  margin: 0 -0.08em -0.14em 0;
+}
+
+/* The browser frame of the hero, seen in perspective. */
+.mock-stage {
+  perspective: 1400px;
+}
+.mock-tilt {
+  transform: rotateY(-4deg) rotateX(2deg);
+  transform-style: preserve-3d;
+}
+@media (min-width: 1024px) {
+  .mock-tilt {
+    transform: rotateY(-11deg) rotateX(4deg);
+  }
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Choice pills of the contact form: real radios, restyled. */
+.pill-face {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.1rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.pill-face:hover {
+  background-color: rgb(14 13 11 / 0.1);
+}
+input:checked + .pill-face {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+input:focus-visible + .pill-face {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* The orange section slides over the one before it. */
+.section-over {
+  position: relative;
+  z-index: 1;
+  margin-top: -32px;
+  border-radius: 32px 32px 0 0;
+}
+
+/* Skills marquee: two rows running in opposite directions. */
+.marquee {
+  animation: marquee var(--marquee-time, 70s) linear infinite;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+}
+.marquee-row:hover .marquee {
   animation-play-state: paused;
 }
 @keyframes marquee {
@@ -864,21 +962,24 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro,
-  .cursor-ring {
+  .cursor,
+  .loader {
     display: none;
   }
-  body::after {
-    animation: none;
-  }
-  #top {
-    --intro: 0ms;
-  }
   .marquee {
+    animation: none;
     flex-wrap: wrap;
     width: auto;
     justify-content: center;
-    row-gap: 1.5rem;
+    row-gap: 0.75rem;
+  }
+  .marquee ul {
+    flex-wrap: wrap;
+    flex-shrink: 1;
+    justify-content: center;
+  }
+  .marquee [aria-hidden='true'] {
+    display: none;
   }
 }
 
@@ -926,25 +1027,20 @@ body::after {
 
 /* Fixed chrome is the spatial anchor: it never slides. */
 ::view-transition-group(site-header),
+::view-transition-group(site-tabs),
 ::view-transition-group(selvedge) {
   animation: none;
   z-index: 100;
 }
 ::view-transition-old(site-header),
+::view-transition-old(site-tabs),
 ::view-transition-old(selvedge) {
   display: none;
 }
 ::view-transition-new(site-header),
+::view-transition-new(site-tabs),
 ::view-transition-new(selvedge) {
   animation: none;
-}
-
-/* The opening curtain plays on the first visit of a session only. */
-html[data-intro-played] .intro {
-  display: none;
-}
-html[data-intro-played] #top {
-  --intro: 0ms;
 }
 
 /* A soft light that follows the pointer across a card (set by <Spotlight />). */
@@ -987,4 +1083,14 @@ html[data-intro-played] #top {
     animation-duration: 0s !important;
     animation-delay: 0s !important;
   }
+}
+
+.swap-in {
+  animation: swap-in 0.3s var(--ease-out);
+}
+@keyframes swap-in {
+  from { opacity: 0; transform: scale(0.25); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .swap-in { animation: none; }
 }

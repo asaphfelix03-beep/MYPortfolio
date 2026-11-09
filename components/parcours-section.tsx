@@ -1,11 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ArrowUpRight, BadgeCheck, Download, FileText } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem, RevealTitle } from "@/components/ui/reveal";
-import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
-import { IN_VIEW_MARGIN } from "@/lib/motion";
 import {
   certifications,
   education,
@@ -24,7 +21,6 @@ import type { CvInfo } from "@/lib/site";
  * is not repeated here.
  */
 export default function ParcoursSection({ cv }: { cv: CvInfo }) {
-  const reduce = useSafeReducedMotion();
   const verifiable = certifications.filter((c) => c.verify).length;
 
   const approach = [
@@ -56,7 +52,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
           <div className="min-w-0 lg:col-span-7">
             <RevealTitle id="parcours-title" className="h-section" text="Deux disciplines qui se _répondent_" />
           </div>
-          <Reveal delay={0.06} className="min-w-0 lg:col-span-5">
+          <Reveal className="min-w-0 lg:col-span-5">
             <p className="prose-night text-base sm:text-[1.0625rem]">
               Je m&apos;appelle Ojewumi Asaph Felix. Je me forme à
               l&apos;ESATIC, à Abidjan, sur deux disciplines qui se répondent :
@@ -69,7 +65,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
         <div className="mt-14 grid gap-14 lg:mt-16 lg:grid-cols-12 lg:gap-12">
           {/* Left: how I work, and the person around it. */}
           <div className="min-w-0 space-y-12 lg:col-span-5">
-            <Reveal kind="clip" duration={1.3}>
+            <Reveal kind="clip">
               <figure className="img-outline relative aspect-[4/5] max-w-sm overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
                 <Image
                   src="/images/asaph-photo.webp"
@@ -176,14 +172,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
               <div id="formation" tabIndex={-1} className="outline-none">
                 <h3 className="h-title text-[1.375rem]">Formation</h3>
                 <ol className="relative mt-6 space-y-7">
-                  <motion.span
-                    aria-hidden
-                    className="absolute bottom-1.5 left-[3.5px] top-1.5 w-px origin-top bg-border"
-                    initial={reduce ? undefined : { scaleY: 0 }}
-                    whileInView={reduce ? undefined : { scaleY: 1 }}
-                    viewport={{ once: true, margin: IN_VIEW_MARGIN }}
-                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                  />
+                  <span aria-hidden className="absolute bottom-1.5 left-[3.5px] top-1.5 w-px origin-top bg-border" />
                   {education.map((e) => (
                     <li key={e.title} className="relative pl-8">
                       <span
@@ -216,11 +205,10 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
                   </p>
                 </div>
 
-                <RevealGroup as="ul" stagger={0.06} className="mt-5 border-t border-border">
+                <RevealGroup as="ul" className="mt-5 border-t border-border">
                   {certifications.map((c) => (
                     <RevealItem
                       as="li"
-                      kind="right"
                       key={c.title}
                       className="flex flex-col gap-3 border-b border-border py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
                     >

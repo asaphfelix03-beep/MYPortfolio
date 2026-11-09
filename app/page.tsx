@@ -1,14 +1,12 @@
 import Navigation from "@/components/navigation";
 import Hero from "@/components/night/hero";
-import { Register, Selvedge } from "@/components/night/weave";
 import ProjectsSection from "@/components/projects/projects-section";
-import SkillsSection from "@/components/skills-section";
+import SkillsMarquee from "@/components/skills-marquee";
+import StatsSection from "@/components/stats-section";
 import ParcoursSection from "@/components/parcours-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
-import { TechMarquee } from "@/components/motion/tech-marquee";
 import { PageTransition } from "@/components/motion/page-transition";
-import { Lift } from "@/components/motion/kinetics";
 import { getCvInfo } from "@/lib/cv-file";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
@@ -16,8 +14,8 @@ import { skillDomains } from "@/lib/skills";
 
 /**
  * The home page, in the order a recruiter needs it: who (hero), the proof
- * (projects), what he can do (skills), where he comes from (parcours), and
- * how to reach him (contact).
+ * (projects, parcours), how to get in touch (contact), the figures, and the
+ * skills.
  *
  * A server component: it reads the CV's size from disk at build time and
  * hands it to the sections that offer the download. The sections themselves
@@ -62,39 +60,22 @@ export default function Home() {
         // Static data built from lib/site.ts; nothing user-supplied.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Opening curtain, CSS only (see .intro in globals.css). */}
-      <div aria-hidden className="intro">
-        <p>Asaph Felix</p>
-        <i />
-      </div>
       <Navigation cv={cv} />
-      <Selvedge />
 
       <PageTransition>
       <main id="contenu" tabIndex={-1} className="relative overflow-x-clip outline-none">
         <Hero cv={cv} />
-        <div className="md:pl-14">
-          <TechMarquee />
-        </div>
-
-        <Register className="md:pl-14">
-          <ProjectsSection />
-        </Register>
-        <Register className="md:pl-14">
-          <SkillsSection />
-        </Register>
-        <Register className="md:pl-14">
+        <ProjectsSection />
+        <div className="pb-8">
           <ParcoursSection cv={cv} />
-        </Register>
-        <Register className="md:pl-14">
-          <Lift>
-            <ContactSection cv={cv} />
-          </Lift>
-        </Register>
+        </div>
+        <ContactSection cv={cv} />
+        <StatsSection />
+        <SkillsMarquee cv={cv} />
       </main>
       </PageTransition>
 
-      <div className="theme-ink md:pl-14">
+      <div className="theme-ink">
         <Footer cv={cv} />
       </div>
     </>

@@ -1,20 +1,28 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
 import { site } from '@/lib/site'
+import { INTRO_FLAG, MOTION_FAILSAFE_MS } from '@/lib/motion'
 import { SmoothScroll } from '@/components/motion/smooth-scroll'
 import { Cursor } from '@/components/motion/cursor'
+import { Loader } from '@/components/motion/loader'
 import { ScrollProgress } from '@/components/motion/scroll-progress'
 import { Spotlight } from '@/components/motion/spotlight'
 import './globals.css'
 
-// Three voices with three jobs: an expressive grotesque for everything
-// (variable, so one file covers display and body), a serif italic for the
-// odd accent word in a title, a mono for small labels. Self-hosted by
-// next/font, so the strict CSP needs no new host.
-const sans = Bricolage_Grotesque({
+// Four voices with four jobs: an expressive grotesque for titles, a humanist
+// sans for reading, a serif italic for the accent word of a title, a mono
+// for small labels. Self-hosted by next/font, so the strict CSP needs no
+// new host.
+const display = Bricolage_Grotesque({
   subsets: ['latin'],
   variable: '--font-geo',
+  display: 'swap',
+})
+
+const sans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
   display: 'swap',
 })
 
@@ -94,14 +102,20 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8fafe' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d1420' },
+    { media: '(prefers-color-scheme: light)', color: '#fbfbf9' },
+    { media: '(prefers-color-scheme: dark)', color: '#0e0d0b' },
   ],
   colorScheme: 'light dark',
 }
 
 // Runs before first paint so a stored or system dark theme never flashes light.
 const themeScript = `try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`
+
+// Also before first paint: html.motion lets the CSS hold the hero in its
+// entrance pose and html.intro shows the curtain. Without JavaScript or with
+// reduced motion neither class exists, so everything is simply visible. The
+// timer lifts both if the page never hydrates.
+const motionScript = `(function(){var h=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');var s;try{s=sessionStorage.getItem('${INTRO_FLAG}')}catch(e){}if(!s)h.classList.add('intro');setTimeout(function(){if(!('motionReady' in h.dataset))h.classList.remove('motion','intro')},${MOTION_FAILSAFE_MS})})()`
 
 export default function RootLayout({
   children,
@@ -112,11 +126,12 @@ export default function RootLayout({
     // data-scroll-behavior tells Next to suspend the CSS smooth scroll
     // during route changes; without it, arriving on /#section from a
     // project page overshot the section by several hundred pixels.
-    <html lang="fr" className={`${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="fr" className={`${display.variable} ${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeScript + ';' + motionScript }} />
       </head>
-      <body className="bg-background text-foreground antialiased">
+      <body className="bg-background pb-20 text-foreground antialiased md:pb-0">
+        <Loader />
         <ScrollProgress />
         <a href="#contenu" className="skip-link">
           Aller au contenu
@@ -125,6 +140,7 @@ export default function RootLayout({
         <SmoothScroll />
         <Cursor />
         <Spotlight />
+        <div aria-hidden className="grain" />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -1,57 +1,70 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
-import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+import { useEffect, useRef, type ReactNode } from "react";
+import { DUR, EASE, gsap, isOnScreen, MAGNET_STRENGTH, prefersReducedMotion, ScrollTrigger, STAGGER, START } from "@/lib/motion";
 
-const expo = [0.16, 1, 0.3, 1] as const;
-
-/** True on a large screen driven by a mouse: the only place the heavier effects run. */
-export function useFineDesktop() {
-  const [ok, setOk] = useState(false);
+/** Runs a GSAP setup after hydration, unless the visitor asked for stillness. */
+function useMotion<T extends HTMLElement | SVGElement>(setup: (el: T) => void, skipIfOnScreen = true) {
+  const ref = useRef<T>(null);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
-    const on = () => setOk(mq.matches);
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
+    const el = ref.current;
+    if (!el || prefersReducedMotion() || (skipIfOnScreen && isOnScreen(el))) return;
+    const ctx = gsap.context(() => setup(el));
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return ok;
+  return ref;
 }
 
-/**
- * Pulls its child toward the pointer and lets it spring back on leave.
- * `strength` is the share of the pointer's offset the child follows.
- */
-export function Magnetic({ children, strength = 0.3, className = "inline-block" }: { children: ReactNode; strength?: number; className?: string }) {
-  const reduce = useSafeReducedMotion();
-  const spring = { stiffness: 180, damping: 11, mass: 0.6 };
-  const x = useSpring(useMotionValue(0), spring);
-  const y = useSpring(useMotionValue(0), spring);
-  if (reduce) return <span className={className}>{children}</span>;
+/** Pulls its child toward the mouse and lets it settle back on leave. */
+export function Magnetic({
+  children,
+  strength = MAGNET_STRENGTH,
+  className = "inline-block",
+}: {
+  children: ReactNode;
+  strength?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !matchMedia("(pointer: fine)").matches || prefersReducedMotion()) return;
+    const x = gsap.quickTo(el, "x", { duration: DUR.magnet, ease: EASE.out });
+    const y = gsap.quickTo(el, "y", { duration: DUR.magnet, ease: EASE.out });
+    const move = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      x((e.clientX - (r.left + r.width / 2)) * strength);
+      y((e.clientY - (r.top + r.height / 2)) * strength);
+    };
+    const leave = () => {
+      gsap.to(el, { x: 0, y: 0, duration: DUR.settle, ease: EASE.settle, overwrite: true });
+    };
+    el.addEventListener("pointermove", move);
+    el.addEventListener("pointerleave", leave);
+    return () => {
+      el.removeEventListener("pointermove", move);
+      el.removeEventListener("pointerleave", leave);
+      gsap.killTweensOf(el);
+    };
+  }, [strength]);
   return (
-    <motion.span
-      className={className}
-      style={{ x, y }}
-      onPointerMove={(e) => {
-        if (e.pointerType !== "mouse") return;
-        const r = e.currentTarget.getBoundingClientRect();
-        x.set((e.clientX - (r.left + r.width / 2)) * strength);
-        y.set((e.clientY - (r.top + r.height / 2)) * strength);
-      }}
-      onPointerLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-    >
+    <span ref={ref} className={className}>
       {children}
-    </motion.span>
+    </span>
   );
 }
 
 /** A hand-drawn stroke under an accent word, drawn once it comes into view. */
-export function Swash({ delay = 0.55, at = "-bottom-[0.06em]" }: { delay?: number; at?: string }) {
-  const reduce = useSafeReducedMotion();
+export function Swash({ at = "-bottom-[0.06em]" }: { at?: string }) {
+  const ref = useMotion<SVGPathElement>((el) => {
+    gsap.from(el, {
+      strokeDashoffset: 1,
+      duration: DUR.swash,
+      ease: EASE.inOut,
+      scrollTrigger: { trigger: el, start: START.reveal, once: true },
+    });
+  });
   return (
     <svg
       aria-hidden
@@ -59,99 +72,88 @@ export function Swash({ delay = 0.55, at = "-bottom-[0.06em]" }: { delay?: numbe
       preserveAspectRatio="none"
       className={`pointer-events-none absolute ${at} left-0 h-[0.16em] w-full overflow-visible text-accent`}
     >
-      <motion.path
+      <path
+        ref={ref}
         d="M3 10.5C46 4.5 104 2.5 197 6.5"
         fill="none"
         stroke="currentColor"
         strokeWidth="3.2"
         strokeLinecap="round"
         vectorEffect="non-scaling-stroke"
-        initial={reduce ? false : { pathLength: 0 }}
-        whileInView={{ pathLength: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.1, delay, ease: [0.65, 0, 0.35, 1] }}
+        pathLength={1}
+        strokeDasharray={1}
+        strokeDashoffset={0}
       />
     </svg>
   );
 }
 
-/**
- * The closing wordmark: each letter rises out of its line once the footer
- * shows, and the whole row eases up as the page reaches its end.
- */
+/** The closing wordmark: each letter rises out of its line once the footer shows. */
 export function Wordmark({ first, last, className }: { first: string; last: string; className?: string }) {
-  const reduce = useSafeReducedMotion();
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["-18%", "0%"]);
-  const letters = [...first.split("").map((c) => ({ c, serif: false })), { c: " ", serif: false }, ...last.split("").map((c) => ({ c, serif: true }))];
-
-  if (reduce) {
-    return (
-      <p aria-hidden className={className}>
-        {first} <span className="serif-accent font-normal text-brand">{last}</span>
-      </p>
-    );
-  }
+  const ref = useMotion<HTMLParagraphElement>((el) => {
+    gsap.from(el.querySelectorAll("[data-letter]"), {
+      yPercent: 130,
+      duration: DUR.wordmark,
+      ease: EASE.expo,
+      stagger: STAGGER.letters,
+      scrollTrigger: { trigger: el, start: START.wordmark, once: true },
+    });
+  });
+  const letters = [
+    ...first.split("").map((c) => ({ c, serif: false })),
+    { c: " ", serif: false },
+    ...last.split("").map((c) => ({ c, serif: true })),
+  ];
   return (
-    // The row is observed, not the letters: they start below its mask, where
-    // an observer would never see them.
-    <motion.p
-      ref={ref}
-      aria-hidden
-      className={className}
-      style={{ y }}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
-    >
+    <p ref={ref} aria-hidden className={className}>
       <span className="inline-block overflow-hidden pb-[0.06em] align-bottom">
         {letters.map((l, i) =>
           l.c === " " ? (
             " "
           ) : (
-            <motion.span
-              key={i}
-              className={`inline-block ${l.serif ? "serif-accent font-normal text-brand" : ""}`}
-              variants={{ hidden: { y: "130%" }, show: { y: "0%", transition: { duration: 1.2, ease: expo } } }}
-            >
+            <span key={i} data-letter="" className={`inline-block ${l.serif ? "serif-accent font-normal text-brand" : ""}`}>
               {l.c}
-            </motion.span>
+            </span>
           ),
         )}
       </span>
-    </motion.p>
+    </p>
   );
 }
 
 /**
- * A figure whose digits roll up through 0–9 into place once it shows.
- * Screen readers get the plain value; other characters stay still.
+ * A figure whose digits roll up through 0–9 into place once it shows. The
+ * server renders the final digits, so the real value shows without
+ * JavaScript. Screen readers get the plain value.
  */
 export function RollingFigure({ value }: { value: string }) {
-  const reduce = useSafeReducedMotion();
-  if (reduce) return <>{value}</>;
+  const ref = useMotion<HTMLSpanElement>((el) => {
+    el.querySelectorAll<HTMLElement>("[data-roll]").forEach((col, i) => {
+      // The server positions the column with CSS; GSAP needs it clean to start at 0.
+      col.style.transform = "";
+      gsap.fromTo(
+        col,
+        { yPercent: 0 },
+        {
+          yPercent: -Number(col.dataset.roll) * 10,
+          duration: DUR.rollDigit,
+          ease: EASE.expo,
+          delay: i * STAGGER.digits,
+          scrollTrigger: { trigger: el, start: START.counter, once: true },
+        },
+      );
+    });
+  });
   return (
-    <motion.span
-      aria-label={value}
-      role="img"
-      className="inline-flex whitespace-pre"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.6 }}
-    >
+    <span ref={ref} aria-label={value} role="img" className="inline-flex whitespace-pre">
       {value.split("").map((c, i) =>
         /\d/.test(c) ? (
           <span key={i} aria-hidden className="roll-col">
-            <motion.span
-              variants={{ hidden: { y: "0%" }, show: { y: `${-Number(c) * 10}%` } }}
-              transition={{ duration: 1.4, delay: i * 0.06, ease: expo }}
-            >
+            <span data-roll={c} style={{ transform: `translateY(${-Number(c) * 10}%)` }}>
               {"0123456789".split("").map((d) => (
                 <span key={d}>{d}</span>
               ))}
-            </motion.span>
+            </span>
           </span>
         ) : (
           <span key={i} aria-hidden>
@@ -159,46 +161,30 @@ export function RollingFigure({ value }: { value: string }) {
           </span>
         ),
       )}
-    </motion.span>
+    </span>
   );
 }
 
-/** Tilts its child toward the pointer in 3D (desktop only). */
-export function Tilt({ children, max = 5 }: { children: ReactNode; max?: number }) {
-  const reduce = useSafeReducedMotion();
-  const fine = useFineDesktop();
-  const spring = { stiffness: 150, damping: 18 };
-  const rx = useSpring(useMotionValue(0), spring);
-  const ry = useSpring(useMotionValue(0), spring);
-  if (reduce || !fine) return <div>{children}</div>;
-  return (
-    <motion.div
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1100 }}
-      onPointerMove={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        ry.set(((e.clientX - r.left) / r.width - 0.5) * 2 * max);
-        rx.set(-((e.clientY - r.top) / r.height - 0.5) * 2 * max);
-      }}
-      onPointerLeave={() => {
-        rx.set(0);
-        ry.set(0);
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/** A block that settles from 94 % to full size as it scrolls into place (desktop only). */
-export function Lift({ children, className }: { children: ReactNode; className?: string }) {
-  const reduce = useSafeReducedMotion();
-  const fine = useFineDesktop();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
-  return (
-    <motion.div ref={ref} className={className} style={reduce || !fine ? undefined : { scale, transformOrigin: "50% 0%" }}>
-      {children}
-    </motion.div>
-  );
+/** Counts from 0 to a real value when reached; the server renders the value. */
+export function Counter({ value }: { value: number }) {
+  const ref = useMotion<HTMLSpanElement>((el) => {
+    const state = { n: 0 };
+    el.textContent = "0";
+    ScrollTrigger.create({
+      trigger: el,
+      start: START.counter,
+      once: true,
+      onEnter: () => {
+        gsap.to(state, {
+          n: value,
+          duration: DUR.counter,
+          ease: EASE.out,
+          onUpdate: () => {
+            el.textContent = String(Math.round(state.n));
+          },
+        });
+      },
+    });
+  });
+  return <span ref={ref}>{value}</span>;
 }

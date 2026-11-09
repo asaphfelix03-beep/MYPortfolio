@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { DUR, gsap, prefersReducedMotion, ScrollTrigger } from "@/lib/motion";
 
 declare global {
   interface Window {
@@ -10,28 +11,26 @@ declare global {
 }
 
 /**
- * Inertial wheel scrolling (Lenis). Touch keeps the native scroll, and
- * nothing is smoothed for visitors who ask for reduced motion. Anchor links
- * are handled by Lenis; the CSS scroll-margin keeps titles clear of the header.
+ * Inertial wheel scrolling (Lenis), driven by GSAP's clock so scroll-linked
+ * animations and the scroll itself share one frame. Touch keeps the native
+ * scroll, and nothing is smoothed for visitors who ask for reduced motion.
+ * Anchor links are handled by Lenis; the CSS scroll-margin keeps titles clear
+ * of the header.
  */
 export function SmoothScroll() {
-  // The layout persists across client navigations, so once the opening
-  // curtain has played this flag keeps it from replaying on the way back home.
   useEffect(() => {
-    const t = window.setTimeout(() => (document.documentElement.dataset.introPlayed = ""), 1600);
-    return () => window.clearTimeout(t);
-  }, []);
+    // Swapped fonts change the page height, which moves every trigger.
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    if (prefersReducedMotion()) return;
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const lenis = new Lenis({ duration: 1.15, anchors: true });
+    const lenis = new Lenis({ duration: DUR.lenis, anchors: true });
     window.__lenis = lenis;
-    let raf = requestAnimationFrame(function loop(t) {
-      lenis.raf(t);
-      raf = requestAnimationFrame(loop);
-    });
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (seconds: number) => lenis.raf(seconds * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
     return () => {
-      cancelAnimationFrame(raf);
+      gsap.ticker.remove(tick);
       lenis.destroy();
       window.__lenis = undefined;
     };

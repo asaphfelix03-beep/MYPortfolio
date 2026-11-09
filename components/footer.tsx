@@ -23,10 +23,10 @@ export default function Footer({
       <div className="mx-auto max-w-7xl">
         <div className="mb-14 flex items-end justify-between gap-6 border-b border-border pb-10">
           <p className="max-w-md text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-tight tracking-[-0.035em]">
-            Un stage à pourvoir ? <span className="relative serif-accent font-normal text-accent">Parlons-en.<Swash delay={0.3} /></span>
+            Un stage à pourvoir ? <span className="relative serif-accent font-normal text-accent">Parlons-en.<Swash /></span>
           </p>
           {/* The closing call: a disc that grows on hover. */}
-          <Magnetic strength={0.35} className="shrink-0">
+          <Magnetic className="shrink-0">
           <a
             href={href("contact")}
             className="group grid h-28 w-28 shrink-0 place-items-center rounded-full bg-accent text-center text-[0.875rem] font-medium text-accent-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 active:scale-[0.96] sm:h-36 sm:w-36"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowUpRight,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Reveal, RevealTitle } from "@/components/ui/reveal";
 import { SwapIcon } from "@/components/ui/swap-icon";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/brand";
+import { EASE, gsap, OVERLAP_END, OVERLAP_START, OVERLAP_Y, prefersReducedMotion } from "@/lib/motion";
 import { site, type CvInfo } from "@/lib/site";
 
 type Fields = { name: string; email: string; message: string };
@@ -22,6 +22,8 @@ type Errors = Partial<Record<keyof Fields, string>>;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MESSAGE_MIN = 10;
 const MESSAGE_MAX = 2000;
+const PROJECT_TYPES = ["Stage", "Projet cybersécurité", "Analyse de données", "Application web ou mobile", "Autre"];
+const DELAYS = ["Dès fin février 2027", "Dans l'année", "À définir"];
 
 function validate(f: Fields): Errors {
   const errors: Errors = {};
@@ -53,6 +55,10 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
   const [attempted, setAttempted] = useState(false);
   const [status, setStatus] = useState<"idle" | "handed-off">("idle");
   const [copied, setCopied] = useState<"email" | "message" | null>(null);
+  const [projectType, setProjectType] = useState("");
+  const [delay, setDelay] = useState("");
+  const pillsId = useId();
+  const section = useRef<HTMLElement>(null);
   const refs = {
     name: useRef<HTMLInputElement>(null),
     email: useRef<HTMLInputElement>(null),
@@ -60,9 +66,24 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
   };
 
   const subject = `Contact portfolio — ${fields.name.trim() || "Nouveau message"}`;
-  const body = `${fields.message.trim()}\n\n—\nDe : ${fields.name.trim()}\nE-mail : ${fields.email.trim()}`;
+  const context = [projectType && `Type de projet : ${projectType}`, delay && `Délai : ${delay}`].filter(Boolean).join("\n");
+  const body = `${context ? `${context}\n\n` : ""}${fields.message.trim()}\n\n—\nDe : ${fields.name.trim()}\nE-mail : ${fields.email.trim()}`;
   const mailtoUrl = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // The orange section slides up over the one before it.
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const tween = gsap.fromTo(
+      section.current,
+      { y: OVERLAP_Y },
+      { y: 0, ease: EASE.linear, scrollTrigger: { trigger: section.current, start: OVERLAP_START, end: OVERLAP_END, scrub: true } },
+    );
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.revert();
+    };
+  }, []);
 
   const update = (key: keyof Fields, value: string) => {
     const next = { ...fields, [key]: value };
@@ -102,7 +123,7 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
 
   const errorCount = Object.keys(errors).length;
   const fieldClass = (invalid: boolean) =>
-    `w-full border bg-card px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:outline-none focus:border-accent focus:ring-2 focus:ring-accent/25 ${
+    `w-full rounded-2xl border bg-card px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:outline-none focus:border-accent focus:ring-2 focus:ring-accent/25 ${
       invalid ? "border-destructive" : "border-input"
     }`;
 
@@ -115,26 +136,24 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
 
   return (
     <section
+      ref={section}
       id="contact"
       tabIndex={-1}
       aria-labelledby="contact-title"
-      className="relative px-5 py-20 outline-none sm:px-8 sm:py-28 lg:py-32"
+      className="theme-accent section-over px-5 py-20 outline-none sm:px-8 sm:py-28 lg:py-32"
     >
-      <Reveal kind="scale" duration={1.1} className="mx-auto max-w-7xl">
-        {/* The closing panel: navy, with one localised glow behind the form. */}
-        <div className="theme-ink relative overflow-hidden rounded-[2rem] px-5 py-12 sm:px-10 sm:py-16 lg:px-14">
-        <span aria-hidden className="weave-field pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(70%_60%_at_80%_10%,black,transparent)]" />
-        <div className="relative grid gap-14 lg:grid-cols-12 lg:gap-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-5">
-            <RevealTitle id="contact-title" className="h-section" text="Parlons de votre offre de _stage_" />
-            <Reveal delay={0.06}>
+            <RevealTitle id="contact-title" className="h-section" text="Parlons de votre _projet_" />
+            <Reveal>
               <p className="prose-night mt-5 text-base sm:text-[1.0625rem]">
                 {site.availability.sentence} Une question sur un projet ou sur
                 mon parcours ? Écrivez-moi, je réponds rapidement.
               </p>
             </Reveal>
 
-            <Reveal delay={0.1}>
+            <Reveal>
               <div className="mt-10 border-t border-border pt-6">
                 <p className="label">E-mail</p>
                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -161,20 +180,6 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
                     {site.phone.display}
                   </a>
                 </ContactRow>
-                <ContactRow icon={<LinkedinIcon size={15} />} label="LinkedIn">
-                  <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer" className="link-go inline-flex min-h-11 items-center gap-1.5 hover:text-accent">
-                    Ojewumi Asaph Felix
-                    <ArrowUpRight size={14} aria-hidden className="icon-out" />
-                    <span className="sr-only">(nouvel onglet)</span>
-                  </a>
-                </ContactRow>
-                <ContactRow icon={<GithubIcon size={15} />} label="GitHub">
-                  <a href={site.links.github} target="_blank" rel="noopener noreferrer" className="link-go inline-flex min-h-11 items-center gap-1.5 hover:text-accent">
-                    asaphfelix03-beep
-                    <ArrowUpRight size={14} aria-hidden className="icon-out" />
-                    <span className="sr-only">(nouvel onglet)</span>
-                  </a>
-                </ContactRow>
                 <ContactRow icon={<Download size={16} aria-hidden />} label="CV">
                   <a href={cv.href} download={cv.downloadName} className="link-line inline-block py-2.5 hover:text-accent">
                     {cv.label} <span className="text-muted-foreground">· {cv.size}</span>
@@ -187,7 +192,7 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
             </Reveal>
           </div>
 
-          <Reveal delay={0.12} className="min-w-0 lg:col-span-7">
+          <Reveal className="min-w-0 lg:col-span-7">
             <form
               noValidate
               onSubmit={onSubmit}
@@ -211,6 +216,11 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
                     : "Un champ est à corriger."}
                 </p>
               ) : null}
+
+              <div className="mt-6 space-y-5">
+                <PillGroup legend="Type de projet (facultatif)" name={`${pillsId}-type`} options={PROJECT_TYPES} value={projectType} onChange={setProjectType} />
+                <PillGroup legend="Délai (facultatif)" name={`${pillsId}-delay`} options={DELAYS} value={delay} onChange={setDelay} />
+              </div>
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 <Field id={ids.name} label="Nom complet" error={errors.name}>
@@ -308,9 +318,36 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
             </form>
           </Reveal>
         </div>
-        </div>
-      </Reveal>
+      </div>
     </section>
+  );
+}
+
+function PillGroup({
+  legend,
+  name,
+  options,
+  value,
+  onChange,
+}: {
+  legend: string;
+  name: string;
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <fieldset>
+      <legend className="text-[0.875rem] font-medium text-foreground">{legend}</legend>
+      <div className="mt-2.5 flex flex-wrap gap-2">
+        {options.map((o) => (
+          <label key={o} className="cursor-pointer">
+            <input type="radio" name={name} value={o} checked={value === o} onChange={() => onChange(o)} className="sr-only" />
+            <span className="pill-face">{o}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 

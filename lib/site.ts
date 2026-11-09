@@ -72,9 +72,9 @@ export type CvInfo = {
 /** The home page's sections, in reading order. */
 export const sections = [
   { id: "projets", label: "Projets" },
-  { id: "competences", label: "Compétences" },
   { id: "parcours", label: "Parcours" },
   { id: "contact", label: "Contact" },
+  { id: "competences", label: "Compétences" },
 ] as const;
 
 export type SectionId = (typeof sections)[number]["id"];

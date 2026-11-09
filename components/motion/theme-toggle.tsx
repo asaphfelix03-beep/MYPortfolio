@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { Moon, Sun } from "lucide-react";
 import { SwapIcon } from "@/components/ui/swap-icon";
-import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /**
  * Light/dark switch. The head script in the layout sets `.dark` before
@@ -13,7 +13,6 @@ import { useSafeReducedMotion } from "@/hooks/use-safe-reduced-motion";
  * supports view transitions.
  */
 export function ThemeToggle() {
-  const reduce = useSafeReducedMotion();
   const [dark, setDark] = useState(false);
   useEffect(() => setDark(document.documentElement.classList.contains("dark")), []);
 
@@ -27,7 +26,7 @@ export function ThemeToggle() {
       } catch {}
       flushSync(() => setDark(next));
     };
-    if (reduce || !document.startViewTransition) return apply();
+    if (prefersReducedMotion() || !document.startViewTransition) return apply();
 
     const r = e.currentTarget.getBoundingClientRect();
     const x = r.left + r.width / 2;
