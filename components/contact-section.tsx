@@ -1,19 +1,15 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowUpRight,
   Check,
   Copy,
-  Download,
   Mail,
-  MapPin,
-  Phone,
 } from "lucide-react";
-import { Reveal, RevealTitle } from "@/components/ui/reveal";
+import { Reveal } from "@/components/ui/reveal";
 import { SwapIcon } from "@/components/ui/swap-icon";
-import { EASE, gsap, OVERLAP_END, OVERLAP_START, OVERLAP_Y, prefersReducedMotion } from "@/lib/motion";
 import { site, type CvInfo } from "@/lib/site";
 
 type Fields = { name: string; email: string; message: string };
@@ -48,7 +44,8 @@ function validate(f: Fields): Errors {
  * they press Send there. Gmail in the browser and a copy button cover the
  * visitor who has no mail app configured.
  */
-export default function ContactSection({ cv }: { cv: CvInfo }) {
+// `cv` stays in the props: the page passes it; the CV download lives in the Parcours section.
+export default function ContactSection(_props: { cv: CvInfo }) {
   const uid = useId();
   const [fields, setFields] = useState<Fields>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Errors>({});
@@ -58,7 +55,6 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
   const [projectType, setProjectType] = useState("");
   const [delay, setDelay] = useState("");
   const pillsId = useId();
-  const section = useRef<HTMLElement>(null);
   const refs = {
     name: useRef<HTMLInputElement>(null),
     email: useRef<HTMLInputElement>(null),
@@ -70,20 +66,6 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
   const body = `${context ? `${context}\n\n` : ""}${fields.message.trim()}\n\n—\nDe : ${fields.name.trim()}\nE-mail : ${fields.email.trim()}`;
   const mailtoUrl = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  // The orange section slides up over the one before it.
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const tween = gsap.fromTo(
-      section.current,
-      { y: OVERLAP_Y },
-      { y: 0, ease: EASE.linear, scrollTrigger: { trigger: section.current, start: OVERLAP_START, end: OVERLAP_END, scrub: true } },
-    );
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.revert();
-    };
-  }, []);
 
   const update = (key: keyof Fields, value: string) => {
     const next = { ...fields, [key]: value };
@@ -123,9 +105,11 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
 
   const errorCount = Object.keys(errors).length;
   const fieldClass = (invalid: boolean) =>
-    `w-full rounded-2xl border bg-card px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:outline-none focus:border-accent focus:ring-2 focus:ring-accent/25 ${
-      invalid ? "border-destructive" : "border-input"
+    `w-full rounded-lg border bg-muted px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/80 focus:border-accent ${
+      invalid ? "border-destructive" : "border-transparent"
     }`;
+  const canSubmit = Boolean(fields.name.trim() && fields.email.trim() && fields.message.trim());
+  const copyAnnounce = copied === "email" ? "Adresse copiée" : "";
 
   const ids = {
     name: `${uid}-name`,
@@ -136,71 +120,78 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
 
   return (
     <section
-      ref={section}
       id="contact"
       tabIndex={-1}
       aria-labelledby="contact-title"
-      className="theme-accent section-over px-5 py-20 outline-none sm:px-8 sm:py-28 lg:py-32"
+      className="mx-auto max-w-[var(--content-max)] px-[var(--gutter)] py-[var(--section-y)] outline-none"
     >
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
-          <div className="min-w-0 lg:col-span-5">
-            <RevealTitle id="contact-title" className="h-section" text="Parlons de votre _projet_" />
-            <Reveal>
-              <p className="prose-night mt-5 text-base sm:text-[1.0625rem]">
-                {site.availability.sentence} Une question sur un projet ou sur
-                mon parcours ? Écrivez-moi, je réponds rapidement.
-              </p>
-            </Reveal>
+      <h2 id="contact-title" className="h-section min-w-0 break-words">
+        Écrivons
+        <br />
+        <span className="grad-text">la suite.</span>
+      </h2>
 
-            <Reveal>
-              <div className="mt-10 border-t border-border pt-6">
-                <p className="label">E-mail</p>
-                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div className="mt-16 grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
+        <div className="min-w-0">
+          <Reveal>
+            <p className="max-w-lg text-[1.15rem] leading-relaxed text-muted-foreground text-pretty">
+              {site.availability.sentence}
+            </p>
+
+            <div className="mt-8 flex items-center gap-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-signal-soft text-accent">
+                <Mail size={18} aria-hidden />
+              </span>
+              <a
+                href={`mailto:${site.email}`}
+                className="min-w-0 break-all text-[clamp(1.35rem,3.6vw,2.5rem)] font-medium tracking-[-0.03em] hover:text-accent"
+              >
+                {site.email}
+              </a>
+            </div>
+            <button
+              type="button"
+              onClick={() => copy("email")}
+              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-muted px-5 text-[0.9375rem] font-medium text-foreground hover:bg-border"
+            >
+              <SwapIcon active={copied === "email"} on={<Check size={15} aria-hidden />} off={<Copy size={15} aria-hidden />} />
+              Copier l&apos;adresse
+            </button>
+            <p className="sr-only" aria-live="polite">
+              {copyAnnounce}
+            </p>
+
+            <ul className="mt-12">
+              {[
+                { name: "LinkedIn", href: site.links.linkedin, external: true },
+                { name: "GitHub", href: site.links.github, external: true },
+                { name: "Téléphone", href: site.phone.href, external: false },
+              ].map((c) => (
+                <li key={c.name} className="hairline-row">
                   <a
-                    href={`mailto:${site.email}`}
-                    className="link-line inline-block break-all py-1.5 text-[clamp(1.25rem,2.3vw,1.6rem)] font-light text-foreground hover:text-accent"
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="link-go flex items-center justify-between gap-4 py-5 text-[length:var(--fs-h2)] font-semibold leading-none tracking-[-0.045em] hover:text-accent"
                   >
-                    {site.email}
+                    <span className="min-w-0 break-words">{c.name}</span>
+                    <ArrowUpRight aria-hidden className="icon-out h-[0.6em] w-[0.6em] shrink-0" />
+                    {c.external ? <span className="sr-only">(nouvel onglet)</span> : <span className="sr-only">{site.phone.display}</span>}
                   </a>
-                  <button
-                    type="button"
-                    onClick={() => copy("email")}
-                    className="btn btn-outline btn-sm"
-                  >
-                    <SwapIcon active={copied === "email"} on={<Check size={15} aria-hidden />} off={<Copy size={15} aria-hidden />} />
-                    {copied === "email" ? "Adresse copiée" : "Copier"}
-                  </button>
-                </div>
-              </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
 
-              <ul className="mt-6 divide-y divide-border border-y border-border">
-                <ContactRow icon={<Phone size={16} aria-hidden />} label="Téléphone">
-                  <a href={site.phone.href} className="link-line inline-block py-2.5 hover:text-accent">
-                    {site.phone.display}
-                  </a>
-                </ContactRow>
-                <ContactRow icon={<Download size={16} aria-hidden />} label="CV">
-                  <a href={cv.href} download={cv.downloadName} className="link-line inline-block py-2.5 hover:text-accent">
-                    {cv.label} <span className="text-muted-foreground">· {cv.size}</span>
-                  </a>
-                </ContactRow>
-                <ContactRow icon={<MapPin size={16} aria-hidden />} label="Ville">
-                  {site.location}
-                </ContactRow>
-              </ul>
-            </Reveal>
-          </div>
-
-          <Reveal className="min-w-0 lg:col-span-7">
+          <Reveal className="min-w-0">
             <form
               noValidate
               onSubmit={onSubmit}
               aria-labelledby={`${uid}-form-title`}
               aria-describedby={ids.note}
-              className="border-t border-border pt-6 lg:border-t-0 lg:pt-0"
+              className="rounded-2xl border border-border bg-card p-6 sm:p-10"
             >
-              <h3 id={`${uid}-form-title`} className="h-title text-[1.375rem]">
+              <h3 id={`${uid}-form-title`} className="text-[length:var(--fs-h3)] font-semibold tracking-[-0.03em]">
                 Écrire un message
               </h3>
               <p id={ids.note} className="mt-2 text-[0.875rem] leading-relaxed text-muted-foreground">
@@ -282,7 +273,7 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
               </div>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" disabled={!canSubmit} className="btn btn-signal disabled:cursor-not-allowed disabled:opacity-50">
                   <Mail size={17} aria-hidden />
                   Envoyer avec ma messagerie
                 </button>
@@ -318,7 +309,6 @@ export default function ContactSection({ cv }: { cv: CvInfo }) {
             </form>
           </Reveal>
         </div>
-      </div>
     </section>
   );
 }
@@ -348,26 +338,6 @@ function PillGroup({
         ))}
       </div>
     </fieldset>
-  );
-}
-
-function ContactRow({
-  icon,
-  label,
-  children,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-center gap-4 py-1.5 text-[0.9375rem]">
-      <span className="grid h-9 w-9 shrink-0 place-items-center border border-border text-accent">
-        {icon}
-      </span>
-      <span className="w-24 shrink-0 text-muted-foreground">{label}</span>
-      <span className="min-w-0 text-foreground">{children}</span>
-    </li>
   );
 }
 

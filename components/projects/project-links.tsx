@@ -50,11 +50,6 @@ export function ProjectLinks({
   );
 }
 
-export function StatusChip({ children }: { children: string }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/45 px-2.5 py-0.5 text-[0.75rem] font-medium text-accent">
-      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-      {children}
-    </span>
-  );
+export function StatusChip({ children, live = false }: { children: string; live?: boolean }) {
+  return <span className={`chip ${live ? "chip-signal" : ""}`}>{children}</span>;
 }

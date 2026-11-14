@@ -1,261 +1,234 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, BadgeCheck, Download, FileText } from "lucide-react";
-import { Reveal, RevealGroup, RevealItem, RevealTitle } from "@/components/ui/reveal";
-import {
-  certifications,
-  education,
-  experience,
-  issuerCount,
-  languages,
-  participations,
-  qualities,
-} from "@/lib/parcours";
-import { publicRepoCount, projects } from "@/lib/projects";
+import { ACTIVE_LINE, prefersReducedMotion, ScrollTrigger } from "@/lib/motion";
+import { certifications, education, experience, participations } from "@/lib/parcours";
 import type { CvInfo } from "@/lib/site";
 
+type Kind = "formation" | "experience" | "certification" | "participation";
+
+type Entry = {
+  id: string;
+  kind: Kind;
+  meta?: string;
+  current?: boolean;
+  title: string;
+  org?: string;
+  body?: string;
+  tools?: string[];
+  links?: { href: string; label: string; sr: string; icon: "out" | "file" | "verify" }[];
+};
+
+const KIND_LABEL: Record<Kind, string> = {
+  formation: "Formation",
+  experience: "Expérience",
+  certification: "Certification",
+  participation: "Participation",
+};
+
+const FILTERS: { id: Kind | "tout"; label: string }[] = [
+  { id: "tout", label: "Tout" },
+  { id: "formation", label: "Formation" },
+  { id: "experience", label: "Expériences" },
+  { id: "certification", label: "Certifications" },
+  { id: "participation", label: "Participations" },
+];
+
+const entries: Entry[] = [
+  ...experience.map<Entry>((x) => ({
+    id: `exp-${x.title}`,
+    kind: "experience",
+    meta: x.period,
+    current: /aujourd/i.test(x.period),
+    title: x.title,
+    org: x.org,
+    body: x.summary,
+    tools: x.tools,
+    links: [{ href: x.href, label: "Voir les 9 projets du stage", sr: "sur GitHub (nouvel onglet)", icon: "out" }],
+  })),
+  ...education.map<Entry>((e) => ({
+    id: `edu-${e.title}`,
+    kind: "formation",
+    meta: e.period,
+    current: e.current,
+    title: e.title,
+    org: e.school,
+  })),
+  ...certifications.map<Entry>((c) => ({
+    id: `cert-${c.title}`,
+    kind: "certification",
+    meta: c.date,
+    title: c.title,
+    org: `${c.issuer}${c.kind ? `, ${c.kind.toLowerCase()}` : ""}`,
+    links: [
+      { href: c.file, label: "Certificat", sr: `${c.title}, PDF (nouvel onglet)`, icon: "file" },
+      ...(c.verify
+        ? [{ href: c.verify, label: "Vérifier", sr: `l'authenticité de ${c.title} (nouvel onglet)`, icon: "verify" as const }]
+        : []),
+    ],
+  })),
+  ...participations.map<Entry>((p) => ({
+    id: `part-${p.title}`,
+    kind: "participation",
+    title: p.title,
+    org: p.note,
+  })),
+];
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
 /**
- * The path so far: the course, the certificates, and the way of working
- * the published projects show. The portrait already opens the page, so it
- * is not repeated here.
+ * The path so far as a timeline. On desktop a sticky "reading position"
+ * block follows the entry nearest the middle of the screen; the others fade.
  */
 export default function ParcoursSection({ cv }: { cv: CvInfo }) {
-  const verifiable = certifications.filter((c) => c.verify).length;
+  const [filter, setFilter] = useState<Kind | "tout">("tout");
+  const [active, setActive] = useState(0);
+  const [fade, setFade] = useState(false);
+  const refs = useRef<(HTMLLIElement | null)[]>([]);
 
-  const approach = [
-    {
-      title: "Partir d'une question précise",
-      body: "L'analyse de l'électrification part de quatre questions, celle de la monnaie électronique d'une seule : un compte ouvert est-il un compte utilisé ?",
-    },
-    {
-      title: "Montrer la méthode et ses limites",
-      body: "Contrôles qualité, tests automatisés, limites écrites noir sur blanc : un chiffre publié doit pouvoir être vérifié.",
-    },
-    {
-      title: "Publier le code",
-      body: `${publicRepoCount} des ${projects.length} projets présentés ici ont leur dépôt public sur GitHub.`,
-    },
-  ];
+  const filters = FILTERS.filter((f) => f.id === "tout" || entries.some((e) => e.kind === f.id));
+  const visible = useMemo(() => (filter === "tout" ? entries : entries.filter((e) => e.kind === filter)), [filter]);
+  const shown = Math.min(active, visible.length - 1);
+  const current = visible[shown];
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    setFade(true);
+    setActive(0);
+    const triggers = refs.current.slice(0, visible.length).map((el, i) =>
+      el
+        ? ScrollTrigger.create({
+            trigger: el,
+            start: ACTIVE_LINE,
+            onEnter: () => setActive(i),
+            onLeaveBack: () => setActive(Math.max(i - 1, 0)),
+          })
+        : null,
+    );
+    ScrollTrigger.refresh();
+    return () => triggers.forEach((t) => t?.kill());
+  }, [visible]);
 
   return (
     <section
       id="parcours"
       tabIndex={-1}
       aria-labelledby="parcours-title"
-      className="relative px-5 py-20 outline-none sm:px-8 sm:py-28 lg:py-32"
+      className="relative mx-auto max-w-[var(--content-max)] px-[var(--gutter)] py-[var(--section-y)] outline-none"
     >
       <span id="about" aria-hidden className="absolute top-0" />
+      <span id="experience" aria-hidden className="absolute top-0" />
+      <span id="formation" aria-hidden className="absolute top-0" />
+      <span id="certifications" aria-hidden className="absolute top-0" />
 
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-12">
-          <div className="min-w-0 lg:col-span-7">
-            <RevealTitle id="parcours-title" className="h-section" text="Deux disciplines qui se _répondent_" />
-          </div>
-          <Reveal className="min-w-0 lg:col-span-5">
-            <p className="prose-night text-base sm:text-[1.0625rem]">
-              Je m&apos;appelle Ojewumi Asaph Felix. Je me forme à
-              l&apos;ESATIC, à Abidjan, sur deux disciplines qui se répondent :
-              protéger les systèmes et faire parler les données. J&apos;apprends
-              autant par les projets que par la certification.
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
+          <h2 id="parcours-title" className="h-section min-w-0 break-words">
+            Un parcours
+            <br />
+            <span className="grad-text">qui se construit.</span>
+          </h2>
+          <p className="mt-5 max-w-xl text-[1.15rem] text-muted-foreground text-pretty">
+            Je me forme à l&apos;ESATIC, à Abidjan, sur deux disciplines qui se répondent : protéger les systèmes et
+            faire parler les données. J&apos;apprends autant par les projets que par la certification.
+          </p>
+        </div>
+        <div role="group" aria-label="Filtrer le parcours" className="flex flex-wrap gap-1">
+          {filters.map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              aria-pressed={filter === f.id}
+              onClick={() => setFilter(f.id)}
+              className="filter-pill"
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+        <div className="hidden lg:block">
+          <div className="sticky top-32" aria-hidden>
+            <p className="text-[length:var(--fs-meta)] text-muted-foreground">Position de lecture</p>
+            <p className="mt-4 flex items-baseline gap-3 font-semibold leading-none tracking-[-0.05em]">
+              <span className="text-[9rem] tabular-nums">{pad(shown + 1)}</span>
+              <span className="text-[2rem] text-muted-foreground tabular-nums">/ {pad(visible.length)}</span>
             </p>
-          </Reveal>
+            <p className="mt-6 max-w-sm text-[length:var(--fs-h3)] font-semibold leading-tight tracking-[-0.03em] text-pretty">
+              {current?.title}
+            </p>
+          </div>
         </div>
 
-        <div className="mt-14 grid gap-14 lg:mt-16 lg:grid-cols-12 lg:gap-12">
-          {/* Left: how I work, and the person around it. */}
-          <div className="min-w-0 space-y-12 lg:col-span-5">
-            <Reveal kind="clip">
-              <figure className="img-outline relative aspect-[4/5] max-w-sm overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
-                <Image
-                  src="/images/asaph-photo.webp"
-                  alt="Portrait d'Ojewumi Asaph Felix"
-                  fill
-                  sizes="(min-width: 1024px) 384px, 90vw"
-                  className="object-cover object-[50%_30%]"
+        <div className="min-w-0">
+          <ol className="relative">
+            <span aria-hidden className="absolute bottom-0 left-[0.5rem] top-0 w-px bg-border" />
+            {visible.map((e, i) => (
+              <li
+                key={e.id}
+                ref={(el) => {
+                  refs.current[i] = el;
+                }}
+                style={{ opacity: fade && i !== active ? 0.35 : 1 }}
+                className="relative pb-14 pl-10 transition-opacity duration-300 last:pb-0"
+              >
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-[0.35rem] h-[1.0625rem] w-[1.0625rem] rounded-full border border-foreground bg-background"
                 />
-                <figcaption className="absolute inset-x-3 bottom-3 rounded-2xl bg-card px-4 py-3 shadow-[var(--shadow-soft)]">
-                  <span className="block text-[1rem] font-semibold tracking-[-0.02em]">Ojewumi Asaph Felix</span>
-                  <span className="mono-label">Abidjan · Côte d&apos;Ivoire</span>
-                </figcaption>
-              </figure>
-            </Reveal>
-
-            <Reveal>
-              <h3 className="h-title text-[1.375rem]">Ma démarche</h3>
-              <ul className="mt-5 border-t border-border">
-                {approach.map((a) => (
-                  <li key={a.title} className="border-b border-border py-5">
-                    <p className="text-[1rem] text-foreground">{a.title}</p>
-                    <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground text-pretty">
-                      {a.body}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            <Reveal>
-              <dl className="grid grid-cols-2 gap-x-6 gap-y-8">
-                {languages.map((l) => (
-                  <div key={l.name}>
-                    <dt className="label">{l.name}</dt>
-                    <dd className="mt-1 text-[1.375rem] font-light">{l.level}</dd>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[length:var(--fs-meta)] text-muted-foreground">
+                  <span>{KIND_LABEL[e.kind]}</span>
+                  {e.meta ? <span>{e.meta}</span> : null}
+                  {e.current ? <span className="chip chip-signal">En cours</span> : null}
+                </div>
+                <h3 className="mt-3 min-w-0 break-words text-[length:var(--fs-h3)] font-semibold leading-tight tracking-[-0.03em] text-balance">
+                  {e.title}
+                </h3>
+                {e.org ? <p className="mt-1.5 text-[1.0625rem] text-muted-foreground">{e.org}</p> : null}
+                {e.body ? (
+                  <p className="mt-4 max-w-2xl text-[1rem] leading-relaxed text-muted-foreground text-pretty">{e.body}</p>
+                ) : null}
+                {e.tools ? (
+                  <ul aria-label="Outils" className="mt-4 flex flex-wrap gap-2">
+                    {e.tools.map((t) => (
+                      <li key={t} className="rounded-full border border-border bg-card px-3 py-1 text-[length:var(--fs-meta)]">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {e.links ? (
+                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+                    {e.links.map((l) => (
+                      <a
+                        key={l.href}
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-go inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-medium text-accent"
+                      >
+                        {l.icon === "file" ? <FileText size={15} aria-hidden /> : null}
+                        {l.icon === "verify" ? <BadgeCheck size={15} aria-hidden /> : null}
+                        {l.label}
+                        {l.icon !== "file" ? <ArrowUpRight size={15} aria-hidden className="icon-out" /> : null}
+                        <span className="sr-only"> {l.sr}</span>
+                      </a>
+                    ))}
                   </div>
-                ))}
-                <div className="col-span-2">
-                  <dt className="label">Atouts</dt>
-                  <dd className="mt-2 text-[0.9375rem] text-foreground/85">
-                    {qualities.join(", ")}
-                  </dd>
-                </div>
-                <div className="col-span-2">
-                  <dt className="label">Participations</dt>
-                  <dd className="mt-2">
-                    <ul className="space-y-1.5 text-[0.9375rem]">
-                      {participations.map((p) => (
-                        <li key={p.title}>
-                          <span className="text-foreground">{p.title}</span>
-                          <span className="text-muted-foreground"> · {p.note}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </dd>
-                </div>
-              </dl>
-            </Reveal>
+                ) : null}
+              </li>
+            ))}
+          </ol>
 
-            <Reveal>
-              <a href={cv.href} download={cv.downloadName} className="btn btn-outline">
-                <Download size={17} aria-hidden className="icon-down" />
-                Télécharger mon CV
-                <span className="font-normal text-muted-foreground">(PDF, {cv.size})</span>
-              </a>
-            </Reveal>
-          </div>
-
-          {/* Right: the record. */}
-          <div className="min-w-0 space-y-14 lg:col-span-7">
-            <Reveal kind="right">
-              <div id="experience" className="surface relative overflow-hidden p-6 sm:p-8">
-                <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-[image:var(--grad-brand)]" />
-                <h3 className="h-title text-[1.375rem]">Expérience</h3>
-                {experience.map((x) => (
-                  <div key={x.title} className="mt-5">
-                    <p className="label">
-                      {x.period} <span className="text-blue">· en cours</span>
-                    </p>
-                    <p className="mt-1 text-[1.125rem] font-medium text-foreground">{x.title}</p>
-                    <p className="text-[0.9375rem] text-muted-foreground">{x.org}</p>
-                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-foreground/85 text-pretty">{x.summary}</p>
-                    <ul aria-label="Outils" className="mt-4 flex flex-wrap gap-1.5">
-                      {x.tools.map((t) => (
-                        <li key={t} className="tag">{t}</li>
-                      ))}
-                    </ul>
-                    <a
-                      href={x.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-go mt-4 inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-medium text-accent"
-                    >
-                      Voir les 9 projets du stage
-                      <ArrowUpRight size={15} aria-hidden className="icon-out" />
-                      <span className="sr-only">sur GitHub (nouvel onglet)</span>
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal>
-              <div id="formation" tabIndex={-1} className="outline-none">
-                <h3 className="h-title text-[1.375rem]">Formation</h3>
-                <ol className="relative mt-6 space-y-7">
-                  <span aria-hidden className="absolute bottom-1.5 left-[3.5px] top-1.5 w-px origin-top bg-border" />
-                  {education.map((e) => (
-                    <li key={e.title} className="relative pl-8">
-                      <span
-                        aria-hidden
-                        className={`absolute left-0 top-[0.45rem] h-2 w-2 rounded-full ${
-                          e.current ? "bg-accent" : "bg-border"
-                        }`}
-                      />
-                      <p className="label">
-                        {e.period}
-                        {e.current ? <span className="text-accent"> · en cours</span> : null}
-                      </p>
-                      <p className="mt-1 text-[1.0625rem] text-foreground text-balance">{e.title}</p>
-                      <p className="mt-0.5 text-[0.9375rem] text-muted-foreground">{e.school}</p>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </Reveal>
-
-            <Reveal>
-              <div id="certifications" tabIndex={-1} className="outline-none">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-                  <h3 className="h-title text-[1.375rem]">
-                    Certifications{" "}
-                    <span className="text-muted-foreground tabular-nums">{certifications.length}</span>
-                  </h3>
-                  <p className="text-[0.875rem] text-muted-foreground">
-                    {issuerCount} organismes, {verifiable} vérifiables en ligne
-                  </p>
-                </div>
-
-                <RevealGroup as="ul" className="mt-5 border-t border-border">
-                  {certifications.map((c) => (
-                    <RevealItem
-                      as="li"
-                      key={c.title}
-                      className="flex flex-col gap-3 border-b border-border py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
-                    >
-                      <div className="min-w-0">
-                        <p className="text-[0.9375rem] text-foreground text-pretty">{c.title}</p>
-                        <p className="mt-0.5 text-[0.8125rem] text-muted-foreground">
-                          {c.issuer}
-                          {c.kind ? `, ${c.kind.toLowerCase()}` : ""} · {c.date}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-1">
-                        <a
-                          href={c.file}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="link-go inline-flex min-h-11 items-center gap-1.5 text-[0.875rem] text-muted-foreground transition-colors hover:text-foreground sm:min-h-0"
-                        >
-                          <FileText size={15} aria-hidden />
-                          Certificat
-                          <span className="sr-only">
-                            {" "}
-                            {c.title}, PDF (nouvel onglet)
-                          </span>
-                        </a>
-                        {c.verify ? (
-                          <a
-                            href={c.verify}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="link-go inline-flex min-h-11 items-center gap-1.5 text-[0.875rem] text-accent sm:min-h-0"
-                          >
-                            <BadgeCheck size={15} aria-hidden />
-                            Vérifier
-                            <ArrowUpRight size={14} aria-hidden className="icon-out" />
-                            <span className="sr-only">
-                              {" "}
-                              l&apos;authenticité de {c.title} sur Coursera (nouvel onglet)
-                            </span>
-                          </a>
-                        ) : null}
-                      </div>
-                    </RevealItem>
-                  ))}
-                </RevealGroup>
-              </div>
-            </Reveal>
-          </div>
+          <a href={cv.href} download={cv.downloadName} className="btn btn-outline mt-14">
+            <Download size={17} aria-hidden className="icon-down" />
+            Télécharger mon CV
+            <span className="font-normal text-muted-foreground">(PDF, {cv.size})</span>
+          </a>
         </div>
       </div>
     </section>

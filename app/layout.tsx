@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
+import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { site } from '@/lib/site'
 import { INTRO_FLAG, MOTION_FAILSAFE_MS } from '@/lib/motion'
 import { SmoothScroll } from '@/components/motion/smooth-scroll'
@@ -10,17 +10,10 @@ import { ScrollProgress } from '@/components/motion/scroll-progress'
 import { Spotlight } from '@/components/motion/spotlight'
 import './globals.css'
 
-// Four voices with four jobs: an expressive grotesque for titles, a humanist
-// sans for reading, a serif italic for the accent word of a title, a mono
-// for small labels. Self-hosted by next/font, so the strict CSP needs no
-// new host.
-const display = Bricolage_Grotesque({
-  subsets: ['latin'],
-  variable: '--font-geo',
-  display: 'swap',
-})
-
-const sans = Plus_Jakarta_Sans({
+// The reference art direction's faces: Geist for titles and reading (titles
+// reach it through --font-geo), Geist Mono, Instrument Serif. Self-hosted by
+// next/font, so the strict CSP needs no new host.
+const sans = Geist({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
@@ -34,9 +27,8 @@ const serif = Instrument_Serif({
   display: 'swap',
 })
 
-const mono = JetBrains_Mono({
+const mono = Geist_Mono({
   subsets: ['latin'],
-  weight: ['400', '500'],
   variable: '--font-code',
   display: 'swap',
 })
@@ -102,8 +94,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fbfbf9' },
-    { media: '(prefers-color-scheme: dark)', color: '#0e0d0b' },
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b0b0c' },
   ],
   colorScheme: 'light dark',
 }
@@ -126,7 +118,7 @@ export default function RootLayout({
     // data-scroll-behavior tells Next to suspend the CSS smooth scroll
     // during route changes; without it, arriving on /#section from a
     // project page overshot the section by several hundred pixels.
-    <html lang="fr" className={`${display.variable} ${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="fr" className={`${sans.variable} ${serif.variable} ${mono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript + ';' + motionScript }} />
       </head>

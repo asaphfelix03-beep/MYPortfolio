@@ -101,3 +101,10 @@ export function isOnScreen(el: Element) {
 
 /** Framer-only pages (project charts) still read this margin. */
 export const IN_VIEW_MARGIN = "-60px 0px" as const;
+
+/** Lead paragraphs light up word by word as they scroll through the view
+ *  (grey to ink), as in the reference art direction. */
+export const WORD_SCRUB = { start: "top 82%", end: "bottom 50%", dim: 0.2 } as const;
+
+/** Domain and timeline lists: the row nearest this line becomes active. */
+export const ACTIVE_LINE = "center center";

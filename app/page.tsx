@@ -1,8 +1,8 @@
 import Navigation from "@/components/navigation";
 import Hero from "@/components/night/hero";
 import ProjectsSection from "@/components/projects/projects-section";
-import SkillsMarquee from "@/components/skills-marquee";
-import StatsSection from "@/components/stats-section";
+import { ProfilSection } from "@/components/profil-section";
+import { DomainesSection } from "@/components/domaines-section";
 import ParcoursSection from "@/components/parcours-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
@@ -13,9 +13,8 @@ import { projects } from "@/lib/projects";
 import { skillDomains } from "@/lib/skills";
 
 /**
- * The home page, in the order a recruiter needs it: who (hero), the proof
- * (projects, parcours), how to get in touch (contact), the figures, and the
- * skills.
+ * The home page, in the order a recruiter needs it: who (hero, profil), what
+ * (domaines), the proof (projects, parcours), and how to get in touch.
  *
  * A server component: it reads the CV's size from disk at build time and
  * hands it to the sections that offer the download. The sections themselves
@@ -65,19 +64,15 @@ export default function Home() {
       <PageTransition>
       <main id="contenu" tabIndex={-1} className="relative overflow-x-clip outline-none">
         <Hero cv={cv} />
+        <ProfilSection />
+        <DomainesSection />
         <ProjectsSection />
-        <div className="pb-8">
-          <ParcoursSection cv={cv} />
-        </div>
+        <ParcoursSection cv={cv} />
         <ContactSection cv={cv} />
-        <StatsSection />
-        <SkillsMarquee cv={cv} />
       </main>
       </PageTransition>
 
-      <div className="theme-ink">
-        <Footer cv={cv} />
-      </div>
+      <Footer cv={cv} />
     </>
   );
 }

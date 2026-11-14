@@ -43,7 +43,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={dark ? "Passer en thème clair" : "Passer en thème sombre"}
-      className="btn btn-outline btn-sm w-10 px-0"
+      className="glass grid h-10 w-10 place-items-center rounded-full text-foreground transition-colors duration-200 hover:text-accent"
     >
       <SwapIcon active={dark} on={<Sun size={16} aria-hidden />} off={<Moon size={16} aria-hidden />} />
     </button>
