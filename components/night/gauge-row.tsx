@@ -34,7 +34,7 @@ export default function GaugeRow({ onProjectPage = false }: { onProjectPage?: bo
           Taux d&apos;activité des comptes en 2024
         </p>
         <p className="whitespace-nowrap text-[0.75rem] tabular-nums text-muted-foreground/80">
-          échelle 0–{SCALE_MAX}{" "}%
+          échelle de 0 à {SCALE_MAX}{" "}%
         </p>
       </div>
 
@@ -85,7 +85,7 @@ export default function GaugeRow({ onProjectPage = false }: { onProjectPage?: bo
                   est proche de celle des barres de contexte, donc l'identite
                   ne peut pas reposer sur la seule teinte. */}
               <span
-                className={`mt-2 h-20 text-[9px] uppercase leading-none tracking-[0.18em] [writing-mode:vertical-rl] ${
+                className={`mt-2 h-20 text-[10px] leading-none [writing-mode:vertical-rl] ${
                   isSubject
                     ? "font-semibold text-foreground"
                     : "text-muted-foreground"

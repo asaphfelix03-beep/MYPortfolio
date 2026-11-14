@@ -42,7 +42,7 @@ export function Selvedge() {
       />
 
       <span className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 md:block">
-        <span className="block whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground [writing-mode:vertical-rl]">
+        <span className="block whitespace-nowrap text-xs font-medium text-muted-foreground [writing-mode:vertical-rl]">
           Défiler
         </span>
       </span>

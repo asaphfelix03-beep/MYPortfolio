@@ -132,9 +132,7 @@ export default async function ProjectPage({
             </nav>
 
             <p className="rise-in label mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-2 sm:mt-10">
-              <span>{p.category}</span>
-              <span aria-hidden>·</span>
-              <span>{p.year}</span>
+              <span>{p.category}, {p.year}</span>
               {p.status ? <StatusChip>{p.status}</StatusChip> : null}
             </p>
             <h1
