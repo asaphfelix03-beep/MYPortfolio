@@ -4,15 +4,13 @@ import { Fragment, useEffect, useRef } from "react";
 import { ShieldCheck } from "lucide-react";
 import { domainIcons } from "@/components/domaines-section";
 import { gsap, prefersReducedMotion, WORD_SCRUB } from "@/lib/motion";
-import { education, experience, qualities } from "@/lib/parcours";
+import { education, experience } from "@/lib/parcours";
 import { site } from "@/lib/site";
 import { skillDomains } from "@/lib/skills";
 
-const accentWords = new Set(["Licence", "cybersécurité", "intelligence", "artificielle", "stage"]);
-const lead = `Étudiant en ${site.level} à l'${site.school.short}, je me forme à la cybersécurité et à l'intelligence artificielle, avec ${qualities
-  .slice(0, 3)
-  .map((q) => q.toLowerCase())
-  .join(", ")}. Je cherche un stage de trois mois à partir de fin février 2027.`;
+const accentWords = new Set(["cybersécurité", "d'intelligence", "artificielle", "sécuriser", "données", "stage"]);
+// Every claim maps to a shipped project (SOC Homelab, SynthID-Graph) or to lib/parcours.ts qualities.
+const lead = `Étudiant en ${site.level} de cybersécurité et d'intelligence artificielle à l'${site.school.short}, je conjugue deux exigences : sécuriser les systèmes et faire parler les données. De la supervision d'un SOC à la détection de fraude par graphe, chacun de mes projets expose sa méthode et ses résultats. Rigoureux et curieux, je recherche un stage pour mettre cette double compétence au service d'une équipe exigeante.`;
 const words = lead.split(" ");
 
 const today = [
