@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowRight, Download } from "lucide-react";
 import { Magnetic } from "@/components/motion/kinetics";
-import { DUR, EASE, gsap, prefersReducedMotion, REVEAL, STAGGER } from "@/lib/motion";
+import { decodeText } from "@/components/motion/signal-thread";
+import { DUR, EASE, gsap, INTRO_DONE, prefersReducedMotion, REVEAL, STAGGER } from "@/lib/motion";
 import { projects } from "@/lib/projects";
 import { site, type CvInfo } from "@/lib/site";
 
@@ -25,14 +26,27 @@ export default function Hero({ cv }: { cv: CvInfo }) {
       gsap.from("[data-in]", { ...REVEAL.up, duration: DUR.reveal, ease: EASE.out, stagger: STAGGER.list });
       gsap.from("[data-tile]", { ...REVEAL.scale, duration: DUR.reveal, ease: EASE.title, stagger: STAGGER.title });
     }, root);
-    return () => ctx.revert();
+    // The owner's name decodes once the intro curtain has lifted.
+    const name = root.current?.querySelector("[data-decrypt]");
+    let stop: (() => void) | undefined;
+    const run = () => {
+      if (name) stop = decodeText(name, 900);
+    };
+    const waiting = document.documentElement.classList.contains("intro");
+    if (waiting) window.addEventListener(INTRO_DONE, run, { once: true });
+    else run();
+    return () => {
+      window.removeEventListener(INTRO_DONE, run);
+      stop?.();
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section ref={root} id="ouverture" tabIndex={-1} aria-labelledby="hero-title" className="relative overflow-hidden">
       <div className="mx-auto grid max-w-[var(--content-max)] items-center gap-12 px-[var(--gutter)] pb-16 pt-28 md:min-h-[min(900px,100svh)] lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10 lg:pt-32">
         <div className="min-w-0">
-          <p data-in="" className="text-[1.25rem] font-medium">
+          <p data-in="" data-decrypt="" className="text-[1.25rem] font-medium">
             {first} <span className="text-accent">{rest[0]}</span> {rest.slice(1).join(" ")}
           </p>
           <h1 id="hero-title" data-in="" className="mt-10 min-w-0 break-words text-[clamp(2.6rem,4.5vw,4.05rem)] font-normal leading-none tracking-[-0.04em] lg:mt-16">
