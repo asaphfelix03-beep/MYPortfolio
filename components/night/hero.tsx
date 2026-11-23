@@ -16,7 +16,7 @@ const shots = projects
 const [first, ...rest] = site.name.split(" ");
 const float = "motion-safe:animate-[float-y_7s_ease-in-out_infinite]";
 
-/** Name, three-line title, one sentence, two actions; the owner's photo and two real projects in a bento. */
+/** The owner's name as the title, the field, one sentence, two actions; two real projects beside it. */
 export default function Hero({ cv }: { cv: CvInfo }) {
   const root = useRef<HTMLElement>(null);
 
@@ -44,19 +44,40 @@ export default function Hero({ cv }: { cv: CvInfo }) {
 
   return (
     <section ref={root} id="ouverture" tabIndex={-1} aria-labelledby="hero-title" className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-[var(--content-max)] items-center gap-12 px-[var(--gutter)] pb-16 pt-28 md:min-h-[min(900px,100svh)] lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10 lg:pt-32">
+      <div className="mx-auto grid max-w-[var(--content-max)] items-center gap-12 px-[var(--gutter)] pb-16 pt-28 md:min-h-[min(900px,100svh)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16 lg:pt-32">
         <div className="min-w-0">
-          <p data-in="" data-decrypt="" className="text-[1.25rem] font-medium">
-            {first} <span className="text-accent">{rest[0]}</span> {rest.slice(1).join(" ")}
-          </p>
-          <h1 id="hero-title" data-in="" className="mt-10 min-w-0 break-words text-[clamp(2.6rem,4.5vw,4.05rem)] font-normal leading-none tracking-[-0.04em] lg:mt-16">
-            <span className="grad-text">Cybersécurité</span>
+          <div data-in="" className="flex items-center gap-4">
+            <span className="relative size-14 shrink-0 overflow-hidden rounded-full bg-muted ring-1 ring-border">
+              <Image
+                src="/images/asaph-photo.webp"
+                alt={`Portrait de ${site.name}`}
+                fill
+                priority
+                sizes="56px"
+                className="object-cover object-top"
+              />
+            </span>
+            <p className="text-[length:var(--fs-meta)] leading-snug text-muted-foreground">
+              Étudiant en {site.level}
+              <br />
+              {site.school.short}, {site.school.city}
+            </p>
+          </div>
+          <h1
+            id="hero-title"
+            data-in=""
+            data-decrypt=""
+            aria-label={site.name}
+            className="mt-10 min-w-0 break-words text-[clamp(2.75rem,5.4vw,5rem)] font-semibold leading-[0.95] tracking-[-0.045em] lg:mt-14"
+          >
+            {first}
             <br />
-            &amp; intelligence
-            <br />
-            <span className="grad-text">artificielle</span>
+            <span className="grad-text">{rest.join(" ")}</span>
           </h1>
-          <p data-in="" className="mt-6 max-w-[32rem] text-[1.0625rem] text-muted-foreground">
+          <p data-in="" className="mt-6 text-[clamp(1.25rem,1.6vw,1.5rem)] font-medium leading-snug tracking-[-0.02em]">
+            Cybersécurité &amp; intelligence artificielle
+          </p>
+          <p data-in="" className="mt-4 max-w-[32rem] text-[1.0625rem] text-muted-foreground text-pretty">
             {site.availability.sentence}
           </p>
           <div data-in="" className="mt-8 flex flex-wrap items-center gap-3">
@@ -74,29 +95,20 @@ export default function Hero({ cv }: { cv: CvInfo }) {
           </div>
         </div>
 
-        <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 sm:gap-4 lg:min-h-[min(46rem,calc(100svh-8rem))] lg:grid-rows-2">
-          <div data-tile="" className={`relative row-span-2 min-h-[22rem] overflow-hidden rounded-lg bg-muted ${float}`}>
-            <Image
-              src="/images/asaph-photo.webp"
-              alt={`Portrait de ${site.name}`}
-              fill
-              priority
-              sizes="(min-width: 1024px) 360px, 45vw"
-              className="object-cover object-top"
-            />
-          </div>
+        <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:gap-4 lg:min-h-[min(44rem,calc(100svh-9rem))] lg:grid-cols-1 lg:grid-rows-2">
           {shots.map((s, i) => (
             <div
               key={s.title}
               data-tile=""
               style={{ animationDelay: `${i * -2.5}s` }}
-              className={`relative aspect-[4/3] overflow-hidden rounded-lg bg-muted lg:aspect-auto lg:h-full ${float}`}
+              className={`relative aspect-[16/10] overflow-hidden rounded-lg bg-muted shadow-[var(--shadow-soft)] ring-1 ring-border lg:aspect-auto lg:h-full ${float}`}
             >
               <Image
                 src={s.src}
                 alt={s.alt}
                 fill
-                sizes="(min-width: 1024px) 360px, 45vw"
+                priority={i === 0}
+                sizes="(min-width: 1024px) 760px, (min-width: 640px) 50vw, 100vw"
                 className="object-cover"
                 style={{ objectPosition: s.pos }}
               />

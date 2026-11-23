@@ -174,7 +174,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
                   refs.current[i] = el;
                 }}
                 style={{ opacity: fade && i !== active ? 0.35 : 1 }}
-                className="relative pb-14 pl-10 transition-opacity duration-300 last:pb-0"
+                className={`relative pl-10 transition-opacity duration-300 last:pb-0 ${e.kind === "certification" ? "pb-8" : "pb-14"}`}
               >
                 <span
                   aria-hidden
@@ -185,7 +185,9 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
                   {e.meta ? <span>{e.meta}</span> : null}
                   {e.current ? <span className="chip chip-signal">En cours</span> : null}
                 </div>
-                <h3 className="mt-3 min-w-0 break-words text-[length:var(--fs-h3)] font-semibold leading-tight tracking-[-0.03em] text-balance">
+                <h3
+                  className={`mt-3 min-w-0 break-words font-semibold leading-tight tracking-[-0.03em] text-balance ${e.kind === "certification" ? "text-[1.25rem]" : "text-[length:var(--fs-h3)]"}`}
+                >
                   {e.title}
                 </h3>
                 {e.org ? <p className="mt-1.5 text-[1.0625rem] text-muted-foreground">{e.org}</p> : null}
