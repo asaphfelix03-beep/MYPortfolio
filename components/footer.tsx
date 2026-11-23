@@ -30,7 +30,7 @@ export default function Footer({
           }}
         />
         <div className="mx-auto w-full max-w-[var(--content-max)]">
-          <p className="min-w-0 max-w-[18ch] break-words text-[clamp(2rem,calc(var(--fs-h1)*0.6),6.5rem)] font-medium leading-[0.95] tracking-[-0.05em] text-foreground">
+          <p className="min-w-0 max-w-[18ch] break-words text-[clamp(2rem,calc(var(--fs-h1)*0.6),6.5rem)] font-medium leading-[1.05] tracking-[-0.035em] text-foreground">
             {site.availability.sentence}
           </p>
           <nav aria-label="Pied de page" className="mt-12">

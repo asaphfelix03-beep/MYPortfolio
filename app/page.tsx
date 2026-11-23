@@ -7,7 +7,6 @@ import ParcoursSection from "@/components/parcours-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import { PageTransition } from "@/components/motion/page-transition";
-import { SignalThread } from "@/components/motion/signal-thread";
 import { getCvInfo } from "@/lib/cv-file";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
@@ -64,7 +63,6 @@ export default function Home() {
 
       <PageTransition>
       <main id="contenu" tabIndex={-1} className="relative isolate overflow-x-clip outline-none">
-        <SignalThread />
         <Hero cv={cv} />
         <ProfilSection />
         <DomainesSection />

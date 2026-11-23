@@ -135,7 +135,7 @@ export default function ParcoursSection({ cv }: { cv: CvInfo }) {
             faire parler les données. J&apos;apprends autant par les projets que par la certification.
           </p>
         </div>
-        <div role="group" aria-label="Filtrer le parcours" className="flex flex-wrap gap-1">
+        <div role="group" aria-label="Filtrer le parcours" className="flex flex-wrap gap-1 lg:shrink-0">
           {filters.map((f) => (
             <button
               key={f.id}

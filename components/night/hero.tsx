@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowRight, Download } from "lucide-react";
 import { Magnetic } from "@/components/motion/kinetics";
-import { decodeText } from "@/components/motion/signal-thread";
+import { decodeText } from "@/components/motion/decode-text";
 import { DUR, EASE, gsap, INTRO_DONE, prefersReducedMotion, REVEAL, STAGGER } from "@/lib/motion";
 import { projects } from "@/lib/projects";
 import { site, type CvInfo } from "@/lib/site";

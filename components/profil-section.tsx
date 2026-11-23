@@ -90,7 +90,7 @@ export function ProfilSection() {
                 <p className="mt-4 min-w-0 break-words font-semibold leading-tight">{d.title}</p>
                 <ul className="mt-4 flex flex-wrap gap-1.5">
                   {d.skills.slice(0, 3).map((s, i) => (
-                    <li key={s.name} className={`tag max-w-full truncate ${tagTone[i % 3]}`}>
+                    <li key={s.name} className={`tag max-w-full ${tagTone[i % 3]}`}>
                       {short(s.name)}
                     </li>
                   ))}
