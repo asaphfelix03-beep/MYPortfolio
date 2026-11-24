@@ -1,86 +1,82 @@
-/* Hallmark · theme: reverse-engineered reference (by request, user named dakaud-uriel.gama-labs.com) · genre: modern-minimal · posture: restrained, one blue signal · hero: 4/8 split, text left, photo + project bento right · nav: glass pill, wordmark + one action · footer: ink card, wordmark over links · surface: white paper, ink, #2952ff */
-/* Hallmark · critique: the violet/blue/cyan brand gradient on .grad-text stays because the owner asked for the reference "exactement"; dark mode is an addition the reference lacks. */
+/* Hallmark · theme: custom "rapport d'analyste" · genre: editorial-technical · posture: quiet navy report, one highlighter yellow · hero: the name set full width over a highlighter stroke, 5/7 split below · nav: glass pill, wordmark + one action · footer: navy card, wordmark over links · surface: cool paper #F4F6F8, navy ink #0F1E33, highlighter #FFD23F */
+/* Hallmark · critique: yellow is spent on actions, selection and the one highlighter stroke under the name; no gradient, no glow, borders over shadows. */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ *
- * White paper, near-black ink and one electric blue, after the art
- * direction the owner asked to reproduce (dakaud-uriel.gama-labs.com):
- * same token values, scale and motion, none of its assets or copy.
+ * An analyst's report: cool paper, navy ink, cobalt for links and a
+ * highlighter yellow for what the reader should act on.
  *
- * --accent (#2952FF) works both as text on white (5.6:1) and as a fill
- * under white text (5.6:1). The violet/blue/cyan gradient is kept as
- * the reference has it, on title accents only.
- *
- * Measured: muted text #585B66 6.8:1 on white; dark accent #8FB0FF
- * 8.4:1 on #0B0B0C.
+ * Measured: ink #0F1E33 on paper 15.5:1; muted #556275 5.7:1; cobalt
+ * #23408E 8.8:1; ink on yellow #FFD23F 11.6:1. Dark: #E9EDF3 on
+ * #0F1B2E 14.7:1; muted #9AA7BA 7.1:1; yellow 12.0:1.
  * ------------------------------------------------------------------ */
 :root {
-  --paper: #ffffff;
-  --paper-2: #f4f4f6;
-  --ink: #0b0b0c;
-  --ink-2: #1a1a1d;
+  --paper: #f4f6f8;
+  --paper-2: #e8ecf1;
+  --ink: #0f1e33;
+  --ink-2: #1b2b44;
   --font-geo: var(--font-body);
-  --accent-fill: #2952ff;
+  --accent-fill: #ffd23f;
 
   --background: var(--paper);
-  --band: var(--paper);
+  --band: #eceff3;
   --foreground: var(--ink);
   --card: #ffffff;
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);
   --primary: var(--ink);
-  --primary-foreground: #ffffff;
+  --primary-foreground: var(--paper);
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
-  --muted-foreground: #585b66;
-  --mute-2: #96969c;
-  --accent: #2952ff;
+  --muted-foreground: #556275;
+  --mute-2: #8a95a5;
+  --accent: #23408e;
   --accent-foreground: #ffffff;
-  --destructive: #c8241a;
+  --destructive: #b42318;
   --destructive-foreground: #ffffff;
-  --border: #e6e6ea;
+  --border: #d3d9e1;
   /* Field strokes clear 3:1 against the card. */
-  --input: #8a8a92;
-  --ring: #2952ff;
+  --input: #7c8797;
+  --ring: #23408e;
 
-  --signal: #2952ff;
-  --signal-soft: #dde3ff;
-  --violet: #8b5cf6;
-  --warm: #f26b1d;
-  --blue: #2952ff;
-  --sage: #16b26e;
-  --sage-ink: #0d7a4a;
-  --cyan: #22b8e6;
-  --cyan-ink: #0b7ea3;
-  --h-software: #2952ff;
-  --h-data: #8b5cf6;
-  --h-iot: #16b26e;
-  --h-creative: #f45078;
-  --h-spatial: #0ea5e9;
-  --grad-brand: linear-gradient(100deg, var(--signal) 0%, var(--violet) 40%, var(--cyan) 60%, var(--signal) 100%);
+  --signal: #23408e;
+  --signal-soft: #fff1b8;
+  --violet: #23408e;
+  --warm: #e0701f;
+  --blue: #23408e;
+  --sage: #1f8a5b;
+  --sage-ink: #146b45;
+  --cyan: #1e7fa8;
+  --cyan-ink: #0f6585;
+  --h-software: #23408e;
+  --h-data: #6b4fb3;
+  --h-iot: #1f8a5b;
+  --h-creative: #c2416b;
+  --h-spatial: #1e7fa8;
+  --grad-brand: linear-gradient(var(--accent), var(--accent));
   --grad-cool: linear-gradient(120deg, var(--cyan), var(--signal));
 
   --chart-1: var(--blue);
-  --chart-2: var(--violet);
+  --chart-2: #6b4fb3;
   --chart-3: var(--cyan);
-  --chart-4: #585b66;
-  --chart-5: #c8241a;
+  --chart-4: #556275;
+  --chart-5: #b42318;
 
-  --radius: 22px;
-  --radius-s: 12px;
-  --radius-m: 22px;
-  --radius-l: 34px;
+  --radius: 8px;
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 14px;
 
-  --fs-display: clamp(3.4rem, 11.5vw, 12.5rem);
+  --fs-display: clamp(3.4rem, 10.6vw, 11.5rem);
   --fs-h1: clamp(2.25rem, 4.4vw, 3.75rem);
   --fs-h2: clamp(1.75rem, 3vw, 2.75rem);
   --fs-h3: clamp(1.35rem, 2vw, 1.85rem);
-  --fs-lead: clamp(1.4rem, 2.9vw, 2.75rem);
+  --fs-lead: clamp(1.35rem, 2.6vw, 2.4rem);
   --fs-body: clamp(1rem, 1.05vw, 1.1rem);
   --fs-meta: 0.8125rem;
   --gutter: clamp(16px, 4vw, 56px);
@@ -91,19 +87,21 @@
   --tabbar-space: calc(var(--tabbar-h) + max(12px, var(--safe-bottom)) + 12px);
 
   --weave-pitch: 22px;
-  --weave-line: rgb(11 11 12 / 0.05);
-  --weave-dot: rgb(11 11 12 / 0.16);
+  --weave-line: rgb(15 30 51 / 0.05);
+  --weave-dot: rgb(15 30 51 / 0.16);
 
-  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px rgb(0 0 0 / 0.06);
-  --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.06), 0 30px 80px rgb(0 0 0 / 0.14);
-  --glass-bg: linear-gradient(rgb(255 255 255 / 0.94), rgb(255 255 255 / 0.86));
-  --glass-shadow: inset 0 1px rgb(255 255 255 / 0.95), inset 0 -1px rgb(255 255 255 / 0.3), 0 0 0 1px rgb(16 18 27 / 0.06), 0 18px 50px -12px rgb(16 18 40 / 0.22);
-  --btn-solid: linear-gradient(180deg, #2b2d35 0%, var(--ink) 100%);
-  --btn-solid-hover: linear-gradient(180deg, #4d74ff 0%, var(--signal) 100%);
-  --signal-glow: 0 10px 30px -8px rgb(41 82 255 / 0.55);
-  --on-accent: #ffffff;
-  --btn-shadow: inset 0 1px rgb(255 255 255 / 0.18), 0 10px 24px -10px rgb(0 0 0 / 0.55);
-  --signal-inset: inset 0 1px rgb(255 255 255 / 0.25);
+  /* Depth from a crisp hairline, not a soft grey cloud. */
+  --shadow-soft: 0 1px 0 rgb(15 30 51 / 0.06);
+  --shadow-lift: 0 1px 0 rgb(15 30 51 / 0.06), 0 14px 30px -20px rgb(15 30 51 / 0.45);
+  --glass-bg: rgb(244 246 248 / 0.9);
+  --glass-shadow: 0 0 0 1px rgb(15 30 51 / 0.1), 0 10px 30px -20px rgb(15 30 51 / 0.4);
+  --btn-bg: var(--accent-fill);
+  --btn-fg: var(--ink);
+  --btn-bg-hover: var(--ink);
+  --btn-fg-hover: var(--accent-fill);
+  --on-accent: var(--ink);
+  /* The highlighter stroke under the owner's name. */
+  --mark: var(--accent-fill);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
@@ -111,103 +109,109 @@
   color-scheme: light;
 }
 
-/* Night mode, chosen with the header toggle or inherited from the system.
- * The reference is light only; these values follow its own dark tone
- * (glass-dark, accent-light). */
+/* Night mode, chosen with the header toggle or inherited from the system:
+ * the same report printed on deep navy, yellow kept for actions. */
 :root.dark {
-  --background: var(--ink);
-  --band: var(--ink);
-  --foreground: #f5f5f7;
-  --card: #131418;
-  --card-foreground: #f5f5f7;
-  --popover: #131418;
-  --popover-foreground: #f5f5f7;
-  --primary: #f5f5f7;
-  --primary-foreground: var(--ink);
-  --secondary: #1c1d22;
-  --secondary-foreground: #f5f5f7;
-  --muted: #1c1d22;
-  --muted-foreground: #a3a4ad;
-  --mute-2: #6e6f78;
-  --accent: #8fb0ff;
-  --accent-foreground: var(--ink);
+  --background: #0f1b2e;
+  --band: #0c1726;
+  --foreground: #e9edf3;
+  --card: #16243a;
+  --card-foreground: #e9edf3;
+  --popover: #16243a;
+  --popover-foreground: #e9edf3;
+  --primary: #e9edf3;
+  --primary-foreground: #0f1b2e;
+  --secondary: #1b2b44;
+  --secondary-foreground: #e9edf3;
+  --muted: #1b2b44;
+  --muted-foreground: #9aa7ba;
+  --mute-2: #66758c;
+  --accent: #ffd23f;
+  --accent-foreground: #0f1b2e;
   --destructive: #ff8a7a;
-  --destructive-foreground: var(--ink);
-  --border: #26272d;
-  --input: #7a7b85;
-  --ring: #8fb0ff;
+  --destructive-foreground: #0f1b2e;
+  --border: #263753;
+  --input: #7c8aa0;
+  --ring: #ffd23f;
 
-  --signal-soft: #1b2450;
-  --violet: #c4b5fd;
-  --blue: #8fb0ff;
+  --signal: #ffd23f;
+  --signal-soft: #2e3a2a;
+  --violet: #b9c6ff;
+  --blue: #9fb4ff;
   --cyan: #7dd3fc;
   --sage: #5fd39d;
   --sage-ink: #7fe0b2;
   --cyan-ink: #7dd3fc;
-  --chart-4: #a3a4ad;
+  --chart-4: #9aa7ba;
   --chart-5: #ff8a7a;
-  --grad-brand: linear-gradient(100deg, #8fb0ff 0%, #c4b5fd 40%, #7dd3fc 60%, #8fb0ff 100%);
 
-  --weave-line: rgb(255 255 255 / 0.045);
-  --weave-dot: rgb(255 255 255 / 0.14);
+  --weave-line: rgb(233 237 243 / 0.05);
+  --weave-dot: rgb(233 237 243 / 0.14);
 
-  --shadow-soft: 0 0 0 1px rgb(255 255 255 / 0.06), 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -14px rgb(0 0 0 / 0.6);
-  --shadow-lift: 0 0 0 1px rgb(255 255 255 / 0.09), 0 2px 4px rgb(0 0 0 / 0.3), 0 22px 44px -22px rgb(0 0 0 / 0.8);
-  --glass-bg: linear-gradient(rgb(38 40 48 / 0.92), rgb(14 15 19 / 0.88));
-  --glass-shadow: inset 0 1px rgb(255 255 255 / 0.16), 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 60px -14px rgb(0 0 0 / 0.55);
-  --btn-solid: linear-gradient(180deg, #ffffff 0%, #e4e4e8 100%);
+  --shadow-soft: 0 0 0 1px rgb(233 237 243 / 0.05);
+  --shadow-lift: 0 0 0 1px rgb(233 237 243 / 0.1), 0 18px 40px -22px rgb(0 0 0 / 0.8);
+  --glass-bg: rgb(22 36 58 / 0.9);
+  --glass-shadow: 0 0 0 1px rgb(233 237 243 / 0.1), 0 18px 44px -18px rgb(0 0 0 / 0.6);
+  --btn-bg-hover: #e9edf3;
+  --btn-fg-hover: #0f1b2e;
+  /* Light letters over yellow fail contrast; a cobalt stroke keeps them at 8:1. */
+  --mark: #2a4aa3;
 
   color-scheme: dark;
 }
 
-/* Ink panels (the footer card): dark in both themes. */
+/* Navy panels (the footer card): dark in both themes. */
 .theme-ink {
-  --background: var(--ink);
-  --band: var(--ink);
-  --foreground: #f5f5f7;
-  --card: #131418;
-  --card-foreground: #f5f5f7;
-  --popover: #131418;
-  --popover-foreground: #f5f5f7;
-  --primary: #f5f5f7;
-  --primary-foreground: var(--ink);
-  --secondary: #1c1d22;
-  --secondary-foreground: #f5f5f7;
-  --muted: #1c1d22;
-  --muted-foreground: #a3a4ad;
-  --accent: #8fb0ff;
-  --accent-foreground: var(--ink);
+  --background: #0b1626;
+  --band: #0b1626;
+  --foreground: #e9edf3;
+  --card: #0b1626;
+  --card-foreground: #e9edf3;
+  --popover: #16243a;
+  --popover-foreground: #e9edf3;
+  --primary: #e9edf3;
+  --primary-foreground: #0b1626;
+  --secondary: #1b2b44;
+  --secondary-foreground: #e9edf3;
+  --muted: #1b2b44;
+  --muted-foreground: #9aa7ba;
+  --accent: #ffd23f;
+  --accent-foreground: #0b1626;
   --destructive: #ff8a7a;
-  --border: #26272d;
-  --input: #7a7b85;
-  --ring: #8fb0ff;
-  --blue: #8fb0ff;
-  --violet: #c4b5fd;
+  --border: #263753;
+  --input: #7c8aa0;
+  --ring: #ffd23f;
+  --blue: #9fb4ff;
+  --violet: #b9c6ff;
   --cyan: #7dd3fc;
-  --grad-brand: linear-gradient(100deg, #8fb0ff 0%, #c4b5fd 40%, #7dd3fc 60%, #8fb0ff 100%);
-  --weave-line: rgb(255 255 255 / 0.045);
-  --weave-dot: rgb(255 255 255 / 0.14);
-  --btn-solid: linear-gradient(180deg, #ffffff 0%, #e4e4e8 100%);
+  --weave-line: rgb(233 237 243 / 0.05);
+  --weave-dot: rgb(233 237 243 / 0.14);
+  --btn-bg-hover: #e9edf3;
+  --btn-fg-hover: #0b1626;
   color-scheme: dark;
   background-color: var(--background);
   color: var(--foreground);
 }
 
-/* The full-blue surface: white carries everything on it (5.6:1). */
+/* The highlighter surface: navy carries everything on it (11.6:1). */
 .theme-accent {
   --background: var(--accent-fill);
-  --foreground: #ffffff;
+  --foreground: var(--ink);
   --card: var(--paper);
   --card-foreground: var(--ink);
-  --primary: #ffffff;
-  --primary-foreground: var(--ink);
-  --muted-foreground: #e6eaff;
-  --accent: #ffffff;
-  --accent-foreground: var(--ink);
-  --destructive: #ffffff;
-  --border: rgb(255 255 255 / 0.32);
-  --input: #ffffff;
-  --ring: #ffffff;
+  --primary: var(--ink);
+  --primary-foreground: var(--accent-fill);
+  --muted-foreground: #4a3f12;
+  --accent: var(--ink);
+  --accent-foreground: var(--accent-fill);
+  --destructive: #8a1c12;
+  --border: rgb(15 30 51 / 0.25);
+  --input: var(--ink);
+  --ring: var(--ink);
+  --btn-bg: var(--ink);
+  --btn-fg: var(--accent-fill);
+  --btn-bg-hover: #ffffff;
+  --btn-fg-hover: var(--ink);
   color-scheme: light;
   background-color: var(--background);
   color: var(--foreground);
@@ -259,9 +263,9 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --radius-sm: var(--radius-s);
-  --radius-md: 16px;
+  --radius-md: 6px;
   --radius-lg: var(--radius-m);
-  --radius-xl: 28px;
+  --radius-xl: 12px;
   --radius-2xl: var(--radius-l);
 }
 
@@ -295,9 +299,17 @@
     font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
   }
 
+  /* Long reading is set in the serif; interface and titles stay grotesque. */
+  .lead,
+  .prose-night,
+  main p.text-pretty:not(.font-semibold) {
+    font-family: var(--font-serif), Georgia, serif;
+    font-optical-sizing: auto;
+  }
+
   ::selection {
-    background: color-mix(in srgb, var(--accent-fill) 28%, transparent);
-    color: var(--foreground);
+    background: var(--accent-fill);
+    color: var(--ink);
   }
 }
 
@@ -312,19 +324,18 @@
     text-wrap: balance;
   }
 
-  /* One accent word per title, in serif italic. */
+  /* Kept for old markup: no accent face, the word reads like its title. */
   .serif-accent {
-    font-family: var(--font-serif), Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: inherit;
   }
 
   /* Section heading: Geist 600, tight, capped below the hero title. */
   .h-section {
     font-family: var(--font-geo), ui-sans-serif, system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: -0.045em;
+    font-weight: 700;
+    letter-spacing: -0.035em;
     line-height: 1;
     font-size: var(--fs-h1);
     overflow-wrap: break-word;
@@ -334,20 +345,14 @@
   /* Large lead paragraph under a section heading. */
   .lead {
     font-size: var(--fs-lead);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.12;
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    line-height: 1.28;
   }
 
-  /* Second line of a heading: the brand gradient, slowly sliding. */
+  /* Legacy hook on heading second lines: one ink per heading. */
   .grad-text {
-    background-image: var(--grad-brand);
-    background-size: 300% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: accent-sheen 9s var(--ease-in-out) infinite alternate;
-    padding-bottom: 0.08em;
+    color: inherit;
   }
 
   .h-title {
@@ -391,7 +396,7 @@
     gap: 0.55rem;
     border: 1px solid var(--border);
     background: var(--card);
-    border-radius: 999px;
+    border-radius: var(--radius-s);
     padding: 0.35rem 0.85rem 0.35rem 0.65rem;
     font-size: 0.8125rem;
     font-weight: 500;
@@ -410,10 +415,10 @@
     justify-content: center;
     gap: 0.55rem;
     min-height: 3rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 999px;
+    padding: 0.75rem 1.4rem;
+    border-radius: var(--radius-m);
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
     border: 1px solid transparent;
     transition:
@@ -440,27 +445,18 @@
     font-size: 0.875rem;
   }
 
-  /* Black pill with a top light, blue on hover. */
-  .btn-primary {
-    background: var(--btn-solid);
-    color: var(--primary-foreground);
-    box-shadow: var(--btn-shadow);
-  }
-
-  .btn-primary:hover {
-    background: var(--btn-solid-hover);
-    color: var(--on-accent);
-  }
-
-  /* The blue call to action with its glow. */
+  /* Highlighter yellow under navy ink; turns to ink on hover. */
+  .btn-primary,
   .btn-signal {
-    background-color: var(--accent-fill);
-    color: var(--on-accent);
-    box-shadow: var(--signal-inset), var(--signal-glow);
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    border-color: color-mix(in srgb, var(--ink) 18%, transparent);
   }
 
+  .btn-primary:hover,
   .btn-signal:hover {
-    background: var(--btn-solid-hover);
+    background-color: var(--btn-bg-hover);
+    color: var(--btn-fg-hover);
   }
 
   .btn-signal:disabled {
@@ -482,7 +478,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    border-radius: 999px;
+    border-radius: var(--radius-s);
     background: var(--muted);
     padding: 0.25rem 0.7rem;
     font-size: var(--fs-meta);
@@ -498,7 +494,7 @@
 
   /* Filter pills: plain text, the pressed one in a black pill. */
   .filter-pill {
-    border-radius: 999px;
+    border-radius: var(--radius-m);
     padding: 0.5rem 1rem;
     font-size: 0.9375rem;
     font-weight: 500;
@@ -533,8 +529,8 @@
   }
 
   .btn-outline:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--foreground);
+    color: var(--foreground);
     box-shadow: var(--shadow-lift);
   }
 
@@ -592,7 +588,7 @@
   .tag {
     display: inline-flex;
     align-items: center;
-    border-radius: 999px;
+    border-radius: var(--radius-s);
     background: var(--muted);
     padding: 0.22rem 0.7rem;
     font-size: 0.75rem;
@@ -964,6 +960,11 @@ html.intro .loader {
 
 /* First-paint pose of the hero, set only when the head script confirmed
    JavaScript runs. GSAP takes over from these exact values. */
+/* The highlighter waits for its stroke; the failsafe lifts html.motion. */
+html.motion [data-mark] {
+  transform: scaleX(0);
+}
+
 html.motion [data-hero-line] {
   transform: translateY(110%);
 }
@@ -1181,6 +1182,4 @@ input:focus-visible + .pill-face {
   50% { transform: translateY(-8px); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .grad-text { animation: none; }
-}
+

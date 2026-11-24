@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
+import { Bricolage_Grotesque, Geist_Mono, Source_Serif_4 } from 'next/font/google'
 import { site } from '@/lib/site'
 import { INTRO_FLAG, MOTION_FAILSAFE_MS } from '@/lib/motion'
 import { SmoothScroll } from '@/components/motion/smooth-scroll'
@@ -10,19 +10,19 @@ import { ScrollProgress } from '@/components/motion/scroll-progress'
 import { Spotlight } from '@/components/motion/spotlight'
 import './globals.css'
 
-// The reference art direction's faces: Geist for titles and reading (titles
-// reach it through --font-geo), Geist Mono, Instrument Serif. Self-hosted by
+// "Analyst report" faces: Bricolage Grotesque for titles and interface,
+// Source Serif 4 for long reading, Geist Mono for code. Self-hosted by
 // next/font, so the strict CSP needs no new host.
-const sans = Geist({
+const sans = Bricolage_Grotesque({
   subsets: ['latin'],
+  axes: ['opsz'],
   variable: '--font-body',
   display: 'swap',
 })
 
-const serif = Instrument_Serif({
+const serif = Source_Serif_4({
   subsets: ['latin'],
-  weight: '400',
-  style: 'italic',
+  axes: ['opsz'],
   variable: '--font-serif',
   display: 'swap',
 })
@@ -94,8 +94,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b0b0c' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f6f8' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f1b2e' },
   ],
   colorScheme: 'light dark',
 }

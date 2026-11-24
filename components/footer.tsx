@@ -21,14 +21,6 @@ export default function Footer({
   return (
     <footer className="p-[max(12px,1.2vw)] pb-[calc(var(--tabbar-space)+12px)] md:pb-[max(12px,1.2vw)]">
       <div className="theme-ink relative isolate flex min-h-[80svh] flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card px-[var(--gutter)] pt-[var(--section-y)]">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-25"
-          style={{
-            backgroundImage:
-              "radial-gradient(60% 50% at 80% 0%, var(--accent), transparent 70%), radial-gradient(50% 40% at 0% 100%, var(--violet), transparent 70%)",
-          }}
-        />
         <div className="mx-auto w-full max-w-[var(--content-max)]">
           <p className="min-w-0 max-w-[18ch] break-words text-[clamp(2rem,calc(var(--fs-h1)*0.6),6.5rem)] font-medium leading-[1.05] tracking-[-0.035em] text-foreground">
             {site.availability.sentence}
