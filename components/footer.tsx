@@ -11,7 +11,7 @@ export default function Footer({
 }) {
   const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
   const link =
-    "inline-flex min-h-10 items-center gap-1 text-[0.9375rem] text-muted-foreground transition-colors duration-200 hover:text-foreground";
+    "inline-flex min-h-10 min-w-6 items-center gap-1 text-[0.9375rem] text-muted-foreground transition-colors duration-200 hover:text-foreground";
   const external = [
     { label: "GitHub", href: site.links.github },
     { label: "LinkedIn", href: site.links.linkedin },

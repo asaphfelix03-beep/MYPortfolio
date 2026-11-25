@@ -34,7 +34,7 @@
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
   --muted-foreground: #556275;
-  --mute-2: #8a95a5;
+  --mute-2: #637083;
   --accent: #23408e;
   --accent-foreground: #ffffff;
   --destructive: #b42318;
@@ -125,7 +125,7 @@
   --secondary-foreground: #e9edf3;
   --muted: #1b2b44;
   --muted-foreground: #9aa7ba;
-  --mute-2: #66758c;
+  --mute-2: #7a89a0;
   --accent: #ffd23f;
   --accent-foreground: #0f1b2e;
   --destructive: #ff8a7a;
@@ -1009,23 +1009,23 @@ html.motion [data-hero-mock] {
   align-items: center;
   min-height: 2.75rem;
   padding: 0.5rem 1.1rem;
-  border: 1.5px solid var(--ink);
+  border: 1.5px solid var(--foreground);
   border-radius: 999px;
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--foreground);
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 .pill-face:hover {
-  background-color: color-mix(in srgb, var(--ink) 10%, transparent);
+  background-color: color-mix(in srgb, var(--foreground) 10%, transparent);
 }
 input:checked + .pill-face {
-  background-color: var(--ink);
-  color: var(--paper);
+  background-color: var(--foreground);
+  color: var(--background);
 }
 input:focus-visible + .pill-face {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--foreground);
   outline-offset: 3px;
 }
 
